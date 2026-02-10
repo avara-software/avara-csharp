@@ -305,9 +305,6 @@ sealed class ExpiredConverter : JsonConverter<Expired>
     }
 }
 
-/// <summary>
-/// Invitation status
-/// </summary>
 [JsonConverter(typeof(StatusConverter))]
 public enum Status
 {

@@ -398,9 +398,6 @@ public sealed record class ReportMetadata : JsonModel
         init { this._rawData.Set("scanType", value); }
     }
 
-    /// <summary>
-    /// Patient's biological sex
-    /// </summary>
     public ApiEnum<string, Sex>? Sex
     {
         get
@@ -476,9 +473,6 @@ class ReportMetadataFromRaw : IFromRawJson<ReportMetadata>
 [JsonConverter(typeof(JsonModelConverter<Height, HeightFromRaw>))]
 public sealed record class Height : JsonModel
 {
-    /// <summary>
-    /// Height unit
-    /// </summary>
     public required ApiEnum<string, Unit> Unit
     {
         get
@@ -541,9 +535,6 @@ class HeightFromRaw : IFromRawJson<Height>
         Height.FromRawUnchecked(rawData);
 }
 
-/// <summary>
-/// Height unit
-/// </summary>
 [JsonConverter(typeof(UnitConverter))]
 public enum Unit
 {
@@ -584,9 +575,6 @@ sealed class UnitConverter : JsonConverter<Unit>
     }
 }
 
-/// <summary>
-/// Patient's biological sex
-/// </summary>
 [JsonConverter(typeof(SexConverter))]
 public enum Sex
 {
@@ -633,9 +621,6 @@ sealed class SexConverter : JsonConverter<Sex>
 [JsonConverter(typeof(JsonModelConverter<Weight, WeightFromRaw>))]
 public sealed record class Weight : JsonModel
 {
-    /// <summary>
-    /// Weight unit
-    /// </summary>
     public required ApiEnum<string, WeightUnit> Unit
     {
         get
@@ -698,9 +683,6 @@ class WeightFromRaw : IFromRawJson<Weight>
         Weight.FromRawUnchecked(rawData);
 }
 
-/// <summary>
-/// Weight unit
-/// </summary>
 [JsonConverter(typeof(WeightUnitConverter))]
 public enum WeightUnit
 {

@@ -150,7 +150,8 @@ public sealed record class UserListResponse : JsonModel
     }
 
     /// <summary>
-    /// User access level
+    /// User access level. 'owner' has full control, 'admin' can manage users/settings,
+    /// 'member' has standard access
     /// </summary>
     public required ApiEnum<string, UserListResponseLevel> Level
     {
@@ -491,7 +492,8 @@ sealed class UserListResponseInvitedSourceConverter : JsonConverter<UserListResp
 }
 
 /// <summary>
-/// User access level
+/// User access level. 'owner' has full control, 'admin' can manage users/settings,
+/// 'member' has standard access
 /// </summary>
 [JsonConverter(typeof(UserListResponseLevelConverter))]
 public enum UserListResponseLevel

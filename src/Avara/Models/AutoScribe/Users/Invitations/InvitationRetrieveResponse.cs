@@ -58,7 +58,7 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// User's clinical or organizational role
+    /// Clinical or organizational role for the invited user
     /// </summary>
     public required ApiEnum<string, InvitationRetrieveResponseClinicRole> ClinicRole
     {
@@ -151,7 +151,7 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// How the user was invited - via dashboard UI or API
+    /// How the invitation was created - 'dashboard' or 'api'
     /// </summary>
     public required ApiEnum<string, InvitedSource> InvitedSource
     {
@@ -191,7 +191,7 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// User access level
+    /// Access level for the invited user. 'admin' or 'member' when created via API
     /// </summary>
     public required ApiEnum<string, InvitationRetrieveResponseLevel> Level
     {
@@ -206,7 +206,7 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// Invitation status
+    /// Invitation status: 'sent', 'accepted', 'rejected', or 'revoked'
     /// </summary>
     public required ApiEnum<string, InvitationRetrieveResponseStatus> Status
     {
@@ -409,7 +409,7 @@ class InvitationRetrieveResponseFromRaw : IFromRawJson<InvitationRetrieveRespons
 }
 
 /// <summary>
-/// User's clinical or organizational role
+/// Clinical or organizational role for the invited user
 /// </summary>
 [JsonConverter(typeof(InvitationRetrieveResponseClinicRoleConverter))]
 public enum InvitationRetrieveResponseClinicRole
@@ -520,7 +520,7 @@ sealed class InvitationRetrieveResponseClinicRoleConverter
 }
 
 /// <summary>
-/// How the user was invited - via dashboard UI or API
+/// How the invitation was created - 'dashboard' or 'api'
 /// </summary>
 [JsonConverter(typeof(InvitedSourceConverter))]
 public enum InvitedSource
@@ -567,7 +567,7 @@ sealed class InvitedSourceConverter : JsonConverter<InvitedSource>
 }
 
 /// <summary>
-/// User access level
+/// Access level for the invited user. 'admin' or 'member' when created via API
 /// </summary>
 [JsonConverter(typeof(InvitationRetrieveResponseLevelConverter))]
 public enum InvitationRetrieveResponseLevel
@@ -618,7 +618,7 @@ sealed class InvitationRetrieveResponseLevelConverter
 }
 
 /// <summary>
-/// Invitation status
+/// Invitation status: 'sent', 'accepted', 'rejected', or 'revoked'
 /// </summary>
 [JsonConverter(typeof(InvitationRetrieveResponseStatusConverter))]
 public enum InvitationRetrieveResponseStatus
