@@ -1,0 +1,364 @@
+using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Avara.Core;
+using Avara.Exceptions;
+
+namespace Avara.Models.Viewer.Studies;
+
+/// <summary>
+/// A study entity in the Viewer system with viewing status
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<StudyCreateResponse, StudyCreateResponseFromRaw>))]
+public sealed record class StudyCreateResponse : JsonModel
+{
+    /// <summary>
+    /// Timestamp when the study was cancelled, null if not cancelled
+    /// </summary>
+    public required DateTimeOffset? CancelledAt
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<DateTimeOffset>("cancelledAt");
+        }
+        init { this._rawData.Set("cancelledAt", value); }
+    }
+
+    /// <summary>
+    /// Timestamp when the study was created
+    /// </summary>
+    public required DateTimeOffset? CreatedAt
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<DateTimeOffset>("createdAt");
+        }
+        init { this._rawData.Set("createdAt", value); }
+    }
+
+    /// <summary>
+    /// Whether the study has been cancelled
+    /// </summary>
+    public required bool IsCancelled
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("isCancelled");
+        }
+        init { this._rawData.Set("isCancelled", value); }
+    }
+
+    /// <summary>
+    /// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
+    /// for immediate attention
+    /// </summary>
+    public required ApiEnum<string, StudyCreateResponseSeverity> Severity
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, StudyCreateResponseSeverity>>(
+                "severity"
+            );
+        }
+        init { this._rawData.Set("severity", value); }
+    }
+
+    /// <summary>
+    /// Description of the study/scan (e.g., 'Brain MRI with Contrast', 'Chest CT')
+    /// </summary>
+    public required string StudyDescription
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyDescription");
+        }
+        init { this._rawData.Set("studyDescription", value); }
+    }
+
+    /// <summary>
+    /// Unique study identifier. Format: stu_{32-hex-chars}
+    /// </summary>
+    public required string StudyID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyId");
+        }
+        init { this._rawData.Set("studyId", value); }
+    }
+
+    /// <summary>
+    /// DICOM Study Instance UID. Must be a valid DICOM UID format (e.g., '1.2.840.10008.5.1.4.1.1.2')
+    /// </summary>
+    public required string StudyInstanceUid
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyInstanceUid");
+        }
+        init { this._rawData.Set("studyInstanceUid", value); }
+    }
+
+    public required ApiEnum<string, StudyCreateResponseStudyViewerStatus> StudyViewerStatus
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
+                ApiEnum<string, StudyCreateResponseStudyViewerStatus>
+            >("studyViewerStatus");
+        }
+        init { this._rawData.Set("studyViewerStatus", value); }
+    }
+
+    /// <summary>
+    /// Timestamp when the study was last updated
+    /// </summary>
+    public required DateTimeOffset? UpdatedAt
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<DateTimeOffset>("updatedAt");
+        }
+        init { this._rawData.Set("updatedAt", value); }
+    }
+
+    /// <summary>
+    /// A reference to a user with basic identifying information
+    /// </summary>
+    public UserReference? AssignedTo
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserReference>("assignedTo");
+        }
+        init { this._rawData.Set("assignedTo", value); }
+    }
+
+    /// <summary>
+    /// A reference to an API key with basic identifying information
+    /// </summary>
+    public ApiKeyReference? CreatedByApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiKeyReference>("createdByApiKey");
+        }
+        init { this._rawData.Set("createdByApiKey", value); }
+    }
+
+    /// <summary>
+    /// A reference to a user with basic identifying information
+    /// </summary>
+    public UserReference? CreatedByUser
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserReference>("createdByUser");
+        }
+        init { this._rawData.Set("createdByUser", value); }
+    }
+
+    /// <summary>
+    /// A reference to an Express customer with basic identifying information
+    /// </summary>
+    public ExpressCustomerReference? ExpressCustomer
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ExpressCustomerReference>("expressCustomer");
+        }
+        init { this._rawData.Set("expressCustomer", value); }
+    }
+
+    /// <summary>
+    /// Custom key-value metadata for the study. Maximum 50 pairs, keys up to 100
+    /// chars, values up to 1000 chars
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Metadata
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("metadata");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "metadata",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.CancelledAt;
+        _ = this.CreatedAt;
+        _ = this.IsCancelled;
+        this.Severity.Validate();
+        _ = this.StudyDescription;
+        _ = this.StudyID;
+        _ = this.StudyInstanceUid;
+        this.StudyViewerStatus.Validate();
+        _ = this.UpdatedAt;
+        this.AssignedTo?.Validate();
+        this.CreatedByApiKey?.Validate();
+        this.CreatedByUser?.Validate();
+        this.ExpressCustomer?.Validate();
+        _ = this.Metadata;
+    }
+
+    public StudyCreateResponse() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public StudyCreateResponse(StudyCreateResponse studyCreateResponse)
+        : base(studyCreateResponse) { }
+#pragma warning restore CS8618
+
+    public StudyCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    StudyCreateResponse(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="StudyCreateResponseFromRaw.FromRawUnchecked"/>
+    public static StudyCreateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class StudyCreateResponseFromRaw : IFromRawJson<StudyCreateResponse>
+{
+    /// <inheritdoc/>
+    public StudyCreateResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        StudyCreateResponse.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
+/// for immediate attention
+/// </summary>
+[JsonConverter(typeof(StudyCreateResponseSeverityConverter))]
+public enum StudyCreateResponseSeverity
+{
+    Normal,
+    High,
+    Stat,
+}
+
+sealed class StudyCreateResponseSeverityConverter : JsonConverter<StudyCreateResponseSeverity>
+{
+    public override StudyCreateResponseSeverity Read(
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "normal" => StudyCreateResponseSeverity.Normal,
+            "high" => StudyCreateResponseSeverity.High,
+            "stat" => StudyCreateResponseSeverity.Stat,
+            _ => (StudyCreateResponseSeverity)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        StudyCreateResponseSeverity value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                StudyCreateResponseSeverity.Normal => "normal",
+                StudyCreateResponseSeverity.High => "high",
+                StudyCreateResponseSeverity.Stat => "stat",
+                _ => throw new AvaraInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+[JsonConverter(typeof(StudyCreateResponseStudyViewerStatusConverter))]
+public enum StudyCreateResponseStudyViewerStatus
+{
+    Incomplete,
+    Complete,
+}
+
+sealed class StudyCreateResponseStudyViewerStatusConverter
+    : JsonConverter<StudyCreateResponseStudyViewerStatus>
+{
+    public override StudyCreateResponseStudyViewerStatus Read(
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "incomplete" => StudyCreateResponseStudyViewerStatus.Incomplete,
+            "complete" => StudyCreateResponseStudyViewerStatus.Complete,
+            _ => (StudyCreateResponseStudyViewerStatus)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        StudyCreateResponseStudyViewerStatus value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                StudyCreateResponseStudyViewerStatus.Incomplete => "incomplete",
+                StudyCreateResponseStudyViewerStatus.Complete => "complete",
+                _ => throw new AvaraInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
