@@ -112,9 +112,6 @@ public record class UserInviteParams : ParamsBase
         init { this._rawBodyData.Set("lastName", value); }
     }
 
-    /// <summary>
-    /// User access level for invite/update (owner cannot be set via API)
-    /// </summary>
     public required ApiEnum<string, UserInviteParamsLevel> Level
     {
         get
@@ -437,9 +434,6 @@ sealed class UserInviteParamsClinicRoleConverter : JsonConverter<UserInviteParam
     }
 }
 
-/// <summary>
-/// User access level for invite/update (owner cannot be set via API)
-/// </summary>
 [JsonConverter(typeof(UserInviteParamsLevelConverter))]
 public enum UserInviteParamsLevel
 {

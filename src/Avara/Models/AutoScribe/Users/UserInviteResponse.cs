@@ -151,7 +151,7 @@ public sealed record class UserInviteResponse : JsonModel
     }
 
     /// <summary>
-    /// User access level for invite/update (owner cannot be set via API)
+    /// User access level. 'admin' can manage users/settings, 'member' has standard access
     /// </summary>
     public required ApiEnum<string, UserInviteResponseLevel> Level
     {
@@ -493,7 +493,7 @@ sealed class UserInviteResponseInvitedSourceConverter
 }
 
 /// <summary>
-/// User access level for invite/update (owner cannot be set via API)
+/// User access level. 'admin' can manage users/settings, 'member' has standard access
 /// </summary>
 [JsonConverter(typeof(UserInviteResponseLevelConverter))]
 public enum UserInviteResponseLevel
