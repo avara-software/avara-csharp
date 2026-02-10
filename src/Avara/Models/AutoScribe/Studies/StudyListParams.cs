@@ -307,6 +307,9 @@ sealed class StudyListParamsSeverityConverter : JsonConverter<StudyListParamsSev
     }
 }
 
+/// <summary>
+/// Report workflow status
+/// </summary>
 [JsonConverter(typeof(StudyReportStatusConverter))]
 public enum StudyReportStatus
 {

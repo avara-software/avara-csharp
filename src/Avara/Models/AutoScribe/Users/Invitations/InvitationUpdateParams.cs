@@ -73,6 +73,9 @@ public record class InvitationUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// User's clinical or organizational role
+    /// </summary>
     public ApiEnum<string, ClinicRole>? ClinicRole
     {
         get
@@ -146,6 +149,9 @@ public record class InvitationUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// User access level for invite/update (owner cannot be set via API)
+    /// </summary>
     public ApiEnum<string, Level>? Level
     {
         get
@@ -325,6 +331,9 @@ public record class InvitationUpdateParams : ParamsBase
     }
 }
 
+/// <summary>
+/// User's clinical or organizational role
+/// </summary>
 [JsonConverter(typeof(ClinicRoleConverter))]
 public enum ClinicRole
 {
@@ -426,6 +435,9 @@ sealed class ClinicRoleConverter : JsonConverter<ClinicRole>
     }
 }
 
+/// <summary>
+/// User access level for invite/update (owner cannot be set via API)
+/// </summary>
 [JsonConverter(typeof(LevelConverter))]
 public enum Level
 {

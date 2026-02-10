@@ -181,7 +181,7 @@ public sealed record class Report : JsonModel
     }
 
     /// <summary>
-    /// Report status: 'in_progress' or 'completed'
+    /// Report status
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
@@ -304,7 +304,7 @@ class ReportFromRaw : IFromRawJson<Report>
 }
 
 /// <summary>
-/// Report status: 'in_progress' or 'completed'
+/// Report status
 /// </summary>
 [JsonConverter(typeof(StatusConverter))]
 public enum Status
