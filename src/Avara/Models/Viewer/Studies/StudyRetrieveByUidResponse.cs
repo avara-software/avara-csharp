@@ -111,6 +111,9 @@ public sealed record class StudyRetrieveByUidResponse : JsonModel
         init { this._rawData.Set("studyInstanceUid", value); }
     }
 
+    /// <summary>
+    /// Study viewer completion status
+    /// </summary>
     public required ApiEnum<string, StudyRetrieveByUidResponseStudyViewerStatus> StudyViewerStatus
     {
         get
@@ -322,6 +325,9 @@ sealed class StudyRetrieveByUidResponseSeverityConverter
     }
 }
 
+/// <summary>
+/// Study viewer completion status
+/// </summary>
 [JsonConverter(typeof(StudyRetrieveByUidResponseStudyViewerStatusConverter))]
 public enum StudyRetrieveByUidResponseStudyViewerStatus
 {

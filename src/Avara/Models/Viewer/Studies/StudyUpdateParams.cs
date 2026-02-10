@@ -111,6 +111,9 @@ public record class StudyUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Study viewer completion status
+    /// </summary>
     public ApiEnum<string, StudyViewerStatus>? StudyViewerStatus
     {
         get
@@ -293,6 +296,9 @@ sealed class StudyUpdateParamsSeverityConverter : JsonConverter<StudyUpdateParam
     }
 }
 
+/// <summary>
+/// Study viewer completion status
+/// </summary>
 [JsonConverter(typeof(StudyViewerStatusConverter))]
 public enum StudyViewerStatus
 {

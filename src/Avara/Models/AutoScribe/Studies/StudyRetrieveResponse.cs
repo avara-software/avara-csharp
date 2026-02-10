@@ -124,9 +124,7 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// Report workflow status. 'unassigned' = no radiologist assigned, 'assigned'
-    /// = assigned but not started, 'in_progress' = actively being dictated, 'completed'
-    /// = report signed, 'addendum_active' = addendum in progress
+    /// Report workflow status
     /// </summary>
     public required ApiEnum<string, StudyRetrieveResponseStudyReportStatus> StudyReportStatus
     {
@@ -424,9 +422,7 @@ sealed class StudyRetrieveResponseSeverityConverter : JsonConverter<StudyRetriev
 }
 
 /// <summary>
-/// Report workflow status. 'unassigned' = no radiologist assigned, 'assigned' =
-/// assigned but not started, 'in_progress' = actively being dictated, 'completed'
-/// = report signed, 'addendum_active' = addendum in progress
+/// Report workflow status
 /// </summary>
 [JsonConverter(typeof(StudyRetrieveResponseStudyReportStatusConverter))]
 public enum StudyRetrieveResponseStudyReportStatus

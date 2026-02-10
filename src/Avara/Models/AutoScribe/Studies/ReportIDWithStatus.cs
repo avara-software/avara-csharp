@@ -29,7 +29,7 @@ public sealed record class ReportIDWithStatus : JsonModel
     }
 
     /// <summary>
-    /// Current status of the report
+    /// Report status
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
@@ -86,7 +86,7 @@ class ReportIDWithStatusFromRaw : IFromRawJson<ReportIDWithStatus>
 }
 
 /// <summary>
-/// Current status of the report
+/// Report status
 /// </summary>
 [JsonConverter(typeof(StatusConverter))]
 public enum Status
