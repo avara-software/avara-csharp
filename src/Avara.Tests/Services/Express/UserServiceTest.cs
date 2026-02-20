@@ -4,7 +4,7 @@ namespace Avara.Tests.Services.Express;
 
 public class UserServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Add_Works()
     {
         var response = await this.client.Express.Users.Add(
@@ -15,7 +15,7 @@ public class UserServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Remove_Works()
     {
         var user = await this.client.Express.Users.Remove(

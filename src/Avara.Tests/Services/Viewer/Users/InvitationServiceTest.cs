@@ -4,7 +4,7 @@ namespace Avara.Tests.Services.Viewer.Users;
 
 public class InvitationServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var invitation = await this.client.Viewer.Users.Invitations.Retrieve(
@@ -15,7 +15,7 @@ public class InvitationServiceTest : TestBase
         invitation.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var invitation = await this.client.Viewer.Users.Invitations.Update(
@@ -26,7 +26,7 @@ public class InvitationServiceTest : TestBase
         invitation.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var page = await this.client.Viewer.Users.Invitations.List(
@@ -36,7 +36,7 @@ public class InvitationServiceTest : TestBase
         page.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Revoke_Works()
     {
         var response = await this.client.Viewer.Users.Invitations.Revoke(

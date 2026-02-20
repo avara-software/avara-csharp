@@ -4,7 +4,7 @@ namespace Avara.Tests.Services.AutoScribe;
 
 public class ReportServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var reports = await this.client.AutoScribe.Reports.List(
@@ -14,7 +14,7 @@ public class ReportServiceTest : TestBase
         reports.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Addendum_Works()
     {
         var response = await this.client.AutoScribe.Reports.Addendum(
@@ -25,7 +25,7 @@ public class ReportServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task CancelAddendum_Works()
     {
         var response = await this.client.AutoScribe.Reports.CancelAddendum(
@@ -36,7 +36,7 @@ public class ReportServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Pdf_Works()
     {
         var response = await this.client.AutoScribe.Reports.Pdf(
@@ -46,7 +46,7 @@ public class ReportServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Text_Works()
     {
         var response = await this.client.AutoScribe.Reports.Text(

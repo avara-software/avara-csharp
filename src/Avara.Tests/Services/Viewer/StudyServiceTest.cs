@@ -5,7 +5,7 @@ namespace Avara.Tests.Services.Viewer;
 
 public class StudyServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Create_Works()
     {
         var study = await this.client.Viewer.Studies.Create(
@@ -20,7 +20,7 @@ public class StudyServiceTest : TestBase
         study.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var study = await this.client.Viewer.Studies.Retrieve(
@@ -31,7 +31,7 @@ public class StudyServiceTest : TestBase
         study.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var study = await this.client.Viewer.Studies.Update(
@@ -42,7 +42,7 @@ public class StudyServiceTest : TestBase
         study.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var page = await this.client.Viewer.Studies.List(
@@ -52,7 +52,7 @@ public class StudyServiceTest : TestBase
         page.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Cancel_Works()
     {
         var response = await this.client.Viewer.Studies.Cancel(
@@ -62,7 +62,7 @@ public class StudyServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RerouteUrl_Works()
     {
         var response = await this.client.Viewer.Studies.RerouteUrl(
@@ -72,7 +72,7 @@ public class StudyServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveByUid_Works()
     {
         var response = await this.client.Viewer.Studies.RetrieveByUid(
@@ -83,7 +83,7 @@ public class StudyServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Uncancel_Works()
     {
         var response = await this.client.Viewer.Studies.Uncancel(

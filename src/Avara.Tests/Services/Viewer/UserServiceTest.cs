@@ -5,7 +5,7 @@ namespace Avara.Tests.Services.Viewer;
 
 public class UserServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var user = await this.client.Viewer.Users.Retrieve(
@@ -16,7 +16,7 @@ public class UserServiceTest : TestBase
         user.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var user = await this.client.Viewer.Users.Update(
@@ -27,7 +27,7 @@ public class UserServiceTest : TestBase
         user.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var page = await this.client.Viewer.Users.List(
@@ -37,7 +37,7 @@ public class UserServiceTest : TestBase
         page.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Invite_Works()
     {
         var response = await this.client.Viewer.Users.Invite(
@@ -56,7 +56,7 @@ public class UserServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Reactivate_Works()
     {
         var response = await this.client.Viewer.Users.Reactivate(
@@ -66,7 +66,7 @@ public class UserServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RevokeAccess_Works()
     {
         var response = await this.client.Viewer.Users.RevokeAccess(
