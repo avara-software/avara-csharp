@@ -4,7 +4,7 @@ namespace Avara.Tests.Services;
 
 public class ExpressServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Create_Works()
     {
         var express = await this.client.Express.Create(
@@ -14,7 +14,7 @@ public class ExpressServiceTest : TestBase
         express.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var express = await this.client.Express.Retrieve(
@@ -25,7 +25,7 @@ public class ExpressServiceTest : TestBase
         express.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var express = await this.client.Express.Update(
@@ -36,14 +36,14 @@ public class ExpressServiceTest : TestBase
         express.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var page = await this.client.Express.List(new(), TestContext.Current.CancellationToken);
         page.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Deactivate_Works()
     {
         var response = await this.client.Express.Deactivate(
@@ -54,7 +54,7 @@ public class ExpressServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Reactivate_Works()
     {
         var response = await this.client.Express.Reactivate(
