@@ -48,9 +48,9 @@ public interface IUserService
 
     /// <summary>
     /// Updates a user's profile information, permissions, and AutoScribe-specific
-    /// settings. All fields are optional - only provided fields will be updated.
-    /// Email cannot be changed via API. NPI number is required if enabling report
-    /// creation capability.
+    /// settings. All fields are optional - only provided fields will be updated. Email
+    /// cannot be changed via API. NPI number is required if enabling report creation
+    /// capability.
     /// </summary>
     Task<UserUpdateResponse> Update(
         UserUpdateParams parameters,
@@ -66,8 +66,8 @@ public interface IUserService
 
     /// <summary>
     /// Retrieves a paginated list of users with optional filtering by access level,
-    /// email, name, invitation source, and report creation capability. Returns up
-    /// to 100 users per request.
+    /// email, name, invitation source, and report creation capability. Returns up to
+    /// 100 users per request.
     /// </summary>
     Task<UserListPage> List(
         UserListParams? parameters = null,
@@ -76,8 +76,9 @@ public interface IUserService
 
     /// <summary>
     /// Creates a new user in the AutoScribe system and sends them an invitation email.
-    /// The user will have the specified permissions including report creation and
-    /// study management capabilities. NPI number is required for users who can create reports.
+    /// The user will have the specified permissions including report creation and study
+    /// management capabilities. NPI number is required for users who can create
+    /// reports.
     /// </summary>
     Task<UserInviteResponse> Invite(
         UserInviteParams parameters,
@@ -86,7 +87,8 @@ public interface IUserService
 
     /// <summary>
     /// Restores access for a previously deactivated user. The user will regain their
-    /// original permissions including report creation and study management capabilities.
+    /// original permissions including report creation and study management
+    /// capabilities.
     /// </summary>
     Task<UserReactivateResponse> Reactivate(
         UserReactivateParams parameters,
@@ -94,9 +96,9 @@ public interface IUserService
     );
 
     /// <summary>
-    /// Deactivates a user's access to the system. The user will no longer be able
-    /// to log in, create reports, or access studies. User data is preserved and can
-    /// be reactivated later.
+    /// Deactivates a user's access to the system. The user will no longer be able to
+    /// log in, create reports, or access studies. User data is preserved and can be
+    /// reactivated later.
     /// </summary>
     Task<UserRevokeAccessResponse> RevokeAccess(
         UserRevokeAccessParams parameters,
@@ -120,7 +122,7 @@ public interface IUserServiceWithRawResponse
     IInvitationServiceWithRawResponse Invitations { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/autoScribe/users/{userId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/autoScribe/users/{userId}</c>, but is otherwise the
     /// same as <see cref="IUserService.Retrieve(UserRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserRetrieveResponse>> Retrieve(
@@ -136,7 +138,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /v1/autoScribe/users/{userId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /v1/autoScribe/users/{userId}</c>, but is otherwise the
     /// same as <see cref="IUserService.Update(UserUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserUpdateResponse>> Update(
@@ -152,7 +154,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/autoScribe/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/autoScribe/users</c>, but is otherwise the
     /// same as <see cref="IUserService.List(UserListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserListPage>> List(
@@ -161,7 +163,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/autoScribe/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/autoScribe/users</c>, but is otherwise the
     /// same as <see cref="IUserService.Invite(UserInviteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserInviteResponse>> Invite(
@@ -170,7 +172,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/autoScribe/users/reactivate`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/autoScribe/users/reactivate</c>, but is otherwise the
     /// same as <see cref="IUserService.Reactivate(UserReactivateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserReactivateResponse>> Reactivate(
@@ -179,7 +181,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/autoScribe/users/revoke-access`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/autoScribe/users/revoke-access</c>, but is otherwise the
     /// same as <see cref="IUserService.RevokeAccess(UserRevokeAccessParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserRevokeAccessResponse>> RevokeAccess(

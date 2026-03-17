@@ -53,8 +53,8 @@ public interface IStudyService
 
     /// <summary>
     /// Updates a study's properties including description, severity, assignment,
-    /// organization, and metadata. All fields are optional - only provided fields
-    /// will be updated.
+    /// organization, and metadata. All fields are optional - only provided fields will
+    /// be updated.
     /// </summary>
     Task<StudyUpdateResponse> Update(
         StudyUpdateParams parameters,
@@ -70,8 +70,8 @@ public interface IStudyService
 
     /// <summary>
     /// Retrieves a paginated list of studies with optional filtering by assignment,
-    /// severity, description, cancellation status, and viewer status. Returns up
-    /// to 100 studies per request.
+    /// severity, description, cancellation status, and viewer status. Returns up to 100
+    /// studies per request.
     /// </summary>
     Task<StudyListPage> List(
         StudyListParams? parameters = null,
@@ -88,9 +88,9 @@ public interface IStudyService
     );
 
     /// <summary>
-    /// Generates a tokenized URL that redirects users directly to the Avara Viewer
-    /// for the specified study. The URL includes authentication and is time-limited
-    /// for security.
+    /// Generates a tokenized URL that redirects users directly to the Avara Viewer for
+    /// the specified study. The URL includes authentication and is time-limited for
+    /// security.
     /// </summary>
     Task<StudyRerouteUrlResponse> RerouteUrl(
         StudyRerouteUrlParams? parameters = null,
@@ -137,7 +137,7 @@ public interface IStudyServiceWithRawResponse
     IStudyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/studies`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/studies</c>, but is otherwise the
     /// same as <see cref="IStudyService.Create(StudyCreateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyCreateResponse>> Create(
@@ -146,7 +146,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/viewer/studies/{studyId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/viewer/studies/{studyId}</c>, but is otherwise the
     /// same as <see cref="IStudyService.Retrieve(StudyRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyRetrieveResponse>> Retrieve(
@@ -162,7 +162,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /v1/viewer/studies/{studyId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /v1/viewer/studies/{studyId}</c>, but is otherwise the
     /// same as <see cref="IStudyService.Update(StudyUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyUpdateResponse>> Update(
@@ -178,7 +178,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/viewer/studies`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/viewer/studies</c>, but is otherwise the
     /// same as <see cref="IStudyService.List(StudyListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyListPage>> List(
@@ -187,7 +187,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/studies/cancel`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/studies/cancel</c>, but is otherwise the
     /// same as <see cref="IStudyService.Cancel(StudyCancelParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyCancelResponse>> Cancel(
@@ -196,7 +196,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/studies/reroute-url`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/studies/reroute-url</c>, but is otherwise the
     /// same as <see cref="IStudyService.RerouteUrl(StudyRerouteUrlParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyRerouteUrlResponse>> RerouteUrl(
@@ -205,7 +205,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/viewer/studies/by-uid/{studyInstanceUid}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/viewer/studies/by-uid/{studyInstanceUid}</c>, but is otherwise the
     /// same as <see cref="IStudyService.RetrieveByUid(StudyRetrieveByUidParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyRetrieveByUidResponse>> RetrieveByUid(
@@ -221,7 +221,7 @@ public interface IStudyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/studies/uncancel`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/studies/uncancel</c>, but is otherwise the
     /// same as <see cref="IStudyService.Uncancel(StudyUncancelParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StudyUncancelResponse>> Uncancel(

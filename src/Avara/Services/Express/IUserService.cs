@@ -27,8 +27,8 @@ public interface IUserService
     IUserService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Associates an existing user with a customer, granting them access to customer-specific
-    /// resources and studies.
+    /// Associates an existing user with a customer, granting them access to
+    /// customer-specific resources and studies.
     /// </summary>
     Task<UserAddResponse> Add(
         UserAddParams parameters,
@@ -43,8 +43,9 @@ public interface IUserService
     );
 
     /// <summary>
-    /// Removes a user's association with a customer, revoking their access to customer-specific
-    /// resources. The user account remains active but is no longer linked to this customer.
+    /// Removes a user's association with a customer, revoking their access to
+    /// customer-specific resources. The user account remains active but is no longer
+    /// linked to this customer.
     /// </summary>
     Task<UserRemoveResponse> Remove(
         UserRemoveParams parameters,
@@ -73,7 +74,7 @@ public interface IUserServiceWithRawResponse
     IUserServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/express/{expressCustomerId}/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/express/{expressCustomerId}/users</c>, but is otherwise the
     /// same as <see cref="IUserService.Add(UserAddParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserAddResponse>> Add(
@@ -89,7 +90,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /v1/express/{expressCustomerId}/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /v1/express/{expressCustomerId}/users</c>, but is otherwise the
     /// same as <see cref="IUserService.Remove(UserRemoveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserRemoveResponse>> Remove(

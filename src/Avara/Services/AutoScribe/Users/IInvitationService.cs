@@ -44,9 +44,10 @@ public interface IInvitationService
     );
 
     /// <summary>
-    /// Updates a pending invitation's user details, permissions, and AutoScribe-specific
-    /// settings before it is accepted. Only valid for invitations that have not expired
-    /// or been processed. NPI number is required if enabling report creation.
+    /// Updates a pending invitation's user details, permissions, and
+    /// AutoScribe-specific settings before it is accepted. Only valid for invitations
+    /// that have not expired or been processed. NPI number is required if enabling
+    /// report creation.
     /// </summary>
     Task<InvitationUpdateResponse> Update(
         InvitationUpdateParams parameters,
@@ -62,8 +63,8 @@ public interface IInvitationService
 
     /// <summary>
     /// Retrieves a paginated list of user invitations with optional filtering by
-    /// status, expiration, date range, and user ID. Returns up to 100 invitations
-    /// per request.
+    /// status, expiration, date range, and user ID. Returns up to 100 invitations per
+    /// request.
     /// </summary>
     Task<InvitationListPage> List(
         InvitationListParams? parameters = null,
@@ -71,9 +72,9 @@ public interface IInvitationService
     );
 
     /// <summary>
-    /// Revokes a pending invitation, preventing it from being accepted. Can revoke
-    /// by invitation ID, user ID, or both. Useful for cancelling invitations sent
-    /// in error.
+    /// Revokes a pending invitation, preventing it from being accepted. Can revoke by
+    /// invitation ID, user ID, or both. Useful for cancelling invitations sent in
+    /// error.
     /// </summary>
     Task<InvitationRevokeResponse> Revoke(
         InvitationRevokeParams? parameters = null,
@@ -95,7 +96,7 @@ public interface IInvitationServiceWithRawResponse
     IInvitationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/autoScribe/users/invitations/{invitationId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/autoScribe/users/invitations/{invitationId}</c>, but is otherwise the
     /// same as <see cref="IInvitationService.Retrieve(InvitationRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InvitationRetrieveResponse>> Retrieve(
@@ -111,7 +112,7 @@ public interface IInvitationServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /v1/autoScribe/users/invitations/{invitationId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /v1/autoScribe/users/invitations/{invitationId}</c>, but is otherwise the
     /// same as <see cref="IInvitationService.Update(InvitationUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InvitationUpdateResponse>> Update(
@@ -127,7 +128,7 @@ public interface IInvitationServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/autoScribe/users/invitations`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/autoScribe/users/invitations</c>, but is otherwise the
     /// same as <see cref="IInvitationService.List(InvitationListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InvitationListPage>> List(
@@ -136,7 +137,7 @@ public interface IInvitationServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/autoScribe/users/invitations/revoke`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/autoScribe/users/invitations/revoke</c>, but is otherwise the
     /// same as <see cref="IInvitationService.Revoke(InvitationRevokeParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InvitationRevokeResponse>> Revoke(

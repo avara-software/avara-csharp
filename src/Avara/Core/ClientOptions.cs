@@ -105,13 +105,13 @@ public record struct ClientOptions()
 
     /// <summary>
     /// Webhook signing JWT secret for signature verification. Format: whsec_{base64}.
-    /// Get this from your Avara dashboard under API Keys > View JWT Secret.
+    /// Get this from your Avara dashboard under API Keys &gt; View JWT Secret.
     /// </summary>
     Lazy<string?> _webhookKey = new(() => Environment.GetEnvironmentVariable("AVARA_WEBHOOK_KEY"));
 
     /// <summary>
     /// Webhook signing JWT secret for signature verification. Format: whsec_{base64}.
-    /// Get this from your Avara dashboard under API Keys > View JWT Secret.
+    /// Get this from your Avara dashboard under API Keys &gt; View JWT Secret.
     /// </summary>
     public string? WebhookKey
     {

@@ -46,9 +46,9 @@ public interface IUserService
     );
 
     /// <summary>
-    /// Updates a user's profile information, permissions, and access level. All
-    /// fields are optional - only provided fields will be updated. Email cannot
-    /// be changed via API.
+    /// Updates a user's profile information, permissions, and access level. All fields
+    /// are optional - only provided fields will be updated. Email cannot be changed via
+    /// API.
     /// </summary>
     Task<UserUpdateResponse> Update(
         UserUpdateParams parameters,
@@ -72,9 +72,9 @@ public interface IUserService
     );
 
     /// <summary>
-    /// Creates a new user in the Viewer system and sends them an invitation email.
-    /// The user will have the specified permissions and access level. Dashboard access
-    /// can be enabled to allow login.
+    /// Creates a new user in the Viewer system and sends them an invitation email. The
+    /// user will have the specified permissions and access level. Dashboard access can
+    /// be enabled to allow login.
     /// </summary>
     Task<UserInviteResponse> Invite(
         UserInviteParams parameters,
@@ -91,8 +91,8 @@ public interface IUserService
     );
 
     /// <summary>
-    /// Deactivates a user's access to the system. The user will no longer be able
-    /// to log in or access resources. User data is preserved and can be reactivated later.
+    /// Deactivates a user's access to the system. The user will no longer be able to
+    /// log in or access resources. User data is preserved and can be reactivated later.
     /// </summary>
     Task<UserRevokeAccessResponse> RevokeAccess(
         UserRevokeAccessParams parameters,
@@ -116,7 +116,7 @@ public interface IUserServiceWithRawResponse
     IInvitationServiceWithRawResponse Invitations { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/viewer/users/{userId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/viewer/users/{userId}</c>, but is otherwise the
     /// same as <see cref="IUserService.Retrieve(UserRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserRetrieveResponse>> Retrieve(
@@ -132,7 +132,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /v1/viewer/users/{userId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /v1/viewer/users/{userId}</c>, but is otherwise the
     /// same as <see cref="IUserService.Update(UserUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserUpdateResponse>> Update(
@@ -148,7 +148,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/viewer/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/viewer/users</c>, but is otherwise the
     /// same as <see cref="IUserService.List(UserListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserListPage>> List(
@@ -157,7 +157,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/users</c>, but is otherwise the
     /// same as <see cref="IUserService.Invite(UserInviteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserInviteResponse>> Invite(
@@ -166,7 +166,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/users/reactivate`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/users/reactivate</c>, but is otherwise the
     /// same as <see cref="IUserService.Reactivate(UserReactivateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserReactivateResponse>> Reactivate(
@@ -175,7 +175,7 @@ public interface IUserServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/viewer/users/revoke-access`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/viewer/users/revoke-access</c>, but is otherwise the
     /// same as <see cref="IUserService.RevokeAccess(UserRevokeAccessParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<UserRevokeAccessResponse>> RevokeAccess(
