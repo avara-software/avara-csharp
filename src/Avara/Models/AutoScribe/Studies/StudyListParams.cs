@@ -23,7 +23,7 @@ namespace Avara.Models.AutoScribe.Studies;
 public record class StudyListParams : ParamsBase
 {
     /// <summary>
-    /// Filter by assigned user ID (null = explicitly unassigned). Format: usr_<32-hex-chars>
+    /// Filter by assigned user ID (null = explicitly unassigned). Format: usr_&lt;32-hex-chars&gt;
     /// </summary>
     public string? AssignedTo
     {
@@ -202,7 +202,7 @@ public record class StudyListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static StudyListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

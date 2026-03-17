@@ -30,9 +30,9 @@ public interface IExpressService
     IUserService Users { get; }
 
     /// <summary>
-    /// Creates a new customer with a unique identifier and name. Customers can be
-    /// used to group and manage users, studies, and access permissions across the
-    /// Avara platform.
+    /// Creates a new customer with a unique identifier and name. Customers can be used
+    /// to group and manage users, studies, and access permissions across the Avara
+    /// platform.
     /// </summary>
     Task<ExpressCreateResponse> Create(
         ExpressCreateParams parameters,
@@ -56,8 +56,8 @@ public interface IExpressService
     );
 
     /// <summary>
-    /// Updates a customer's properties such as name or other metadata. All fields
-    /// are optional - only provided fields will be updated.
+    /// Updates a customer's properties such as name or other metadata. All fields are
+    /// optional - only provided fields will be updated.
     /// </summary>
     Task<ExpressUpdateResponse> Update(
         ExpressUpdateParams parameters,
@@ -81,8 +81,9 @@ public interface IExpressService
     );
 
     /// <summary>
-    /// Deactivates a customer, preventing it from being used for new studies or
-    /// user assignments. Existing data is preserved and the customer can be reactivated later.
+    /// Deactivates a customer, preventing it from being used for new studies or user
+    /// assignments. Existing data is preserved and the customer can be reactivated
+    /// later.
     /// </summary>
     Task<ExpressDeactivateResponse> Deactivate(
         ExpressDeactivateParams parameters,
@@ -97,8 +98,8 @@ public interface IExpressService
     );
 
     /// <summary>
-    /// Restores a deactivated customer to active status, allowing it to be used
-    /// for new studies and user assignments again.
+    /// Restores a deactivated customer to active status, allowing it to be used for new
+    /// studies and user assignments again.
     /// </summary>
     Task<ExpressReactivateResponse> Reactivate(
         ExpressReactivateParams parameters,
@@ -129,7 +130,7 @@ public interface IExpressServiceWithRawResponse
     IUserServiceWithRawResponse Users { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/express`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/express</c>, but is otherwise the
     /// same as <see cref="IExpressService.Create(ExpressCreateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressCreateResponse>> Create(
@@ -138,7 +139,7 @@ public interface IExpressServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/express/{expressCustomerId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/express/{expressCustomerId}</c>, but is otherwise the
     /// same as <see cref="IExpressService.Retrieve(ExpressRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressRetrieveResponse>> Retrieve(
@@ -154,7 +155,7 @@ public interface IExpressServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /v1/express/{expressCustomerId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /v1/express/{expressCustomerId}</c>, but is otherwise the
     /// same as <see cref="IExpressService.Update(ExpressUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressUpdateResponse>> Update(
@@ -170,7 +171,7 @@ public interface IExpressServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /v1/express`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /v1/express</c>, but is otherwise the
     /// same as <see cref="IExpressService.List(ExpressListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressListPage>> List(
@@ -179,7 +180,7 @@ public interface IExpressServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/express/{expressCustomerId}/deactivate`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/express/{expressCustomerId}/deactivate</c>, but is otherwise the
     /// same as <see cref="IExpressService.Deactivate(ExpressDeactivateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressDeactivateResponse>> Deactivate(
@@ -195,7 +196,7 @@ public interface IExpressServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /v1/express/{expressCustomerId}/reactivate`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /v1/express/{expressCustomerId}/reactivate</c>, but is otherwise the
     /// same as <see cref="IExpressService.Reactivate(ExpressReactivateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ExpressReactivateResponse>> Reactivate(
