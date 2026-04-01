@@ -263,11 +263,10 @@ sealed class UnwrapWebhookEventConverter : JsonConverter<UnwrapWebhookEvent>
                     );
                     if (deserialized != null)
                     {
-                        deserialized.Validate();
                         return new(deserialized, element);
                     }
                 }
-                catch (Exception e) when (e is JsonException || e is AvaraInvalidDataException)
+                catch (JsonException)
                 {
                     // ignore
                 }
@@ -284,11 +283,10 @@ sealed class UnwrapWebhookEventConverter : JsonConverter<UnwrapWebhookEvent>
                     );
                     if (deserialized != null)
                     {
-                        deserialized.Validate();
                         return new(deserialized, element);
                     }
                 }
-                catch (Exception e) when (e is JsonException || e is AvaraInvalidDataException)
+                catch (JsonException)
                 {
                     // ignore
                 }
