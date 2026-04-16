@@ -51,11 +51,13 @@ public class ExpressListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/express?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&limit=20"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/express?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&limit=20"
+                ),
+                url
+            )
         );
     }
 

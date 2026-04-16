@@ -113,11 +113,13 @@ public class InvitationListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/autoScribe/users/invitations?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&endDate=2024-12-31&expired=not-expired&limit=20&startDate=2024-01-01&status=sent&userId=usr_1234567890abcdef1234567890abcdef"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/autoScribe/users/invitations?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&endDate=2024-12-31&expired=not-expired&limit=20&startDate=2024-01-01&status=sent&userId=usr_1234567890abcdef1234567890abcdef"
+                ),
+                url
+            )
         );
     }
 
