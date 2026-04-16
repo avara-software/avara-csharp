@@ -28,11 +28,13 @@ public class ReportCancelAddendumParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/autoScribe/reports/rep_1234567890abcdef1234567890abcdef/cancel-addendum"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/autoScribe/reports/rep_1234567890abcdef1234567890abcdef/cancel-addendum"
+                ),
+                url
+            )
         );
     }
 

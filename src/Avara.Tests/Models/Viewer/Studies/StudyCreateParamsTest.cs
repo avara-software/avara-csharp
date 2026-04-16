@@ -105,7 +105,9 @@ public class StudyCreateParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.avarasoftware.com/v1/viewer/studies"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.avarasoftware.com/v1/viewer/studies"), url)
+        );
     }
 
     [Fact]

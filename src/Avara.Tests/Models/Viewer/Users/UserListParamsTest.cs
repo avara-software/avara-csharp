@@ -107,11 +107,13 @@ public class UserListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/viewer/users?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&email=user%40example.com&firstName=John&invitedSource=api&lastName=Doe&level=member&limit=20"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/viewer/users?cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&email=user%40example.com&firstName=John&invitedSource=api&lastName=Doe&level=member&limit=20"
+                ),
+                url
+            )
         );
     }
 

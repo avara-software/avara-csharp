@@ -25,7 +25,12 @@ public class UserReactivateParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.avarasoftware.com/v1/autoScribe/users/reactivate"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.avarasoftware.com/v1/autoScribe/users/reactivate"),
+                url
+            )
+        );
     }
 
     [Fact]

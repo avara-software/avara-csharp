@@ -66,9 +66,11 @@ public class StudyRerouteUrlParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri("https://api.avarasoftware.com/v1/autoScribe/studies/reroute-url"),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.avarasoftware.com/v1/autoScribe/studies/reroute-url"),
+                url
+            )
         );
     }
 

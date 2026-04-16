@@ -22,11 +22,13 @@ public class UserRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/viewer/users/usr_1234567890abcdef1234567890abcdef"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/viewer/users/usr_1234567890abcdef1234567890abcdef"
+                ),
+                url
+            )
         );
     }
 

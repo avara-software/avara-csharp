@@ -59,11 +59,13 @@ public class ReportListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.avarasoftware.com/v1/autoScribe/reports?studyId=stu_1234567890abcdef1234567890abcdef&studyInstanceUid=1.2.840.10008.5.1.4.1.1.2"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.avarasoftware.com/v1/autoScribe/reports?studyId=stu_1234567890abcdef1234567890abcdef&studyInstanceUid=1.2.840.10008.5.1.4.1.1.2"
+                ),
+                url
+            )
         );
     }
 
