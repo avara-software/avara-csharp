@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Avara.Models.Viewer.Studies;
+using Avara.Models;
 
 namespace Avara.Tests.Services.Viewer;
 

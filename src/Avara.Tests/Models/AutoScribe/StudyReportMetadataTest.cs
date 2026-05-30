@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
 using Avara.Models.AutoScribe;
 
 namespace Avara.Tests.Models.AutoScribe;
@@ -15,7 +14,7 @@ public class StudyReportMetadataTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -29,7 +28,7 @@ public class StudyReportMetadataTest : TestBase
         string expectedAge = "38 years";
         string expectedDateOfBirth = "1985-07-20";
         string expectedFacilityName = "City Medical Center";
-        Height expectedHeight = new() { Unit = Unit.Cm, Value = 165 };
+        Height expectedHeight = new() { Unit = HeightUnit.Cm, Value = 165 };
         string expectedMrn = "MRN-2024-001234";
         string expectedPatientName = "Jane Doe";
         string expectedProcedure = "MRI Brain with Contrast";
@@ -61,7 +60,7 @@ public class StudyReportMetadataTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -89,7 +88,7 @@ public class StudyReportMetadataTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -110,7 +109,7 @@ public class StudyReportMetadataTest : TestBase
         string expectedAge = "38 years";
         string expectedDateOfBirth = "1985-07-20";
         string expectedFacilityName = "City Medical Center";
-        Height expectedHeight = new() { Unit = Unit.Cm, Value = 165 };
+        Height expectedHeight = new() { Unit = HeightUnit.Cm, Value = 165 };
         string expectedMrn = "MRN-2024-001234";
         string expectedPatientName = "Jane Doe";
         string expectedProcedure = "MRI Brain with Contrast";
@@ -142,7 +141,7 @@ public class StudyReportMetadataTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -272,7 +271,7 @@ public class StudyReportMetadataTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -294,9 +293,9 @@ public class HeightTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = HeightUnit.Cm, Value = 170 };
 
-        ApiEnum<string, Unit> expectedUnit = Unit.Cm;
+        ApiEnum<string, HeightUnit> expectedUnit = HeightUnit.Cm;
         double expectedValue = 170;
 
         Assert.Equal(expectedUnit, model.Unit);
@@ -306,7 +305,7 @@ public class HeightTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = HeightUnit.Cm, Value = 170 };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Height>(json, ModelBase.SerializerOptions);
@@ -317,13 +316,13 @@ public class HeightTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = HeightUnit.Cm, Value = 170 };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Height>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, Unit> expectedUnit = Unit.Cm;
+        ApiEnum<string, HeightUnit> expectedUnit = HeightUnit.Cm;
         double expectedValue = 170;
 
         Assert.Equal(expectedUnit, deserialized.Unit);
@@ -333,7 +332,7 @@ public class HeightTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = HeightUnit.Cm, Value = 170 };
 
         model.Validate();
     }
@@ -341,129 +340,11 @@ public class HeightTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = HeightUnit.Cm, Value = 170 };
 
         Height copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class UnitTest : TestBase
-{
-    [Theory]
-    [InlineData(Unit.In)]
-    [InlineData(Unit.Cm)]
-    public void Validation_Works(Unit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Unit> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Unit.In)]
-    [InlineData(Unit.Cm)]
-    public void SerializationRoundtrip_Works(Unit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Unit> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class SexTest : TestBase
-{
-    [Theory]
-    [InlineData(Sex.Male)]
-    [InlineData(Sex.Female)]
-    [InlineData(Sex.Other)]
-    public void Validation_Works(Sex rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sex> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Sex.Male)]
-    [InlineData(Sex.Female)]
-    [InlineData(Sex.Other)]
-    public void SerializationRoundtrip_Works(Sex rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sex> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
 
@@ -524,63 +405,5 @@ public class WeightTest : TestBase
         Weight copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class WeightUnitTest : TestBase
-{
-    [Theory]
-    [InlineData(WeightUnit.Lbs)]
-    [InlineData(WeightUnit.Kg)]
-    public void Validation_Works(WeightUnit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, WeightUnit> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(WeightUnit.Lbs)]
-    [InlineData(WeightUnit.Kg)]
-    public void SerializationRoundtrip_Works(WeightUnit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, WeightUnit> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

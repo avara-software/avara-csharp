@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Studies;
 
@@ -55,17 +54,15 @@ public sealed record class StudyCreateResponse : JsonModel
     }
 
     /// <summary>
-    /// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-    /// for immediate attention
+    /// Priority level of a study. 'normal' for routine, 'high' for urgent, 'stat'
+    /// for immediate attention.
     /// </summary>
-    public required ApiEnum<string, StudyCreateResponseSeverity> Severity
+    public required ApiEnum<string, Severity> Severity
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, StudyCreateResponseSeverity>>(
-                "severity"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, Severity>>("severity");
         }
         init { this._rawData.Set("severity", value); }
     }
@@ -109,14 +106,18 @@ public sealed record class StudyCreateResponse : JsonModel
         init { this._rawData.Set("studyInstanceUid", value); }
     }
 
-    public required ApiEnum<string, StudyCreateResponseStudyViewerStatus> StudyViewerStatus
+    /// <summary>
+    /// Viewer completion status for a study. 'incomplete' = not yet finished in
+    /// the viewer, 'complete' = finished.
+    /// </summary>
+    public required ApiEnum<string, StudyViewerStatus> StudyViewerStatus
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, StudyCreateResponseStudyViewerStatus>
-            >("studyViewerStatus");
+            return this._rawData.GetNotNullClass<ApiEnum<string, StudyViewerStatus>>(
+                "studyViewerStatus"
+            );
         }
         init { this._rawData.Set("studyViewerStatus", value); }
     }
@@ -265,100 +266,4 @@ class StudyCreateResponseFromRaw : IFromRawJson<StudyCreateResponse>
     /// <inheritdoc/>
     public StudyCreateResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         StudyCreateResponse.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-/// for immediate attention
-/// </summary>
-[JsonConverter(typeof(StudyCreateResponseSeverityConverter))]
-public enum StudyCreateResponseSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyCreateResponseSeverityConverter : JsonConverter<StudyCreateResponseSeverity>
-{
-    public override StudyCreateResponseSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyCreateResponseSeverity.Normal,
-            "high" => StudyCreateResponseSeverity.High,
-            "stat" => StudyCreateResponseSeverity.Stat,
-            _ => (StudyCreateResponseSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyCreateResponseSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyCreateResponseSeverity.Normal => "normal",
-                StudyCreateResponseSeverity.High => "high",
-                StudyCreateResponseSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(StudyCreateResponseStudyViewerStatusConverter))]
-public enum StudyCreateResponseStudyViewerStatus
-{
-    Incomplete,
-    Complete,
-}
-
-sealed class StudyCreateResponseStudyViewerStatusConverter
-    : JsonConverter<StudyCreateResponseStudyViewerStatus>
-{
-    public override StudyCreateResponseStudyViewerStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "incomplete" => StudyCreateResponseStudyViewerStatus.Incomplete,
-            "complete" => StudyCreateResponseStudyViewerStatus.Complete,
-            _ => (StudyCreateResponseStudyViewerStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyCreateResponseStudyViewerStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyCreateResponseStudyViewerStatus.Incomplete => "incomplete",
-                StudyCreateResponseStudyViewerStatus.Complete => "complete",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

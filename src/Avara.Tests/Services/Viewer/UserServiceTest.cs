@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Avara.Models.Viewer.Users;
+using Avara.Models;
 
 namespace Avara.Tests.Services.Viewer;
 
@@ -44,12 +44,12 @@ public class UserServiceTest : TestBase
             new()
             {
                 CanManageStudies = true,
-                ClinicRole = UserInviteParamsClinicRole.Radiologist,
+                ClinicRole = ClinicRole.Radiologist,
                 Email = "dr.johnson@hospital.org",
                 FirstName = "Sarah",
                 HasDashboardAccess = true,
                 LastName = "Johnson",
-                Level = UserInviteParamsLevel.Member,
+                Level = AssignableUserLevel.Member,
             },
             TestContext.Current.CancellationToken
         );

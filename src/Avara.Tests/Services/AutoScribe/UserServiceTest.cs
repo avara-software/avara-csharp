@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Avara.Models.AutoScribe.Users;
+using Avara.Models;
 
 namespace Avara.Tests.Services.AutoScribe;
 
@@ -45,12 +45,12 @@ public class UserServiceTest : TestBase
             {
                 CanCreateReports = true,
                 CanManageStudies = true,
-                ClinicRole = UserInviteParamsClinicRole.Radiologist,
+                ClinicRole = ClinicRole.Radiologist,
                 Email = "dr.johnson@hospital.org",
                 FirstName = "Sarah",
                 HasDashboardAccess = true,
                 LastName = "Johnson",
-                Level = UserInviteParamsLevel.Member,
+                Level = AssignableUserLevel.Member,
             },
             TestContext.Current.CancellationToken
         );

@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Users;
 
@@ -42,16 +41,14 @@ public sealed record class UserListResponse : JsonModel
     }
 
     /// <summary>
-    /// User's clinical or organizational role
+    /// A user's clinical or organizational role within the clinic.
     /// </summary>
-    public required ApiEnum<string, UserListResponseClinicRole> ClinicRole
+    public required ApiEnum<string, ClinicRole> ClinicRole
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, UserListResponseClinicRole>>(
-                "clinicRole"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, ClinicRole>>("clinicRole");
         }
         init { this._rawData.Set("clinicRole", value); }
     }
@@ -109,16 +106,15 @@ public sealed record class UserListResponse : JsonModel
     }
 
     /// <summary>
-    /// How the user was invited - via dashboard UI or API
+    /// How a user/invitation was created - via the dashboard UI ('dashboard') or
+    /// the API ('api').
     /// </summary>
-    public required ApiEnum<string, UserListResponseInvitedSource> InvitedSource
+    public required ApiEnum<string, InvitedSource> InvitedSource
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, UserListResponseInvitedSource>>(
-                "invitedSource"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, InvitedSource>>("invitedSource");
         }
         init { this._rawData.Set("invitedSource", value); }
     }
@@ -150,15 +146,15 @@ public sealed record class UserListResponse : JsonModel
     }
 
     /// <summary>
-    /// User access level. 'owner' has full control, 'admin' can manage users/settings,
-    /// 'member' has standard access
+    /// User access level. 'owner' has full control (dashboard-only, not assignable
+    /// via API), 'admin' can manage users/settings, 'member' has standard access.
     /// </summary>
-    public required ApiEnum<string, UserListResponseLevel> Level
+    public required ApiEnum<string, UserLevel> Level
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, UserListResponseLevel>>("level");
+            return this._rawData.GetNotNullClass<ApiEnum<string, UserLevel>>("level");
         }
         init { this._rawData.Set("level", value); }
     }
@@ -338,206 +334,4 @@ class UserListResponseFromRaw : IFromRawJson<UserListResponse>
     /// <inheritdoc/>
     public UserListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         UserListResponse.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// User's clinical or organizational role
-/// </summary>
-[JsonConverter(typeof(UserListResponseClinicRoleConverter))]
-public enum UserListResponseClinicRole
-{
-    Radiologist,
-    Cardiologist,
-    Neurologist,
-    Urologist,
-    Gynecologist,
-    Endocrinologist,
-    Doctor,
-    Surgeon,
-    Physician,
-    PhysicianAssistant,
-    NursePractitioner,
-    RegisteredNurse,
-    PatientCareCoordinator,
-    FrontDeskOperator,
-    ImagingTechnologist,
-    PacsAdministrator,
-    SoftwareEngineer,
-    RevenueCycleManager,
-    AdministrativeDirector,
-    AdministrativeAssistant,
-    Other,
-}
-
-sealed class UserListResponseClinicRoleConverter : JsonConverter<UserListResponseClinicRole>
-{
-    public override UserListResponseClinicRole Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "Radiologist" => UserListResponseClinicRole.Radiologist,
-            "Cardiologist" => UserListResponseClinicRole.Cardiologist,
-            "Neurologist" => UserListResponseClinicRole.Neurologist,
-            "Urologist" => UserListResponseClinicRole.Urologist,
-            "Gynecologist" => UserListResponseClinicRole.Gynecologist,
-            "Endocrinologist" => UserListResponseClinicRole.Endocrinologist,
-            "Doctor" => UserListResponseClinicRole.Doctor,
-            "Surgeon" => UserListResponseClinicRole.Surgeon,
-            "Physician" => UserListResponseClinicRole.Physician,
-            "Physician Assistant" => UserListResponseClinicRole.PhysicianAssistant,
-            "Nurse Practitioner" => UserListResponseClinicRole.NursePractitioner,
-            "Registered Nurse" => UserListResponseClinicRole.RegisteredNurse,
-            "Patient Care Coordinator" => UserListResponseClinicRole.PatientCareCoordinator,
-            "Front Desk Operator" => UserListResponseClinicRole.FrontDeskOperator,
-            "Imaging Technologist" => UserListResponseClinicRole.ImagingTechnologist,
-            "PACS Administrator" => UserListResponseClinicRole.PacsAdministrator,
-            "Software Engineer" => UserListResponseClinicRole.SoftwareEngineer,
-            "Revenue Cycle Manager" => UserListResponseClinicRole.RevenueCycleManager,
-            "Administrative Director" => UserListResponseClinicRole.AdministrativeDirector,
-            "Administrative Assistant" => UserListResponseClinicRole.AdministrativeAssistant,
-            "Other" => UserListResponseClinicRole.Other,
-            _ => (UserListResponseClinicRole)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserListResponseClinicRole value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserListResponseClinicRole.Radiologist => "Radiologist",
-                UserListResponseClinicRole.Cardiologist => "Cardiologist",
-                UserListResponseClinicRole.Neurologist => "Neurologist",
-                UserListResponseClinicRole.Urologist => "Urologist",
-                UserListResponseClinicRole.Gynecologist => "Gynecologist",
-                UserListResponseClinicRole.Endocrinologist => "Endocrinologist",
-                UserListResponseClinicRole.Doctor => "Doctor",
-                UserListResponseClinicRole.Surgeon => "Surgeon",
-                UserListResponseClinicRole.Physician => "Physician",
-                UserListResponseClinicRole.PhysicianAssistant => "Physician Assistant",
-                UserListResponseClinicRole.NursePractitioner => "Nurse Practitioner",
-                UserListResponseClinicRole.RegisteredNurse => "Registered Nurse",
-                UserListResponseClinicRole.PatientCareCoordinator => "Patient Care Coordinator",
-                UserListResponseClinicRole.FrontDeskOperator => "Front Desk Operator",
-                UserListResponseClinicRole.ImagingTechnologist => "Imaging Technologist",
-                UserListResponseClinicRole.PacsAdministrator => "PACS Administrator",
-                UserListResponseClinicRole.SoftwareEngineer => "Software Engineer",
-                UserListResponseClinicRole.RevenueCycleManager => "Revenue Cycle Manager",
-                UserListResponseClinicRole.AdministrativeDirector => "Administrative Director",
-                UserListResponseClinicRole.AdministrativeAssistant => "Administrative Assistant",
-                UserListResponseClinicRole.Other => "Other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// How the user was invited - via dashboard UI or API
-/// </summary>
-[JsonConverter(typeof(UserListResponseInvitedSourceConverter))]
-public enum UserListResponseInvitedSource
-{
-    Dashboard,
-    Api,
-}
-
-sealed class UserListResponseInvitedSourceConverter : JsonConverter<UserListResponseInvitedSource>
-{
-    public override UserListResponseInvitedSource Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "dashboard" => UserListResponseInvitedSource.Dashboard,
-            "api" => UserListResponseInvitedSource.Api,
-            _ => (UserListResponseInvitedSource)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserListResponseInvitedSource value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserListResponseInvitedSource.Dashboard => "dashboard",
-                UserListResponseInvitedSource.Api => "api",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// User access level. 'owner' has full control, 'admin' can manage users/settings,
-/// 'member' has standard access
-/// </summary>
-[JsonConverter(typeof(UserListResponseLevelConverter))]
-public enum UserListResponseLevel
-{
-    Owner,
-    Admin,
-    Member,
-}
-
-sealed class UserListResponseLevelConverter : JsonConverter<UserListResponseLevel>
-{
-    public override UserListResponseLevel Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "owner" => UserListResponseLevel.Owner,
-            "admin" => UserListResponseLevel.Admin,
-            "member" => UserListResponseLevel.Member,
-            _ => (UserListResponseLevel)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserListResponseLevel value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserListResponseLevel.Owner => "owner",
-                UserListResponseLevel.Admin => "admin",
-                UserListResponseLevel.Member => "member",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

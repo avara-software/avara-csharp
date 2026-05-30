@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Reports;
 
@@ -181,14 +180,15 @@ public sealed record class Report : JsonModel
     }
 
     /// <summary>
-    /// Report status: 'in_progress' or 'completed'
+    /// Status of an individual report. 'in_progress' = actively being dictated,
+    /// 'completed' = signed.
     /// </summary>
-    public required ApiEnum<string, Status> Status
+    public required ApiEnum<string, ReportStatus> Status
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+            return this._rawData.GetNotNullClass<ApiEnum<string, ReportStatus>>("status");
         }
         init { this._rawData.Set("status", value); }
     }
@@ -301,47 +301,4 @@ class ReportFromRaw : IFromRawJson<Report>
     /// <inheritdoc/>
     public Report FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Report.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Report status: 'in_progress' or 'completed'
-/// </summary>
-[JsonConverter(typeof(StatusConverter))]
-public enum Status
-{
-    InProgress,
-    Completed,
-}
-
-sealed class StatusConverter : JsonConverter<Status>
-{
-    public override Status Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "in_progress" => Status.InProgress,
-            "completed" => Status.Completed,
-            _ => (Status)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Status.InProgress => "in_progress",
-                Status.Completed => "completed",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

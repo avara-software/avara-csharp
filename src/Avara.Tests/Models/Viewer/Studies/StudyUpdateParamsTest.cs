@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
+using Avara.Models.Viewer;
 using Avara.Models.Viewer.Studies;
 
 namespace Avara.Tests.Models.Viewer.Studies;
@@ -17,7 +17,7 @@ public class StudyUpdateParamsTest : TestBase
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            Severity = StudyUpdateParamsSeverity.Stat,
+            Severity = Severity.Stat,
             StudyDescription = "CT Chest/Abdomen/Pelvis with Contrast",
             StudyViewerStatus = StudyViewerStatus.Complete,
         };
@@ -25,8 +25,7 @@ public class StudyUpdateParamsTest : TestBase
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedAssignedTo = "usr_1234567890abcdef1234567890abcdef";
         Dictionary<string, string> expectedMetadata = new() { { "foo", "string" } };
-        ApiEnum<string, StudyUpdateParamsSeverity> expectedSeverity =
-            StudyUpdateParamsSeverity.Stat;
+        ApiEnum<string, Severity> expectedSeverity = Severity.Stat;
         string expectedStudyDescription = "CT Chest/Abdomen/Pelvis with Contrast";
         ApiEnum<string, StudyViewerStatus> expectedStudyViewerStatus = StudyViewerStatus.Complete;
 
@@ -96,7 +95,7 @@ public class StudyUpdateParamsTest : TestBase
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
-            Severity = StudyUpdateParamsSeverity.Stat,
+            Severity = Severity.Stat,
             StudyDescription = "CT Chest/Abdomen/Pelvis with Contrast",
             StudyViewerStatus = StudyViewerStatus.Complete,
         };
@@ -112,7 +111,7 @@ public class StudyUpdateParamsTest : TestBase
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
-            Severity = StudyUpdateParamsSeverity.Stat,
+            Severity = Severity.Stat,
             StudyDescription = "CT Chest/Abdomen/Pelvis with Contrast",
             StudyViewerStatus = StudyViewerStatus.Complete,
 
@@ -148,7 +147,7 @@ public class StudyUpdateParamsTest : TestBase
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            Severity = StudyUpdateParamsSeverity.Stat,
+            Severity = Severity.Stat,
             StudyDescription = "CT Chest/Abdomen/Pelvis with Contrast",
             StudyViewerStatus = StudyViewerStatus.Complete,
         };
@@ -156,123 +155,5 @@ public class StudyUpdateParamsTest : TestBase
         StudyUpdateParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
-    }
-}
-
-public class StudyUpdateParamsSeverityTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyUpdateParamsSeverity.Normal)]
-    [InlineData(StudyUpdateParamsSeverity.High)]
-    [InlineData(StudyUpdateParamsSeverity.Stat)]
-    public void Validation_Works(StudyUpdateParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyUpdateParamsSeverity> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyUpdateParamsSeverity.Normal)]
-    [InlineData(StudyUpdateParamsSeverity.High)]
-    [InlineData(StudyUpdateParamsSeverity.Stat)]
-    public void SerializationRoundtrip_Works(StudyUpdateParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyUpdateParamsSeverity> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class StudyViewerStatusTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyViewerStatus.Incomplete)]
-    [InlineData(StudyViewerStatus.Complete)]
-    public void Validation_Works(StudyViewerStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyViewerStatus> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyViewerStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyViewerStatus.Incomplete)]
-    [InlineData(StudyViewerStatus.Complete)]
-    public void SerializationRoundtrip_Works(StudyViewerStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyViewerStatus> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyViewerStatus>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyViewerStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyViewerStatus>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

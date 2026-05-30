@@ -5,9 +5,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Studies;
 
@@ -106,14 +104,12 @@ public record class StudyListParams : ParamsBase
     /// <summary>
     /// Filter by study severity
     /// </summary>
-    public ApiEnum<string, StudyListParamsSeverity>? Severity
+    public ApiEnum<string, Severity>? Severity
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, StudyListParamsSeverity>>(
-                "severity"
-            );
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Severity>>("severity");
         }
         init
         {
@@ -260,108 +256,5 @@ public record class StudyListParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// Filter by study severity
-/// </summary>
-[JsonConverter(typeof(StudyListParamsSeverityConverter))]
-public enum StudyListParamsSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyListParamsSeverityConverter : JsonConverter<StudyListParamsSeverity>
-{
-    public override StudyListParamsSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyListParamsSeverity.Normal,
-            "high" => StudyListParamsSeverity.High,
-            "stat" => StudyListParamsSeverity.Stat,
-            _ => (StudyListParamsSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyListParamsSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyListParamsSeverity.Normal => "normal",
-                StudyListParamsSeverity.High => "high",
-                StudyListParamsSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(StudyReportStatusConverter))]
-public enum StudyReportStatus
-{
-    Unassigned,
-    Assigned,
-    InProgress,
-    Completed,
-    AddendumActive,
-}
-
-sealed class StudyReportStatusConverter : JsonConverter<StudyReportStatus>
-{
-    public override StudyReportStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "unassigned" => StudyReportStatus.Unassigned,
-            "assigned" => StudyReportStatus.Assigned,
-            "in_progress" => StudyReportStatus.InProgress,
-            "completed" => StudyReportStatus.Completed,
-            "addendum_active" => StudyReportStatus.AddendumActive,
-            _ => (StudyReportStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyReportStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyReportStatus.Unassigned => "unassigned",
-                StudyReportStatus.Assigned => "assigned",
-                StudyReportStatus.InProgress => "in_progress",
-                StudyReportStatus.Completed => "completed",
-                StudyReportStatus.AddendumActive => "addendum_active",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

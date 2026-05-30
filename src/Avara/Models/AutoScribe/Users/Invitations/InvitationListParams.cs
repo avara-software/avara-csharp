@@ -5,9 +5,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Users.Invitations;
 
@@ -66,12 +64,14 @@ public record class InvitationListParams : ParamsBase
     /// <summary>
     /// Filter by expiration status
     /// </summary>
-    public ApiEnum<string, Expired>? Expired
+    public ApiEnum<string, InvitationExpiredFilter>? Expired
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, Expired>>("expired");
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, InvitationExpiredFilter>>(
+                "expired"
+            );
         }
         init
         {
@@ -129,14 +129,14 @@ public record class InvitationListParams : ParamsBase
     /// <summary>
     /// Filter by invitation status(es)
     /// </summary>
-    public IReadOnlyList<ApiEnum<string, Status>>? Status
+    public IReadOnlyList<ApiEnum<string, InvitationStatus>>? Status
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableStruct<ImmutableArray<ApiEnum<string, Status>>>(
-                "status"
-            );
+            return this._rawQueryData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, InvitationStatus>>
+            >("status");
         }
         init
         {
@@ -145,7 +145,7 @@ public record class InvitationListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData.Set<ImmutableArray<ApiEnum<string, Status>>?>(
+            this._rawQueryData.Set<ImmutableArray<ApiEnum<string, InvitationStatus>>?>(
                 "status",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -262,97 +262,5 @@ public record class InvitationListParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// Filter by expiration status
-/// </summary>
-[JsonConverter(typeof(ExpiredConverter))]
-public enum Expired
-{
-    All,
-    Expired1,
-    NotExpired,
-}
-
-sealed class ExpiredConverter : JsonConverter<Expired>
-{
-    public override Expired Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "all" => Expired.All,
-            "expired" => Expired.Expired1,
-            "not-expired" => Expired.NotExpired,
-            _ => (Expired)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Expired value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Expired.All => "all",
-                Expired.Expired1 => "expired",
-                Expired.NotExpired => "not-expired",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(StatusConverter))]
-public enum Status
-{
-    Sent,
-    Accepted,
-    Rejected,
-    Revoked,
-}
-
-sealed class StatusConverter : JsonConverter<Status>
-{
-    public override Status Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "sent" => Status.Sent,
-            "accepted" => Status.Accepted,
-            "rejected" => Status.Rejected,
-            "revoked" => Status.Revoked,
-            _ => (Status)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Status.Sent => "sent",
-                Status.Accepted => "accepted",
-                Status.Rejected => "rejected",
-                Status.Revoked => "revoked",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

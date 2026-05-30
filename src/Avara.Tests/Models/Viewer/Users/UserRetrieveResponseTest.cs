@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
 using Avara.Models.Viewer.Users;
 
 namespace Avara.Tests.Models.Viewer.Users;
@@ -14,15 +14,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             PhoneNumber = "5551234567",
@@ -31,17 +31,15 @@ public class UserRetrieveResponseTest : TestBase
         };
 
         bool expectedCanManageStudies = true;
-        ApiEnum<string, UserRetrieveResponseClinicRole> expectedClinicRole =
-            UserRetrieveResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z");
         string expectedEmail = "dr.johnson@hospital.org";
         string expectedFirstName = "Sarah";
         bool expectedHasDashboardAccess = true;
-        ApiEnum<string, UserRetrieveResponseInvitedSource> expectedInvitedSource =
-            UserRetrieveResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         DateTimeOffset expectedLastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z");
         string expectedLastName = "Johnson";
-        ApiEnum<string, UserRetrieveResponseLevel> expectedLevel = UserRetrieveResponseLevel.Member;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedMiddleName = "Marie";
         string expectedPhoneNumber = "5551234567";
@@ -71,15 +69,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             PhoneNumber = "5551234567",
@@ -102,15 +100,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             PhoneNumber = "5551234567",
@@ -126,17 +124,15 @@ public class UserRetrieveResponseTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCanManageStudies = true;
-        ApiEnum<string, UserRetrieveResponseClinicRole> expectedClinicRole =
-            UserRetrieveResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z");
         string expectedEmail = "dr.johnson@hospital.org";
         string expectedFirstName = "Sarah";
         bool expectedHasDashboardAccess = true;
-        ApiEnum<string, UserRetrieveResponseInvitedSource> expectedInvitedSource =
-            UserRetrieveResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         DateTimeOffset expectedLastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z");
         string expectedLastName = "Johnson";
-        ApiEnum<string, UserRetrieveResponseLevel> expectedLevel = UserRetrieveResponseLevel.Member;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedMiddleName = "Marie";
         string expectedPhoneNumber = "5551234567";
@@ -166,15 +162,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             PhoneNumber = "5551234567",
@@ -191,15 +187,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
         };
 
@@ -219,15 +215,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
         };
 
@@ -240,15 +236,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
 
             // Null should be interpreted as omitted for these properties
@@ -274,15 +270,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
 
             // Null should be interpreted as omitted for these properties
@@ -301,15 +297,15 @@ public class UserRetrieveResponseTest : TestBase
         var model = new UserRetrieveResponse
         {
             CanManageStudies = true,
-            ClinicRole = UserRetrieveResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserRetrieveResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserRetrieveResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             PhoneNumber = "5551234567",
@@ -320,215 +316,5 @@ public class UserRetrieveResponseTest : TestBase
         UserRetrieveResponse copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class UserRetrieveResponseClinicRoleTest : TestBase
-{
-    [Theory]
-    [InlineData(UserRetrieveResponseClinicRole.Radiologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Cardiologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Neurologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Urologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Gynecologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Endocrinologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Doctor)]
-    [InlineData(UserRetrieveResponseClinicRole.Surgeon)]
-    [InlineData(UserRetrieveResponseClinicRole.Physician)]
-    [InlineData(UserRetrieveResponseClinicRole.PhysicianAssistant)]
-    [InlineData(UserRetrieveResponseClinicRole.NursePractitioner)]
-    [InlineData(UserRetrieveResponseClinicRole.RegisteredNurse)]
-    [InlineData(UserRetrieveResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(UserRetrieveResponseClinicRole.FrontDeskOperator)]
-    [InlineData(UserRetrieveResponseClinicRole.ImagingTechnologist)]
-    [InlineData(UserRetrieveResponseClinicRole.PacsAdministrator)]
-    [InlineData(UserRetrieveResponseClinicRole.SoftwareEngineer)]
-    [InlineData(UserRetrieveResponseClinicRole.RevenueCycleManager)]
-    [InlineData(UserRetrieveResponseClinicRole.AdministrativeDirector)]
-    [InlineData(UserRetrieveResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(UserRetrieveResponseClinicRole.Other)]
-    public void Validation_Works(UserRetrieveResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseClinicRole> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserRetrieveResponseClinicRole.Radiologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Cardiologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Neurologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Urologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Gynecologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Endocrinologist)]
-    [InlineData(UserRetrieveResponseClinicRole.Doctor)]
-    [InlineData(UserRetrieveResponseClinicRole.Surgeon)]
-    [InlineData(UserRetrieveResponseClinicRole.Physician)]
-    [InlineData(UserRetrieveResponseClinicRole.PhysicianAssistant)]
-    [InlineData(UserRetrieveResponseClinicRole.NursePractitioner)]
-    [InlineData(UserRetrieveResponseClinicRole.RegisteredNurse)]
-    [InlineData(UserRetrieveResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(UserRetrieveResponseClinicRole.FrontDeskOperator)]
-    [InlineData(UserRetrieveResponseClinicRole.ImagingTechnologist)]
-    [InlineData(UserRetrieveResponseClinicRole.PacsAdministrator)]
-    [InlineData(UserRetrieveResponseClinicRole.SoftwareEngineer)]
-    [InlineData(UserRetrieveResponseClinicRole.RevenueCycleManager)]
-    [InlineData(UserRetrieveResponseClinicRole.AdministrativeDirector)]
-    [InlineData(UserRetrieveResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(UserRetrieveResponseClinicRole.Other)]
-    public void SerializationRoundtrip_Works(UserRetrieveResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseClinicRole> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserRetrieveResponseClinicRole>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserRetrieveResponseClinicRole>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class UserRetrieveResponseInvitedSourceTest : TestBase
-{
-    [Theory]
-    [InlineData(UserRetrieveResponseInvitedSource.Dashboard)]
-    [InlineData(UserRetrieveResponseInvitedSource.Api)]
-    public void Validation_Works(UserRetrieveResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseInvitedSource> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseInvitedSource>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserRetrieveResponseInvitedSource.Dashboard)]
-    [InlineData(UserRetrieveResponseInvitedSource.Api)]
-    public void SerializationRoundtrip_Works(UserRetrieveResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseInvitedSource> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserRetrieveResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseInvitedSource>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserRetrieveResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class UserRetrieveResponseLevelTest : TestBase
-{
-    [Theory]
-    [InlineData(UserRetrieveResponseLevel.Owner)]
-    [InlineData(UserRetrieveResponseLevel.Admin)]
-    [InlineData(UserRetrieveResponseLevel.Member)]
-    public void Validation_Works(UserRetrieveResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseLevel> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserRetrieveResponseLevel.Owner)]
-    [InlineData(UserRetrieveResponseLevel.Admin)]
-    [InlineData(UserRetrieveResponseLevel.Member)]
-    public void SerializationRoundtrip_Works(UserRetrieveResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserRetrieveResponseLevel> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseLevel>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserRetrieveResponseLevel>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

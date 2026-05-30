@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
 using Avara.Models.AutoScribe.Studies;
+using AutoScribe = Avara.Models.AutoScribe;
 
 namespace Avara.Tests.Models.AutoScribe.Studies;
 
@@ -38,17 +39,17 @@ public class StudyUpdateParamsTest : TestBase
                 Age = "age",
                 DateOfBirth = "7321-69-10",
                 FacilityName = "facilityName",
-                Height = new() { Unit = Unit.Cm, Value = 170 },
+                Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
                 Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                Sex = Sex.Female,
+                Sex = AutoScribe::Sex.Female,
                 StudyDate = "7321-69-10",
                 StudyTime = "studyTime",
-                Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
             },
-            Severity = StudyUpdateParamsSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "Brain MRI with and without Contrast",
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
@@ -62,7 +63,7 @@ public class StudyUpdateParamsTest : TestBase
         string expectedExternalPatientID = "externalPatientId";
         Dictionary<string, string> expectedMetadata = new() { { "foo", "string" } };
         string expectedModality = "MRI";
-        List<StudyUpdateParamsPriorReport> expectedPriorReports =
+        List<PriorReport> expectedPriorReports =
         [
             new()
             {
@@ -78,18 +79,17 @@ public class StudyUpdateParamsTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "Jane M. Doe",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
-        ApiEnum<string, StudyUpdateParamsSeverity> expectedSeverity =
-            StudyUpdateParamsSeverity.High;
+        ApiEnum<string, Severity> expectedSeverity = Severity.High;
         string expectedStudyDescription = "Brain MRI with and without Contrast";
         List<string> expectedTechnologistNotes = ["x"];
         string expectedTechnologistTechnique = "technologistTechnique";
@@ -223,17 +223,17 @@ public class StudyUpdateParamsTest : TestBase
                 Age = "age",
                 DateOfBirth = "7321-69-10",
                 FacilityName = "facilityName",
-                Height = new() { Unit = Unit.Cm, Value = 170 },
+                Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
                 Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                Sex = Sex.Female,
+                Sex = AutoScribe::Sex.Female,
                 StudyDate = "7321-69-10",
                 StudyTime = "studyTime",
-                Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
             },
-            Severity = StudyUpdateParamsSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "Brain MRI with and without Contrast",
         };
 
@@ -268,17 +268,17 @@ public class StudyUpdateParamsTest : TestBase
                 Age = "age",
                 DateOfBirth = "7321-69-10",
                 FacilityName = "facilityName",
-                Height = new() { Unit = Unit.Cm, Value = 170 },
+                Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
                 Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                Sex = Sex.Female,
+                Sex = AutoScribe::Sex.Female,
                 StudyDate = "7321-69-10",
                 StudyTime = "studyTime",
-                Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
             },
-            Severity = StudyUpdateParamsSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "Brain MRI with and without Contrast",
 
             ClinicalHistory = null,
@@ -355,17 +355,17 @@ public class StudyUpdateParamsTest : TestBase
                 Age = "age",
                 DateOfBirth = "7321-69-10",
                 FacilityName = "facilityName",
-                Height = new() { Unit = Unit.Cm, Value = 170 },
+                Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
                 Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                Sex = Sex.Female,
+                Sex = AutoScribe::Sex.Female,
                 StudyDate = "7321-69-10",
                 StudyTime = "studyTime",
-                Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
             },
-            Severity = StudyUpdateParamsSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "Brain MRI with and without Contrast",
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
@@ -374,189 +374,6 @@ public class StudyUpdateParamsTest : TestBase
         StudyUpdateParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
-    }
-}
-
-public class StudyUpdateParamsPriorReportTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
-        string expectedExternalStudyID = "EXT-2024-001";
-        string expectedModality = "CT";
-        string expectedStudyDate = "2024-01-15";
-        string expectedStudyDescription = "CT Chest without contrast";
-
-        Assert.Equal(expectedReportText, model.ReportText);
-        Assert.Equal(expectedExternalStudyID, model.ExternalStudyID);
-        Assert.Equal(expectedModality, model.Modality);
-        Assert.Equal(expectedStudyDate, model.StudyDate);
-        Assert.Equal(expectedStudyDescription, model.StudyDescription);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyUpdateParamsPriorReport>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyUpdateParamsPriorReport>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
-        string expectedExternalStudyID = "EXT-2024-001";
-        string expectedModality = "CT";
-        string expectedStudyDate = "2024-01-15";
-        string expectedStudyDescription = "CT Chest without contrast";
-
-        Assert.Equal(expectedReportText, deserialized.ReportText);
-        Assert.Equal(expectedExternalStudyID, deserialized.ExternalStudyID);
-        Assert.Equal(expectedModality, deserialized.Modality);
-        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
-        Assert.Equal(expectedStudyDescription, deserialized.StudyDescription);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-        };
-
-        Assert.Null(model.ExternalStudyID);
-        Assert.False(model.RawData.ContainsKey("externalStudyId"));
-        Assert.Null(model.Modality);
-        Assert.False(model.RawData.ContainsKey("modality"));
-        Assert.Null(model.StudyDate);
-        Assert.False(model.RawData.ContainsKey("studyDate"));
-        Assert.Null(model.StudyDescription);
-        Assert.False(model.RawData.ContainsKey("studyDescription"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-
-            // Null should be interpreted as omitted for these properties
-            ExternalStudyID = null,
-            Modality = null,
-            StudyDate = null,
-            StudyDescription = null,
-        };
-
-        Assert.Null(model.ExternalStudyID);
-        Assert.False(model.RawData.ContainsKey("externalStudyId"));
-        Assert.Null(model.Modality);
-        Assert.False(model.RawData.ContainsKey("modality"));
-        Assert.Null(model.StudyDate);
-        Assert.False(model.RawData.ContainsKey("studyDate"));
-        Assert.Null(model.StudyDescription);
-        Assert.False(model.RawData.ContainsKey("studyDescription"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-
-            // Null should be interpreted as omitted for these properties
-            ExternalStudyID = null,
-            Modality = null,
-            StudyDate = null,
-            StudyDescription = null,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new StudyUpdateParamsPriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        StudyUpdateParamsPriorReport copied = new(model);
-
-        Assert.Equal(model, copied);
     }
 }
 
@@ -570,29 +387,29 @@ public class ReportMetadataTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
 
         string expectedAge = "age";
         string expectedDateOfBirth = "7321-69-10";
         string expectedFacilityName = "facilityName";
-        Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
+        Height expectedHeight = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
         string expectedMrn = "mrn";
         string expectedPatientName = "patientName";
         string expectedProcedure = "procedure";
         string expectedReferringPhysicianName = "referringPhysicianName";
-        ApiEnum<string, Sex> expectedSex = Sex.Female;
+        ApiEnum<string, AutoScribe::Sex> expectedSex = AutoScribe::Sex.Female;
         string expectedStudyDate = "7321-69-10";
         string expectedStudyTime = "studyTime";
-        Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
+        Weight expectedWeight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedAge, model.Age);
         Assert.Equal(expectedDateOfBirth, model.DateOfBirth);
@@ -616,15 +433,15 @@ public class ReportMetadataTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -644,15 +461,15 @@ public class ReportMetadataTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -665,15 +482,15 @@ public class ReportMetadataTest : TestBase
         string expectedAge = "age";
         string expectedDateOfBirth = "7321-69-10";
         string expectedFacilityName = "facilityName";
-        Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
+        Height expectedHeight = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
         string expectedMrn = "mrn";
         string expectedPatientName = "patientName";
         string expectedProcedure = "procedure";
         string expectedReferringPhysicianName = "referringPhysicianName";
-        ApiEnum<string, Sex> expectedSex = Sex.Female;
+        ApiEnum<string, AutoScribe::Sex> expectedSex = AutoScribe::Sex.Female;
         string expectedStudyDate = "7321-69-10";
         string expectedStudyTime = "studyTime";
-        Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
+        Weight expectedWeight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedAge, deserialized.Age);
         Assert.Equal(expectedDateOfBirth, deserialized.DateOfBirth);
@@ -697,15 +514,15 @@ public class ReportMetadataTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
 
         model.Validate();
@@ -825,15 +642,15 @@ public class ReportMetadataTest : TestBase
             Age = "age",
             DateOfBirth = "7321-69-10",
             FacilityName = "facilityName",
-            Height = new() { Unit = Unit.Cm, Value = 170 },
+            Height = new() { Unit = AutoScribe::HeightUnit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
             Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            Sex = Sex.Female,
+            Sex = AutoScribe::Sex.Female,
             StudyDate = "7321-69-10",
             StudyTime = "studyTime",
-            Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
+            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 68 },
         };
 
         ReportMetadata copied = new(model);
@@ -847,9 +664,9 @@ public class HeightTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
 
-        ApiEnum<string, Unit> expectedUnit = Unit.Cm;
+        ApiEnum<string, AutoScribe::HeightUnit> expectedUnit = AutoScribe::HeightUnit.Cm;
         double expectedValue = 170;
 
         Assert.Equal(expectedUnit, model.Unit);
@@ -859,7 +676,7 @@ public class HeightTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Height>(json, ModelBase.SerializerOptions);
@@ -870,13 +687,13 @@ public class HeightTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Height>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, Unit> expectedUnit = Unit.Cm;
+        ApiEnum<string, AutoScribe::HeightUnit> expectedUnit = AutoScribe::HeightUnit.Cm;
         double expectedValue = 170;
 
         Assert.Equal(expectedUnit, deserialized.Unit);
@@ -886,7 +703,7 @@ public class HeightTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
 
         model.Validate();
     }
@@ -894,129 +711,11 @@ public class HeightTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Height { Unit = Unit.Cm, Value = 170 };
+        var model = new Height { Unit = AutoScribe::HeightUnit.Cm, Value = 170 };
 
         Height copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class UnitTest : TestBase
-{
-    [Theory]
-    [InlineData(Unit.In)]
-    [InlineData(Unit.Cm)]
-    public void Validation_Works(Unit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Unit> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Unit.In)]
-    [InlineData(Unit.Cm)]
-    public void SerializationRoundtrip_Works(Unit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Unit> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Unit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class SexTest : TestBase
-{
-    [Theory]
-    [InlineData(Sex.Male)]
-    [InlineData(Sex.Female)]
-    [InlineData(Sex.Other)]
-    public void Validation_Works(Sex rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sex> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Sex.Male)]
-    [InlineData(Sex.Female)]
-    [InlineData(Sex.Other)]
-    public void SerializationRoundtrip_Works(Sex rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sex> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sex>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
 
@@ -1025,9 +724,9 @@ public class WeightTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Weight { Unit = WeightUnit.Kg, Value = 68 };
+        var model = new Weight { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
-        ApiEnum<string, WeightUnit> expectedUnit = WeightUnit.Kg;
+        ApiEnum<string, AutoScribe::WeightUnit> expectedUnit = AutoScribe::WeightUnit.Kg;
         double expectedValue = 68;
 
         Assert.Equal(expectedUnit, model.Unit);
@@ -1037,7 +736,7 @@ public class WeightTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Weight { Unit = WeightUnit.Kg, Value = 68 };
+        var model = new Weight { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Weight>(json, ModelBase.SerializerOptions);
@@ -1048,13 +747,13 @@ public class WeightTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Weight { Unit = WeightUnit.Kg, Value = 68 };
+        var model = new Weight { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Weight>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, WeightUnit> expectedUnit = WeightUnit.Kg;
+        ApiEnum<string, AutoScribe::WeightUnit> expectedUnit = AutoScribe::WeightUnit.Kg;
         double expectedValue = 68;
 
         Assert.Equal(expectedUnit, deserialized.Unit);
@@ -1064,7 +763,7 @@ public class WeightTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Weight { Unit = WeightUnit.Kg, Value = 68 };
+        var model = new Weight { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         model.Validate();
     }
@@ -1072,128 +771,10 @@ public class WeightTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Weight { Unit = WeightUnit.Kg, Value = 68 };
+        var model = new Weight { Unit = AutoScribe::WeightUnit.Kg, Value = 68 };
 
         Weight copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class WeightUnitTest : TestBase
-{
-    [Theory]
-    [InlineData(WeightUnit.Lbs)]
-    [InlineData(WeightUnit.Kg)]
-    public void Validation_Works(WeightUnit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, WeightUnit> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(WeightUnit.Lbs)]
-    [InlineData(WeightUnit.Kg)]
-    public void SerializationRoundtrip_Works(WeightUnit rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, WeightUnit> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, WeightUnit>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class StudyUpdateParamsSeverityTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyUpdateParamsSeverity.Normal)]
-    [InlineData(StudyUpdateParamsSeverity.High)]
-    [InlineData(StudyUpdateParamsSeverity.Stat)]
-    public void Validation_Works(StudyUpdateParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyUpdateParamsSeverity> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyUpdateParamsSeverity.Normal)]
-    [InlineData(StudyUpdateParamsSeverity.High)]
-    [InlineData(StudyUpdateParamsSeverity.Stat)]
-    public void SerializationRoundtrip_Works(StudyUpdateParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyUpdateParamsSeverity> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyUpdateParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

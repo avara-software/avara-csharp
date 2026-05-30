@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Studies;
 
@@ -69,17 +68,15 @@ public sealed record class StudyCreateResponse : JsonModel
     }
 
     /// <summary>
-    /// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-    /// for immediate attention
+    /// Priority level of a study. 'normal' for routine, 'high' for urgent, 'stat'
+    /// for immediate attention.
     /// </summary>
-    public required ApiEnum<string, StudyCreateResponseSeverity> Severity
+    public required ApiEnum<string, Severity> Severity
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, StudyCreateResponseSeverity>>(
-                "severity"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, Severity>>("severity");
         }
         init { this._rawData.Set("severity", value); }
     }
@@ -124,18 +121,19 @@ public sealed record class StudyCreateResponse : JsonModel
     }
 
     /// <summary>
-    /// Report workflow status. 'unassigned' = no radiologist assigned, 'assigned'
-    /// = assigned but not started, 'in_progress' = actively being dictated, 'completed'
-    /// = report signed, 'addendum_active' = addendum in progress
+    /// AutoScribe report workflow status for a study. 'unassigned' = no radiologist
+    /// assigned, 'assigned' = assigned but not started, 'in_progress' = actively
+    /// being dictated, 'completed' = report signed, 'addendum_active' = addendum
+    /// in progress.
     /// </summary>
-    public required ApiEnum<string, StudyCreateResponseStudyReportStatus> StudyReportStatus
+    public required ApiEnum<string, StudyReportStatus> StudyReportStatus
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, StudyCreateResponseStudyReportStatus>
-            >("studyReportStatus");
+            return this._rawData.GetNotNullClass<ApiEnum<string, StudyReportStatus>>(
+                "studyReportStatus"
+            );
         }
         init { this._rawData.Set("studyReportStatus", value); }
     }
@@ -285,14 +283,12 @@ public sealed record class StudyCreateResponse : JsonModel
     /// <summary>
     /// External prior reports with metadata and text
     /// </summary>
-    public IReadOnlyList<StudyCreateResponsePriorReport>? PriorReports
+    public IReadOnlyList<PriorReport>? PriorReports
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<ImmutableArray<StudyCreateResponsePriorReport>>(
-                "priorReports"
-            );
+            return this._rawData.GetNullableStruct<ImmutableArray<PriorReport>>("priorReports");
         }
         init
         {
@@ -301,7 +297,7 @@ public sealed record class StudyCreateResponse : JsonModel
                 return;
             }
 
-            this._rawData.Set<ImmutableArray<StudyCreateResponsePriorReport>?>(
+            this._rawData.Set<ImmutableArray<PriorReport>?>(
                 "priorReports",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -438,116 +434,6 @@ class StudyCreateResponseFromRaw : IFromRawJson<StudyCreateResponse>
     /// <inheritdoc/>
     public StudyCreateResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         StudyCreateResponse.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-/// for immediate attention
-/// </summary>
-[JsonConverter(typeof(StudyCreateResponseSeverityConverter))]
-public enum StudyCreateResponseSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyCreateResponseSeverityConverter : JsonConverter<StudyCreateResponseSeverity>
-{
-    public override StudyCreateResponseSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyCreateResponseSeverity.Normal,
-            "high" => StudyCreateResponseSeverity.High,
-            "stat" => StudyCreateResponseSeverity.Stat,
-            _ => (StudyCreateResponseSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyCreateResponseSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyCreateResponseSeverity.Normal => "normal",
-                StudyCreateResponseSeverity.High => "high",
-                StudyCreateResponseSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Report workflow status. 'unassigned' = no radiologist assigned, 'assigned' =
-/// assigned but not started, 'in_progress' = actively being dictated, 'completed'
-/// = report signed, 'addendum_active' = addendum in progress
-/// </summary>
-[JsonConverter(typeof(StudyCreateResponseStudyReportStatusConverter))]
-public enum StudyCreateResponseStudyReportStatus
-{
-    Unassigned,
-    Assigned,
-    InProgress,
-    Completed,
-    AddendumActive,
-}
-
-sealed class StudyCreateResponseStudyReportStatusConverter
-    : JsonConverter<StudyCreateResponseStudyReportStatus>
-{
-    public override StudyCreateResponseStudyReportStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "unassigned" => StudyCreateResponseStudyReportStatus.Unassigned,
-            "assigned" => StudyCreateResponseStudyReportStatus.Assigned,
-            "in_progress" => StudyCreateResponseStudyReportStatus.InProgress,
-            "completed" => StudyCreateResponseStudyReportStatus.Completed,
-            "addendum_active" => StudyCreateResponseStudyReportStatus.AddendumActive,
-            _ => (StudyCreateResponseStudyReportStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyCreateResponseStudyReportStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyCreateResponseStudyReportStatus.Unassigned => "unassigned",
-                StudyCreateResponseStudyReportStatus.Assigned => "assigned",
-                StudyCreateResponseStudyReportStatus.InProgress => "in_progress",
-                StudyCreateResponseStudyReportStatus.Completed => "completed",
-                StudyCreateResponseStudyReportStatus.AddendumActive => "addendum_active",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }
 
 /// <summary>
@@ -1086,169 +972,4 @@ class ExpressCustomerFromRaw : IFromRawJson<ExpressCustomer>
     /// <inheritdoc/>
     public ExpressCustomer FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ExpressCustomer.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// External prior report metadata and text stored on a study
-/// </summary>
-[JsonConverter(
-    typeof(JsonModelConverter<
-        StudyCreateResponsePriorReport,
-        StudyCreateResponsePriorReportFromRaw
-    >)
-)]
-public sealed record class StudyCreateResponsePriorReport : JsonModel
-{
-    /// <summary>
-    /// Full prior report text
-    /// </summary>
-    public required string ReportText
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("reportText");
-        }
-        init { this._rawData.Set("reportText", value); }
-    }
-
-    /// <summary>
-    /// Integrator's external study identifier
-    /// </summary>
-    public string? ExternalStudyID
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("externalStudyId");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("externalStudyId", value);
-        }
-    }
-
-    /// <summary>
-    /// Imaging modality for the prior study
-    /// </summary>
-    public string? Modality
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("modality");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("modality", value);
-        }
-    }
-
-    /// <summary>
-    /// Prior study date (YYYY-MM-DD)
-    /// </summary>
-    public string? StudyDate
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("studyDate");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("studyDate", value);
-        }
-    }
-
-    /// <summary>
-    /// Description of the prior study
-    /// </summary>
-    public string? StudyDescription
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("studyDescription");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("studyDescription", value);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        _ = this.ReportText;
-        _ = this.ExternalStudyID;
-        _ = this.Modality;
-        _ = this.StudyDate;
-        _ = this.StudyDescription;
-    }
-
-    public StudyCreateResponsePriorReport() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public StudyCreateResponsePriorReport(
-        StudyCreateResponsePriorReport studyCreateResponsePriorReport
-    )
-        : base(studyCreateResponsePriorReport) { }
-#pragma warning restore CS8618
-
-    public StudyCreateResponsePriorReport(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    StudyCreateResponsePriorReport(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="StudyCreateResponsePriorReportFromRaw.FromRawUnchecked"/>
-    public static StudyCreateResponsePriorReport FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public StudyCreateResponsePriorReport(string reportText)
-        : this()
-    {
-        this.ReportText = reportText;
-    }
-}
-
-class StudyCreateResponsePriorReportFromRaw : IFromRawJson<StudyCreateResponsePriorReport>
-{
-    /// <inheritdoc/>
-    public StudyCreateResponsePriorReport FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => StudyCreateResponsePriorReport.FromRawUnchecked(rawData);
 }

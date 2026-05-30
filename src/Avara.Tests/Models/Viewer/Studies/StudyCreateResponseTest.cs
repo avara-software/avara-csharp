@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
 using Avara.Models;
+using Avara.Models.Viewer;
 using Avara.Models.Viewer.Studies;
 
 namespace Avara.Tests.Models.Viewer.Studies;
@@ -18,11 +18,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -64,13 +64,11 @@ public class StudyCreateResponseTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z");
         bool expectedIsCancelled = false;
-        ApiEnum<string, StudyCreateResponseSeverity> expectedSeverity =
-            StudyCreateResponseSeverity.High;
+        ApiEnum<string, Severity> expectedSeverity = Severity.High;
         string expectedStudyDescription = "CT Chest/Abdomen/Pelvis";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
-        ApiEnum<string, StudyCreateResponseStudyViewerStatus> expectedStudyViewerStatus =
-            StudyCreateResponseStudyViewerStatus.Incomplete;
+        ApiEnum<string, StudyViewerStatus> expectedStudyViewerStatus = StudyViewerStatus.Incomplete;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z");
         UserReference expectedAssignedTo = new()
         {
@@ -140,11 +138,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -201,11 +199,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -254,13 +252,11 @@ public class StudyCreateResponseTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z");
         bool expectedIsCancelled = false;
-        ApiEnum<string, StudyCreateResponseSeverity> expectedSeverity =
-            StudyCreateResponseSeverity.High;
+        ApiEnum<string, Severity> expectedSeverity = Severity.High;
         string expectedStudyDescription = "CT Chest/Abdomen/Pelvis";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
-        ApiEnum<string, StudyCreateResponseStudyViewerStatus> expectedStudyViewerStatus =
-            StudyCreateResponseStudyViewerStatus.Incomplete;
+        ApiEnum<string, StudyViewerStatus> expectedStudyViewerStatus = StudyViewerStatus.Incomplete;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z");
         UserReference expectedAssignedTo = new()
         {
@@ -330,11 +326,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -385,11 +381,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -436,11 +432,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -486,11 +482,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -540,11 +536,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -593,11 +589,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -624,11 +620,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -648,11 +644,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -684,11 +680,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -713,11 +709,11 @@ public class StudyCreateResponseTest : TestBase
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
             IsCancelled = false,
-            Severity = StudyCreateResponseSeverity.High,
+            Severity = Severity.High,
             StudyDescription = "CT Chest/Abdomen/Pelvis",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyViewerStatus = StudyCreateResponseStudyViewerStatus.Incomplete,
+            StudyViewerStatus = StudyViewerStatus.Incomplete,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -760,119 +756,5 @@ public class StudyCreateResponseTest : TestBase
         StudyCreateResponse copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class StudyCreateResponseSeverityTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyCreateResponseSeverity.Normal)]
-    [InlineData(StudyCreateResponseSeverity.High)]
-    [InlineData(StudyCreateResponseSeverity.Stat)]
-    public void Validation_Works(StudyCreateResponseSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyCreateResponseSeverity> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyCreateResponseSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyCreateResponseSeverity.Normal)]
-    [InlineData(StudyCreateResponseSeverity.High)]
-    [InlineData(StudyCreateResponseSeverity.Stat)]
-    public void SerializationRoundtrip_Works(StudyCreateResponseSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyCreateResponseSeverity> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyCreateResponseSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyCreateResponseSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyCreateResponseSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class StudyCreateResponseStudyViewerStatusTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyCreateResponseStudyViewerStatus.Incomplete)]
-    [InlineData(StudyCreateResponseStudyViewerStatus.Complete)]
-    public void Validation_Works(StudyCreateResponseStudyViewerStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyCreateResponseStudyViewerStatus> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyCreateResponseStudyViewerStatus>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyCreateResponseStudyViewerStatus.Incomplete)]
-    [InlineData(StudyCreateResponseStudyViewerStatus.Complete)]
-    public void SerializationRoundtrip_Works(StudyCreateResponseStudyViewerStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyCreateResponseStudyViewerStatus> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyCreateResponseStudyViewerStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyCreateResponseStudyViewerStatus>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyCreateResponseStudyViewerStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
     }
 }

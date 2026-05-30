@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
 using Avara.Models.Viewer.Users.Invitations;
 
 namespace Avara.Tests.Models.Viewer.Users.Invitations;
@@ -15,18 +15,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -38,22 +38,18 @@ public class InvitationUpdateResponseTest : TestBase
 
         bool expectedCanManageStudies = true;
         string expectedClinicID = "550e8400-e29b-41d4-a716-446655440000";
-        ApiEnum<string, InvitationUpdateResponseClinicRole> expectedClinicRole =
-            InvitationUpdateResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z");
         string expectedEmail = "dr.chen@hospital.org";
         DateTimeOffset expectedExpiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z");
         string expectedFirstName = "Michael";
         bool expectedHasDashboardAccess = true;
         string expectedInvitationID = "inv_1234567890abcdef1234567890abcdef";
-        ApiEnum<string, InvitationUpdateResponseInvitedSource> expectedInvitedSource =
-            InvitationUpdateResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         string expectedInviterID = "usr_1234567890abcdef1234567890abcdef";
         string expectedLastName = "Chen";
-        ApiEnum<string, InvitationUpdateResponseLevel> expectedLevel =
-            InvitationUpdateResponseLevel.Member;
-        ApiEnum<string, InvitationUpdateResponseStatus> expectedStatus =
-            InvitationUpdateResponseStatus.Sent;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
+        ApiEnum<string, InvitationStatus> expectedStatus = InvitationStatus.Sent;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z");
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedInvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000";
@@ -91,18 +87,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -128,18 +124,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -158,22 +154,18 @@ public class InvitationUpdateResponseTest : TestBase
 
         bool expectedCanManageStudies = true;
         string expectedClinicID = "550e8400-e29b-41d4-a716-446655440000";
-        ApiEnum<string, InvitationUpdateResponseClinicRole> expectedClinicRole =
-            InvitationUpdateResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z");
         string expectedEmail = "dr.chen@hospital.org";
         DateTimeOffset expectedExpiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z");
         string expectedFirstName = "Michael";
         bool expectedHasDashboardAccess = true;
         string expectedInvitationID = "inv_1234567890abcdef1234567890abcdef";
-        ApiEnum<string, InvitationUpdateResponseInvitedSource> expectedInvitedSource =
-            InvitationUpdateResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         string expectedInviterID = "usr_1234567890abcdef1234567890abcdef";
         string expectedLastName = "Chen";
-        ApiEnum<string, InvitationUpdateResponseLevel> expectedLevel =
-            InvitationUpdateResponseLevel.Member;
-        ApiEnum<string, InvitationUpdateResponseStatus> expectedStatus =
-            InvitationUpdateResponseStatus.Sent;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
+        ApiEnum<string, InvitationStatus> expectedStatus = InvitationStatus.Sent;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z");
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedInvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000";
@@ -211,18 +203,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -242,18 +234,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "David",
@@ -273,18 +265,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "David",
@@ -303,18 +295,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "David",
@@ -337,18 +329,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "David",
@@ -370,18 +362,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -404,18 +396,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -431,18 +423,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -470,18 +462,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -502,18 +494,18 @@ public class InvitationUpdateResponseTest : TestBase
         {
             CanManageStudies = true,
             ClinicID = "550e8400-e29b-41d4-a716-446655440000",
-            ClinicRole = InvitationUpdateResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             Email = "dr.chen@hospital.org",
             Expiry = DateTimeOffset.Parse("2024-04-15T00:00:00Z"),
             FirstName = "Michael",
             HasDashboardAccess = true,
             InvitationID = "inv_1234567890abcdef1234567890abcdef",
-            InvitedSource = InvitationUpdateResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             InviterID = "usr_1234567890abcdef1234567890abcdef",
             LastName = "Chen",
-            Level = InvitationUpdateResponseLevel.Member,
-            Status = InvitationUpdateResponseStatus.Sent,
+            Level = UserLevel.Member,
+            Status = InvitationStatus.Sent,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T10:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
             InvitedByApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -526,271 +518,5 @@ public class InvitationUpdateResponseTest : TestBase
         InvitationUpdateResponse copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class InvitationUpdateResponseClinicRoleTest : TestBase
-{
-    [Theory]
-    [InlineData(InvitationUpdateResponseClinicRole.Radiologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Cardiologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Neurologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Urologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Gynecologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Endocrinologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Doctor)]
-    [InlineData(InvitationUpdateResponseClinicRole.Surgeon)]
-    [InlineData(InvitationUpdateResponseClinicRole.Physician)]
-    [InlineData(InvitationUpdateResponseClinicRole.PhysicianAssistant)]
-    [InlineData(InvitationUpdateResponseClinicRole.NursePractitioner)]
-    [InlineData(InvitationUpdateResponseClinicRole.RegisteredNurse)]
-    [InlineData(InvitationUpdateResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(InvitationUpdateResponseClinicRole.FrontDeskOperator)]
-    [InlineData(InvitationUpdateResponseClinicRole.ImagingTechnologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.PacsAdministrator)]
-    [InlineData(InvitationUpdateResponseClinicRole.SoftwareEngineer)]
-    [InlineData(InvitationUpdateResponseClinicRole.RevenueCycleManager)]
-    [InlineData(InvitationUpdateResponseClinicRole.AdministrativeDirector)]
-    [InlineData(InvitationUpdateResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(InvitationUpdateResponseClinicRole.Other)]
-    public void Validation_Works(InvitationUpdateResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseClinicRole> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(InvitationUpdateResponseClinicRole.Radiologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Cardiologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Neurologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Urologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Gynecologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Endocrinologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.Doctor)]
-    [InlineData(InvitationUpdateResponseClinicRole.Surgeon)]
-    [InlineData(InvitationUpdateResponseClinicRole.Physician)]
-    [InlineData(InvitationUpdateResponseClinicRole.PhysicianAssistant)]
-    [InlineData(InvitationUpdateResponseClinicRole.NursePractitioner)]
-    [InlineData(InvitationUpdateResponseClinicRole.RegisteredNurse)]
-    [InlineData(InvitationUpdateResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(InvitationUpdateResponseClinicRole.FrontDeskOperator)]
-    [InlineData(InvitationUpdateResponseClinicRole.ImagingTechnologist)]
-    [InlineData(InvitationUpdateResponseClinicRole.PacsAdministrator)]
-    [InlineData(InvitationUpdateResponseClinicRole.SoftwareEngineer)]
-    [InlineData(InvitationUpdateResponseClinicRole.RevenueCycleManager)]
-    [InlineData(InvitationUpdateResponseClinicRole.AdministrativeDirector)]
-    [InlineData(InvitationUpdateResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(InvitationUpdateResponseClinicRole.Other)]
-    public void SerializationRoundtrip_Works(InvitationUpdateResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseClinicRole> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseClinicRole>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseClinicRole>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class InvitationUpdateResponseInvitedSourceTest : TestBase
-{
-    [Theory]
-    [InlineData(InvitationUpdateResponseInvitedSource.Dashboard)]
-    [InlineData(InvitationUpdateResponseInvitedSource.Api)]
-    public void Validation_Works(InvitationUpdateResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseInvitedSource> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseInvitedSource>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(InvitationUpdateResponseInvitedSource.Dashboard)]
-    [InlineData(InvitationUpdateResponseInvitedSource.Api)]
-    public void SerializationRoundtrip_Works(InvitationUpdateResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseInvitedSource> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseInvitedSource>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class InvitationUpdateResponseLevelTest : TestBase
-{
-    [Theory]
-    [InlineData(InvitationUpdateResponseLevel.Owner)]
-    [InlineData(InvitationUpdateResponseLevel.Admin)]
-    [InlineData(InvitationUpdateResponseLevel.Member)]
-    public void Validation_Works(InvitationUpdateResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseLevel> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(InvitationUpdateResponseLevel.Owner)]
-    [InlineData(InvitationUpdateResponseLevel.Admin)]
-    [InlineData(InvitationUpdateResponseLevel.Member)]
-    public void SerializationRoundtrip_Works(InvitationUpdateResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseLevel> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseLevel>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseLevel>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class InvitationUpdateResponseStatusTest : TestBase
-{
-    [Theory]
-    [InlineData(InvitationUpdateResponseStatus.Sent)]
-    [InlineData(InvitationUpdateResponseStatus.Accepted)]
-    [InlineData(InvitationUpdateResponseStatus.Rejected)]
-    [InlineData(InvitationUpdateResponseStatus.Revoked)]
-    public void Validation_Works(InvitationUpdateResponseStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseStatus> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(InvitationUpdateResponseStatus.Sent)]
-    [InlineData(InvitationUpdateResponseStatus.Accepted)]
-    [InlineData(InvitationUpdateResponseStatus.Rejected)]
-    [InlineData(InvitationUpdateResponseStatus.Revoked)]
-    public void SerializationRoundtrip_Works(InvitationUpdateResponseStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, InvitationUpdateResponseStatus> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, InvitationUpdateResponseStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, InvitationUpdateResponseStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
     }
 }

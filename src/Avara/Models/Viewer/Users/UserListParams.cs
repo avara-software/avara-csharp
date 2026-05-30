@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Users;
 
@@ -130,14 +128,12 @@ public record class UserListParams : ParamsBase
     /// <summary>
     /// Filter by user level
     /// </summary>
-    public ApiEnum<string, UserListParamsLevel>? Level
+    public ApiEnum<string, UserLevel>? Level
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, UserListParamsLevel>>(
-                "level"
-            );
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, UserLevel>>("level");
         }
         init
         {
@@ -258,102 +254,5 @@ public record class UserListParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// Filter by invitation source
-/// </summary>
-[JsonConverter(typeof(InvitedSourceConverter))]
-public enum InvitedSource
-{
-    Dashboard,
-    Api,
-}
-
-sealed class InvitedSourceConverter : JsonConverter<InvitedSource>
-{
-    public override InvitedSource Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "dashboard" => InvitedSource.Dashboard,
-            "api" => InvitedSource.Api,
-            _ => (InvitedSource)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        InvitedSource value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                InvitedSource.Dashboard => "dashboard",
-                InvitedSource.Api => "api",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Filter by user level
-/// </summary>
-[JsonConverter(typeof(UserListParamsLevelConverter))]
-public enum UserListParamsLevel
-{
-    Owner,
-    Admin,
-    Member,
-}
-
-sealed class UserListParamsLevelConverter : JsonConverter<UserListParamsLevel>
-{
-    public override UserListParamsLevel Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "owner" => UserListParamsLevel.Owner,
-            "admin" => UserListParamsLevel.Admin,
-            "member" => UserListParamsLevel.Member,
-            _ => (UserListParamsLevel)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserListParamsLevel value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserListParamsLevel.Owner => "owner",
-                UserListParamsLevel.Admin => "admin",
-                UserListParamsLevel.Member => "member",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }
