@@ -26,11 +26,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -49,6 +49,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -70,13 +72,24 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            Modality = "modality",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -85,6 +98,8 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z");
@@ -97,11 +112,11 @@ public class StudyUpdateResponseTest : TestBase
             Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = AutoScribe::Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
         };
         ApiEnum<string, StudyUpdateResponseSeverity> expectedSeverity =
@@ -122,6 +137,8 @@ public class StudyUpdateResponseTest : TestBase
             Suffix1 = "MD",
             Suffix2 = "FACR",
         };
+        string expectedClinicalHistory = "clinicalHistory";
+        string expectedClinicalIndication = "clinicalIndication";
         StudyUpdateResponseCreatedByApiKey expectedCreatedByApiKey = new()
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -143,17 +160,30 @@ public class StudyUpdateResponseTest : TestBase
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExpressCustomerName = "City Medical Center",
         };
+        string expectedExternalPatientID = "externalPatientId";
         Dictionary<string, string> expectedMetadata = new()
         {
             { "department", "radiology" },
             { "priority", "routine" },
         };
-        List<string> expectedPriorReportTexts = ["Previous imaging shows stable findings."];
-        List<string> expectedPriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"];
+        string expectedModality = "modality";
+        List<StudyUpdateResponsePriorReport> expectedPriorReports =
+        [
+            new()
+            {
+                ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                ExternalStudyID = "EXT-2024-001",
+                Modality = "CT",
+                StudyDate = "2024-01-15",
+                StudyDescription = "CT Chest without contrast",
+            },
+        ];
         List<ReportIDWithStatus> expectedReportIds =
         [
             new() { ReportID = "rep_1234567890abcdef1234567890abcdef", Status = Status.InProgress },
         ];
+        List<string> expectedTechnologistNotes = ["x"];
+        string expectedTechnologistTechnique = "technologistTechnique";
 
         Assert.Null(model.CancelledAt);
         Assert.Equal(expectedCreatedAt, model.CreatedAt);
@@ -166,9 +196,12 @@ public class StudyUpdateResponseTest : TestBase
         Assert.Equal(expectedStudyReportStatus, model.StudyReportStatus);
         Assert.Equal(expectedUpdatedAt, model.UpdatedAt);
         Assert.Equal(expectedAssignedTo, model.AssignedTo);
+        Assert.Equal(expectedClinicalHistory, model.ClinicalHistory);
+        Assert.Equal(expectedClinicalIndication, model.ClinicalIndication);
         Assert.Equal(expectedCreatedByApiKey, model.CreatedByApiKey);
         Assert.Equal(expectedCreatedByUser, model.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, model.ExpressCustomer);
+        Assert.Equal(expectedExternalPatientID, model.ExternalPatientID);
         Assert.NotNull(model.Metadata);
         Assert.Equal(expectedMetadata.Count, model.Metadata.Count);
         foreach (var item in expectedMetadata)
@@ -177,17 +210,12 @@ public class StudyUpdateResponseTest : TestBase
 
             Assert.Equal(value, model.Metadata[item.Key]);
         }
-        Assert.NotNull(model.PriorReportTexts);
-        Assert.Equal(expectedPriorReportTexts.Count, model.PriorReportTexts.Count);
-        for (int i = 0; i < expectedPriorReportTexts.Count; i++)
+        Assert.Equal(expectedModality, model.Modality);
+        Assert.NotNull(model.PriorReports);
+        Assert.Equal(expectedPriorReports.Count, model.PriorReports.Count);
+        for (int i = 0; i < expectedPriorReports.Count; i++)
         {
-            Assert.Equal(expectedPriorReportTexts[i], model.PriorReportTexts[i]);
-        }
-        Assert.NotNull(model.PriorStudyIds);
-        Assert.Equal(expectedPriorStudyIds.Count, model.PriorStudyIds.Count);
-        for (int i = 0; i < expectedPriorStudyIds.Count; i++)
-        {
-            Assert.Equal(expectedPriorStudyIds[i], model.PriorStudyIds[i]);
+            Assert.Equal(expectedPriorReports[i], model.PriorReports[i]);
         }
         Assert.NotNull(model.ReportIds);
         Assert.Equal(expectedReportIds.Count, model.ReportIds.Count);
@@ -195,6 +223,13 @@ public class StudyUpdateResponseTest : TestBase
         {
             Assert.Equal(expectedReportIds[i], model.ReportIds[i]);
         }
+        Assert.NotNull(model.TechnologistNotes);
+        Assert.Equal(expectedTechnologistNotes.Count, model.TechnologistNotes.Count);
+        for (int i = 0; i < expectedTechnologistNotes.Count; i++)
+        {
+            Assert.Equal(expectedTechnologistNotes[i], model.TechnologistNotes[i]);
+        }
+        Assert.Equal(expectedTechnologistTechnique, model.TechnologistTechnique);
     }
 
     [Fact]
@@ -213,11 +248,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -236,6 +271,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -257,13 +294,24 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            Modality = "modality",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -272,6 +320,8 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -299,11 +349,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -322,6 +372,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -343,13 +395,24 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            Modality = "modality",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -358,6 +421,8 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -377,11 +442,11 @@ public class StudyUpdateResponseTest : TestBase
             Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = AutoScribe::Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
         };
         ApiEnum<string, StudyUpdateResponseSeverity> expectedSeverity =
@@ -402,6 +467,8 @@ public class StudyUpdateResponseTest : TestBase
             Suffix1 = "MD",
             Suffix2 = "FACR",
         };
+        string expectedClinicalHistory = "clinicalHistory";
+        string expectedClinicalIndication = "clinicalIndication";
         StudyUpdateResponseCreatedByApiKey expectedCreatedByApiKey = new()
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -423,17 +490,30 @@ public class StudyUpdateResponseTest : TestBase
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExpressCustomerName = "City Medical Center",
         };
+        string expectedExternalPatientID = "externalPatientId";
         Dictionary<string, string> expectedMetadata = new()
         {
             { "department", "radiology" },
             { "priority", "routine" },
         };
-        List<string> expectedPriorReportTexts = ["Previous imaging shows stable findings."];
-        List<string> expectedPriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"];
+        string expectedModality = "modality";
+        List<StudyUpdateResponsePriorReport> expectedPriorReports =
+        [
+            new()
+            {
+                ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                ExternalStudyID = "EXT-2024-001",
+                Modality = "CT",
+                StudyDate = "2024-01-15",
+                StudyDescription = "CT Chest without contrast",
+            },
+        ];
         List<ReportIDWithStatus> expectedReportIds =
         [
             new() { ReportID = "rep_1234567890abcdef1234567890abcdef", Status = Status.InProgress },
         ];
+        List<string> expectedTechnologistNotes = ["x"];
+        string expectedTechnologistTechnique = "technologistTechnique";
 
         Assert.Null(deserialized.CancelledAt);
         Assert.Equal(expectedCreatedAt, deserialized.CreatedAt);
@@ -446,9 +526,12 @@ public class StudyUpdateResponseTest : TestBase
         Assert.Equal(expectedStudyReportStatus, deserialized.StudyReportStatus);
         Assert.Equal(expectedUpdatedAt, deserialized.UpdatedAt);
         Assert.Equal(expectedAssignedTo, deserialized.AssignedTo);
+        Assert.Equal(expectedClinicalHistory, deserialized.ClinicalHistory);
+        Assert.Equal(expectedClinicalIndication, deserialized.ClinicalIndication);
         Assert.Equal(expectedCreatedByApiKey, deserialized.CreatedByApiKey);
         Assert.Equal(expectedCreatedByUser, deserialized.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, deserialized.ExpressCustomer);
+        Assert.Equal(expectedExternalPatientID, deserialized.ExternalPatientID);
         Assert.NotNull(deserialized.Metadata);
         Assert.Equal(expectedMetadata.Count, deserialized.Metadata.Count);
         foreach (var item in expectedMetadata)
@@ -457,17 +540,12 @@ public class StudyUpdateResponseTest : TestBase
 
             Assert.Equal(value, deserialized.Metadata[item.Key]);
         }
-        Assert.NotNull(deserialized.PriorReportTexts);
-        Assert.Equal(expectedPriorReportTexts.Count, deserialized.PriorReportTexts.Count);
-        for (int i = 0; i < expectedPriorReportTexts.Count; i++)
+        Assert.Equal(expectedModality, deserialized.Modality);
+        Assert.NotNull(deserialized.PriorReports);
+        Assert.Equal(expectedPriorReports.Count, deserialized.PriorReports.Count);
+        for (int i = 0; i < expectedPriorReports.Count; i++)
         {
-            Assert.Equal(expectedPriorReportTexts[i], deserialized.PriorReportTexts[i]);
-        }
-        Assert.NotNull(deserialized.PriorStudyIds);
-        Assert.Equal(expectedPriorStudyIds.Count, deserialized.PriorStudyIds.Count);
-        for (int i = 0; i < expectedPriorStudyIds.Count; i++)
-        {
-            Assert.Equal(expectedPriorStudyIds[i], deserialized.PriorStudyIds[i]);
+            Assert.Equal(expectedPriorReports[i], deserialized.PriorReports[i]);
         }
         Assert.NotNull(deserialized.ReportIds);
         Assert.Equal(expectedReportIds.Count, deserialized.ReportIds.Count);
@@ -475,6 +553,13 @@ public class StudyUpdateResponseTest : TestBase
         {
             Assert.Equal(expectedReportIds[i], deserialized.ReportIds[i]);
         }
+        Assert.NotNull(deserialized.TechnologistNotes);
+        Assert.Equal(expectedTechnologistNotes.Count, deserialized.TechnologistNotes.Count);
+        for (int i = 0; i < expectedTechnologistNotes.Count; i++)
+        {
+            Assert.Equal(expectedTechnologistNotes[i], deserialized.TechnologistNotes[i]);
+        }
+        Assert.Equal(expectedTechnologistTechnique, deserialized.TechnologistTechnique);
     }
 
     [Fact]
@@ -493,11 +578,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -516,6 +601,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -537,13 +624,24 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            Modality = "modality",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -552,6 +650,8 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         model.Validate();
@@ -573,11 +673,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -596,6 +696,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -617,16 +719,19 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
+            Modality = "modality",
+            TechnologistTechnique = "technologistTechnique",
         };
 
         Assert.Null(model.Metadata);
         Assert.False(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.PriorReportTexts);
-        Assert.False(model.RawData.ContainsKey("priorReportTexts"));
-        Assert.Null(model.PriorStudyIds);
-        Assert.False(model.RawData.ContainsKey("priorStudyIds"));
+        Assert.Null(model.PriorReports);
+        Assert.False(model.RawData.ContainsKey("priorReports"));
         Assert.Null(model.ReportIds);
         Assert.False(model.RawData.ContainsKey("reportIds"));
+        Assert.Null(model.TechnologistNotes);
+        Assert.False(model.RawData.ContainsKey("technologistNotes"));
     }
 
     [Fact]
@@ -645,11 +750,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -668,6 +773,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -689,6 +796,9 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
+            Modality = "modality",
+            TechnologistTechnique = "technologistTechnique",
         };
 
         model.Validate();
@@ -710,11 +820,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -733,6 +843,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -754,22 +866,25 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
+            Modality = "modality",
+            TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
             Metadata = null,
-            PriorReportTexts = null,
-            PriorStudyIds = null,
+            PriorReports = null,
             ReportIds = null,
+            TechnologistNotes = null,
         };
 
         Assert.Null(model.Metadata);
         Assert.False(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.PriorReportTexts);
-        Assert.False(model.RawData.ContainsKey("priorReportTexts"));
-        Assert.Null(model.PriorStudyIds);
-        Assert.False(model.RawData.ContainsKey("priorStudyIds"));
+        Assert.Null(model.PriorReports);
+        Assert.False(model.RawData.ContainsKey("priorReports"));
         Assert.Null(model.ReportIds);
         Assert.False(model.RawData.ContainsKey("reportIds"));
+        Assert.Null(model.TechnologistNotes);
+        Assert.False(model.RawData.ContainsKey("technologistNotes"));
     }
 
     [Fact]
@@ -788,11 +903,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -811,6 +926,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -832,12 +949,15 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
+            Modality = "modality",
+            TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
             Metadata = null,
-            PriorReportTexts = null,
-            PriorStudyIds = null,
+            PriorReports = null,
             ReportIds = null,
+            TechnologistNotes = null,
         };
 
         model.Validate();
@@ -859,11 +979,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -877,8 +997,17 @@ public class StudyUpdateResponseTest : TestBase
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -887,16 +1016,27 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
         };
 
         Assert.Null(model.AssignedTo);
         Assert.False(model.RawData.ContainsKey("assignedTo"));
+        Assert.Null(model.ClinicalHistory);
+        Assert.False(model.RawData.ContainsKey("clinicalHistory"));
+        Assert.Null(model.ClinicalIndication);
+        Assert.False(model.RawData.ContainsKey("clinicalIndication"));
         Assert.Null(model.CreatedByApiKey);
         Assert.False(model.RawData.ContainsKey("createdByApiKey"));
         Assert.Null(model.CreatedByUser);
         Assert.False(model.RawData.ContainsKey("createdByUser"));
         Assert.Null(model.ExpressCustomer);
         Assert.False(model.RawData.ContainsKey("expressCustomer"));
+        Assert.Null(model.ExternalPatientID);
+        Assert.False(model.RawData.ContainsKey("externalPatientId"));
+        Assert.Null(model.Modality);
+        Assert.False(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.TechnologistTechnique);
+        Assert.False(model.RawData.ContainsKey("technologistTechnique"));
     }
 
     [Fact]
@@ -915,11 +1055,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -933,8 +1073,17 @@ public class StudyUpdateResponseTest : TestBase
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -943,6 +1092,7 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
         };
 
         model.Validate();
@@ -964,11 +1114,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -982,8 +1132,17 @@ public class StudyUpdateResponseTest : TestBase
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -992,21 +1151,37 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
 
             AssignedTo = null,
+            ClinicalHistory = null,
+            ClinicalIndication = null,
             CreatedByApiKey = null,
             CreatedByUser = null,
             ExpressCustomer = null,
+            ExternalPatientID = null,
+            Modality = null,
+            TechnologistTechnique = null,
         };
 
         Assert.Null(model.AssignedTo);
         Assert.True(model.RawData.ContainsKey("assignedTo"));
+        Assert.Null(model.ClinicalHistory);
+        Assert.True(model.RawData.ContainsKey("clinicalHistory"));
+        Assert.Null(model.ClinicalIndication);
+        Assert.True(model.RawData.ContainsKey("clinicalIndication"));
         Assert.Null(model.CreatedByApiKey);
         Assert.True(model.RawData.ContainsKey("createdByApiKey"));
         Assert.Null(model.CreatedByUser);
         Assert.True(model.RawData.ContainsKey("createdByUser"));
         Assert.Null(model.ExpressCustomer);
         Assert.True(model.RawData.ContainsKey("expressCustomer"));
+        Assert.Null(model.ExternalPatientID);
+        Assert.True(model.RawData.ContainsKey("externalPatientId"));
+        Assert.Null(model.Modality);
+        Assert.True(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.TechnologistTechnique);
+        Assert.True(model.RawData.ContainsKey("technologistTechnique"));
     }
 
     [Fact]
@@ -1025,11 +1200,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -1043,8 +1218,17 @@ public class StudyUpdateResponseTest : TestBase
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -1053,11 +1237,17 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
 
             AssignedTo = null,
+            ClinicalHistory = null,
+            ClinicalIndication = null,
             CreatedByApiKey = null,
             CreatedByUser = null,
             ExpressCustomer = null,
+            ExternalPatientID = null,
+            Modality = null,
+            TechnologistTechnique = null,
         };
 
         model.Validate();
@@ -1079,11 +1269,11 @@ public class StudyUpdateResponseTest : TestBase
                 Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
+                Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                ScanDate = "2024-03-15",
-                ScanTime = "14:30",
-                ScanType = "MRI Brain with Contrast",
                 Sex = AutoScribe::Sex.Female,
+                StudyDate = "2024-03-15",
+                StudyTime = "14:30",
                 Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
             },
             Severity = StudyUpdateResponseSeverity.Normal,
@@ -1102,6 +1292,8 @@ public class StudyUpdateResponseTest : TestBase
                 Suffix1 = "MD",
                 Suffix2 = "FACR",
             },
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "clinicalIndication",
             CreatedByApiKey = new()
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -1123,13 +1315,24 @@ public class StudyUpdateResponseTest : TestBase
                 ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                 ExpressCustomerName = "City Medical Center",
             },
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
                 { "priority", "routine" },
             },
-            PriorReportTexts = ["Previous imaging shows stable findings."],
-            PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+            Modality = "modality",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportIds =
             [
                 new()
@@ -1138,6 +1341,8 @@ public class StudyUpdateResponseTest : TestBase
                     Status = Status.InProgress,
                 },
             ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         StudyUpdateResponse copied = new(model);
@@ -1920,6 +2125,189 @@ public class StudyUpdateResponseExpressCustomerTest : TestBase
         };
 
         StudyUpdateResponseExpressCustomer copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class StudyUpdateResponsePriorReportTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
+        string expectedExternalStudyID = "EXT-2024-001";
+        string expectedModality = "CT";
+        string expectedStudyDate = "2024-01-15";
+        string expectedStudyDescription = "CT Chest without contrast";
+
+        Assert.Equal(expectedReportText, model.ReportText);
+        Assert.Equal(expectedExternalStudyID, model.ExternalStudyID);
+        Assert.Equal(expectedModality, model.Modality);
+        Assert.Equal(expectedStudyDate, model.StudyDate);
+        Assert.Equal(expectedStudyDescription, model.StudyDescription);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StudyUpdateResponsePriorReport>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StudyUpdateResponsePriorReport>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
+        string expectedExternalStudyID = "EXT-2024-001";
+        string expectedModality = "CT";
+        string expectedStudyDate = "2024-01-15";
+        string expectedStudyDescription = "CT Chest without contrast";
+
+        Assert.Equal(expectedReportText, deserialized.ReportText);
+        Assert.Equal(expectedExternalStudyID, deserialized.ExternalStudyID);
+        Assert.Equal(expectedModality, deserialized.Modality);
+        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
+        Assert.Equal(expectedStudyDescription, deserialized.StudyDescription);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+        };
+
+        Assert.Null(model.ExternalStudyID);
+        Assert.False(model.RawData.ContainsKey("externalStudyId"));
+        Assert.Null(model.Modality);
+        Assert.False(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyDescription);
+        Assert.False(model.RawData.ContainsKey("studyDescription"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+
+            // Null should be interpreted as omitted for these properties
+            ExternalStudyID = null,
+            Modality = null,
+            StudyDate = null,
+            StudyDescription = null,
+        };
+
+        Assert.Null(model.ExternalStudyID);
+        Assert.False(model.RawData.ContainsKey("externalStudyId"));
+        Assert.Null(model.Modality);
+        Assert.False(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyDescription);
+        Assert.False(model.RawData.ContainsKey("studyDescription"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+
+            // Null should be interpreted as omitted for these properties
+            ExternalStudyID = null,
+            Modality = null,
+            StudyDate = null,
+            StudyDescription = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StudyUpdateResponsePriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        StudyUpdateResponsePriorReport copied = new(model);
 
         Assert.Equal(model, copied);
     }

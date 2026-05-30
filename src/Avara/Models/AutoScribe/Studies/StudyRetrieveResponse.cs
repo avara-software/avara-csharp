@@ -167,6 +167,32 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 
     /// <summary>
+    /// Relevant clinical history for the study
+    /// </summary>
+    public string? ClinicalHistory
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("clinicalHistory");
+        }
+        init { this._rawData.Set("clinicalHistory", value); }
+    }
+
+    /// <summary>
+    /// Clinical indication for the study
+    /// </summary>
+    public string? ClinicalIndication
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("clinicalIndication");
+        }
+        init { this._rawData.Set("clinicalIndication", value); }
+    }
+
+    /// <summary>
     /// Reference to the API key used to create this study
     /// </summary>
     public StudyRetrieveResponseCreatedByApiKey? CreatedByApiKey
@@ -212,6 +238,19 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 
     /// <summary>
+    /// Integrator-provided stable patient identifier for linking studies
+    /// </summary>
+    public string? ExternalPatientID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("externalPatientId");
+        }
+        init { this._rawData.Set("externalPatientId", value); }
+    }
+
+    /// <summary>
     /// Custom key-value metadata for the study. Maximum 50 pairs, keys up to 100
     /// chars, values up to 1000 chars
     /// </summary>
@@ -237,38 +276,29 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// Array of prior report texts to provide clinical context
+    /// Imaging modality for the study (free text)
     /// </summary>
-    public IReadOnlyList<string>? PriorReportTexts
+    public string? Modality
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<ImmutableArray<string>>("priorReportTexts");
+            return this._rawData.GetNullableClass<string>("modality");
         }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set<ImmutableArray<string>?>(
-                "priorReportTexts",
-                value == null ? null : ImmutableArray.ToImmutableArray(value)
-            );
-        }
+        init { this._rawData.Set("modality", value); }
     }
 
     /// <summary>
-    /// Array of prior study IDs for comparison context (format: stu_{32-hex-chars})
+    /// External prior reports with metadata and text
     /// </summary>
-    public IReadOnlyList<string>? PriorStudyIds
+    public IReadOnlyList<StudyRetrieveResponsePriorReport>? PriorReports
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<ImmutableArray<string>>("priorStudyIds");
+            return this._rawData.GetNullableStruct<
+                ImmutableArray<StudyRetrieveResponsePriorReport>
+            >("priorReports");
         }
         init
         {
@@ -277,8 +307,8 @@ public sealed record class StudyRetrieveResponse : JsonModel
                 return;
             }
 
-            this._rawData.Set<ImmutableArray<string>?>(
-                "priorStudyIds",
+            this._rawData.Set<ImmutableArray<StudyRetrieveResponsePriorReport>?>(
+                "priorReports",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
@@ -308,6 +338,43 @@ public sealed record class StudyRetrieveResponse : JsonModel
         }
     }
 
+    /// <summary>
+    /// Technologist notes for the study
+    /// </summary>
+    public IReadOnlyList<string>? TechnologistNotes
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("technologistNotes");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<ImmutableArray<string>?>(
+                "technologistNotes",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Imaging technique description
+    /// </summary>
+    public string? TechnologistTechnique
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("technologistTechnique");
+        }
+        init { this._rawData.Set("technologistTechnique", value); }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -322,16 +389,24 @@ public sealed record class StudyRetrieveResponse : JsonModel
         this.StudyReportStatus.Validate();
         _ = this.UpdatedAt;
         this.AssignedTo?.Validate();
+        _ = this.ClinicalHistory;
+        _ = this.ClinicalIndication;
         this.CreatedByApiKey?.Validate();
         this.CreatedByUser?.Validate();
         this.ExpressCustomer?.Validate();
+        _ = this.ExternalPatientID;
         _ = this.Metadata;
-        _ = this.PriorReportTexts;
-        _ = this.PriorStudyIds;
+        _ = this.Modality;
+        foreach (var item in this.PriorReports ?? [])
+        {
+            item.Validate();
+        }
         foreach (var item in this.ReportIds ?? [])
         {
             item.Validate();
         }
+        _ = this.TechnologistNotes;
+        _ = this.TechnologistTechnique;
     }
 
     public StudyRetrieveResponse() { }
@@ -1060,4 +1135,169 @@ class StudyRetrieveResponseExpressCustomerFromRaw
     public StudyRetrieveResponseExpressCustomer FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => StudyRetrieveResponseExpressCustomer.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// External prior report metadata and text stored on a study
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        StudyRetrieveResponsePriorReport,
+        StudyRetrieveResponsePriorReportFromRaw
+    >)
+)]
+public sealed record class StudyRetrieveResponsePriorReport : JsonModel
+{
+    /// <summary>
+    /// Full prior report text
+    /// </summary>
+    public required string ReportText
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("reportText");
+        }
+        init { this._rawData.Set("reportText", value); }
+    }
+
+    /// <summary>
+    /// Integrator's external study identifier
+    /// </summary>
+    public string? ExternalStudyID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("externalStudyId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("externalStudyId", value);
+        }
+    }
+
+    /// <summary>
+    /// Imaging modality for the prior study
+    /// </summary>
+    public string? Modality
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("modality");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("modality", value);
+        }
+    }
+
+    /// <summary>
+    /// Prior study date (YYYY-MM-DD)
+    /// </summary>
+    public string? StudyDate
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDate");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyDate", value);
+        }
+    }
+
+    /// <summary>
+    /// Description of the prior study
+    /// </summary>
+    public string? StudyDescription
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDescription");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyDescription", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ReportText;
+        _ = this.ExternalStudyID;
+        _ = this.Modality;
+        _ = this.StudyDate;
+        _ = this.StudyDescription;
+    }
+
+    public StudyRetrieveResponsePriorReport() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public StudyRetrieveResponsePriorReport(
+        StudyRetrieveResponsePriorReport studyRetrieveResponsePriorReport
+    )
+        : base(studyRetrieveResponsePriorReport) { }
+#pragma warning restore CS8618
+
+    public StudyRetrieveResponsePriorReport(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    StudyRetrieveResponsePriorReport(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="StudyRetrieveResponsePriorReportFromRaw.FromRawUnchecked"/>
+    public static StudyRetrieveResponsePriorReport FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public StudyRetrieveResponsePriorReport(string reportText)
+        : this()
+    {
+        this.ReportText = reportText;
+    }
+}
+
+class StudyRetrieveResponsePriorReportFromRaw : IFromRawJson<StudyRetrieveResponsePriorReport>
+{
+    /// <inheritdoc/>
+    public StudyRetrieveResponsePriorReport FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => StudyRetrieveResponsePriorReport.FromRawUnchecked(rawData);
 }

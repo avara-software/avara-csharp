@@ -30,11 +30,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -53,6 +53,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -74,13 +76,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -89,6 +102,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
             Cursor = "cursor",
@@ -110,11 +125,11 @@ public class StudyListPageResponseTest : TestBase
                     Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                     Mrn = "MRN-2024-001234",
                     PatientName = "Jane Doe",
+                    Procedure = "MRI Brain with Contrast",
                     ReferringPhysicianName = "Dr. Michael Chen",
-                    ScanDate = "2024-03-15",
-                    ScanTime = "14:30",
-                    ScanType = "MRI Brain with Contrast",
                     Sex = AutoScribe::Sex.Female,
+                    StudyDate = "2024-03-15",
+                    StudyTime = "14:30",
                     Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                 },
                 Severity = StudyListResponseSeverity.Normal,
@@ -133,6 +148,8 @@ public class StudyListPageResponseTest : TestBase
                     Suffix1 = "MD",
                     Suffix2 = "FACR",
                 },
+                ClinicalHistory = "clinicalHistory",
+                ClinicalIndication = "clinicalIndication",
                 CreatedByApiKey = new()
                 {
                     ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -154,13 +171,24 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                     ExpressCustomerName = "City Medical Center",
                 },
+                ExternalPatientID = "externalPatientId",
                 Metadata = new Dictionary<string, string>()
                 {
                     { "department", "radiology" },
                     { "priority", "routine" },
                 },
-                PriorReportTexts = ["Previous imaging shows stable findings."],
-                PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                Modality = "modality",
+                PriorReports =
+                [
+                    new()
+                    {
+                        ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                        ExternalStudyID = "EXT-2024-001",
+                        Modality = "CT",
+                        StudyDate = "2024-01-15",
+                        StudyDescription = "CT Chest without contrast",
+                    },
+                ],
                 ReportIds =
                 [
                     new()
@@ -169,6 +197,8 @@ public class StudyListPageResponseTest : TestBase
                         Status = Status.InProgress,
                     },
                 ],
+                TechnologistNotes = ["x"],
+                TechnologistTechnique = "technologistTechnique",
             },
         ];
         string expectedCursor = "cursor";
@@ -203,11 +233,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -226,6 +256,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -247,13 +279,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -262,6 +305,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
             Cursor = "cursor",
@@ -297,11 +342,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -320,6 +365,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -341,13 +388,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -356,6 +414,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
             Cursor = "cursor",
@@ -384,11 +444,11 @@ public class StudyListPageResponseTest : TestBase
                     Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                     Mrn = "MRN-2024-001234",
                     PatientName = "Jane Doe",
+                    Procedure = "MRI Brain with Contrast",
                     ReferringPhysicianName = "Dr. Michael Chen",
-                    ScanDate = "2024-03-15",
-                    ScanTime = "14:30",
-                    ScanType = "MRI Brain with Contrast",
                     Sex = AutoScribe::Sex.Female,
+                    StudyDate = "2024-03-15",
+                    StudyTime = "14:30",
                     Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                 },
                 Severity = StudyListResponseSeverity.Normal,
@@ -407,6 +467,8 @@ public class StudyListPageResponseTest : TestBase
                     Suffix1 = "MD",
                     Suffix2 = "FACR",
                 },
+                ClinicalHistory = "clinicalHistory",
+                ClinicalIndication = "clinicalIndication",
                 CreatedByApiKey = new()
                 {
                     ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -428,13 +490,24 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                     ExpressCustomerName = "City Medical Center",
                 },
+                ExternalPatientID = "externalPatientId",
                 Metadata = new Dictionary<string, string>()
                 {
                     { "department", "radiology" },
                     { "priority", "routine" },
                 },
-                PriorReportTexts = ["Previous imaging shows stable findings."],
-                PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                Modality = "modality",
+                PriorReports =
+                [
+                    new()
+                    {
+                        ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                        ExternalStudyID = "EXT-2024-001",
+                        Modality = "CT",
+                        StudyDate = "2024-01-15",
+                        StudyDescription = "CT Chest without contrast",
+                    },
+                ],
                 ReportIds =
                 [
                     new()
@@ -443,6 +516,8 @@ public class StudyListPageResponseTest : TestBase
                         Status = Status.InProgress,
                     },
                 ],
+                TechnologistNotes = ["x"],
+                TechnologistTechnique = "technologistTechnique",
             },
         ];
         string expectedCursor = "cursor";
@@ -477,11 +552,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -500,6 +575,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -521,13 +598,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -536,6 +624,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
             Cursor = "cursor",
@@ -565,11 +655,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -588,6 +678,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -609,13 +701,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -624,6 +727,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
         };
@@ -653,11 +758,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -676,6 +781,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -697,13 +804,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -712,6 +830,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
         };
@@ -740,11 +860,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -763,6 +883,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -784,13 +906,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -799,6 +932,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
 
@@ -831,11 +966,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -854,6 +989,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -875,13 +1012,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -890,6 +1038,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
 
@@ -921,11 +1071,11 @@ public class StudyListPageResponseTest : TestBase
                         Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
+                        Procedure = "MRI Brain with Contrast",
                         ReferringPhysicianName = "Dr. Michael Chen",
-                        ScanDate = "2024-03-15",
-                        ScanTime = "14:30",
-                        ScanType = "MRI Brain with Contrast",
                         Sex = AutoScribe::Sex.Female,
+                        StudyDate = "2024-03-15",
+                        StudyTime = "14:30",
                         Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
                     },
                     Severity = StudyListResponseSeverity.Normal,
@@ -944,6 +1094,8 @@ public class StudyListPageResponseTest : TestBase
                         Suffix1 = "MD",
                         Suffix2 = "FACR",
                     },
+                    ClinicalHistory = "clinicalHistory",
+                    ClinicalIndication = "clinicalIndication",
                     CreatedByApiKey = new()
                     {
                         ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
@@ -965,13 +1117,24 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
                         ExpressCustomerName = "City Medical Center",
                     },
+                    ExternalPatientID = "externalPatientId",
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
                         { "priority", "routine" },
                     },
-                    PriorReportTexts = ["Previous imaging shows stable findings."],
-                    PriorStudyIds = ["stu_abcdef1234567890abcdef1234567890"],
+                    Modality = "modality",
+                    PriorReports =
+                    [
+                        new()
+                        {
+                            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                            ExternalStudyID = "EXT-2024-001",
+                            Modality = "CT",
+                            StudyDate = "2024-01-15",
+                            StudyDescription = "CT Chest without contrast",
+                        },
+                    ],
                     ReportIds =
                     [
                         new()
@@ -980,6 +1143,8 @@ public class StudyListPageResponseTest : TestBase
                             Status = Status.InProgress,
                         },
                     ],
+                    TechnologistNotes = ["x"],
+                    TechnologistTechnique = "technologistTechnique",
                 },
             ],
             Cursor = "cursor",

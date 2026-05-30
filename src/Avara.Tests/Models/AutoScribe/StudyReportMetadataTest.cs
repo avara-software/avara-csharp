@@ -18,11 +18,11 @@ public class StudyReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
 
@@ -32,11 +32,11 @@ public class StudyReportMetadataTest : TestBase
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 165 };
         string expectedMrn = "MRN-2024-001234";
         string expectedPatientName = "Jane Doe";
+        string expectedProcedure = "MRI Brain with Contrast";
         string expectedReferringPhysicianName = "Dr. Michael Chen";
-        string expectedScanDate = "2024-03-15";
-        string expectedScanTime = "14:30";
-        string expectedScanType = "MRI Brain with Contrast";
         ApiEnum<string, Sex> expectedSex = Sex.Female;
+        string expectedStudyDate = "2024-03-15";
+        string expectedStudyTime = "14:30";
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 62 };
 
         Assert.Equal(expectedAge, model.Age);
@@ -45,11 +45,11 @@ public class StudyReportMetadataTest : TestBase
         Assert.Equal(expectedHeight, model.Height);
         Assert.Equal(expectedMrn, model.Mrn);
         Assert.Equal(expectedPatientName, model.PatientName);
+        Assert.Equal(expectedProcedure, model.Procedure);
         Assert.Equal(expectedReferringPhysicianName, model.ReferringPhysicianName);
-        Assert.Equal(expectedScanDate, model.ScanDate);
-        Assert.Equal(expectedScanTime, model.ScanTime);
-        Assert.Equal(expectedScanType, model.ScanType);
         Assert.Equal(expectedSex, model.Sex);
+        Assert.Equal(expectedStudyDate, model.StudyDate);
+        Assert.Equal(expectedStudyTime, model.StudyTime);
         Assert.Equal(expectedWeight, model.Weight);
     }
 
@@ -64,11 +64,11 @@ public class StudyReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
 
@@ -92,11 +92,11 @@ public class StudyReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
 
@@ -113,11 +113,11 @@ public class StudyReportMetadataTest : TestBase
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 165 };
         string expectedMrn = "MRN-2024-001234";
         string expectedPatientName = "Jane Doe";
+        string expectedProcedure = "MRI Brain with Contrast";
         string expectedReferringPhysicianName = "Dr. Michael Chen";
-        string expectedScanDate = "2024-03-15";
-        string expectedScanTime = "14:30";
-        string expectedScanType = "MRI Brain with Contrast";
         ApiEnum<string, Sex> expectedSex = Sex.Female;
+        string expectedStudyDate = "2024-03-15";
+        string expectedStudyTime = "14:30";
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 62 };
 
         Assert.Equal(expectedAge, deserialized.Age);
@@ -126,11 +126,11 @@ public class StudyReportMetadataTest : TestBase
         Assert.Equal(expectedHeight, deserialized.Height);
         Assert.Equal(expectedMrn, deserialized.Mrn);
         Assert.Equal(expectedPatientName, deserialized.PatientName);
+        Assert.Equal(expectedProcedure, deserialized.Procedure);
         Assert.Equal(expectedReferringPhysicianName, deserialized.ReferringPhysicianName);
-        Assert.Equal(expectedScanDate, deserialized.ScanDate);
-        Assert.Equal(expectedScanTime, deserialized.ScanTime);
-        Assert.Equal(expectedScanType, deserialized.ScanType);
         Assert.Equal(expectedSex, deserialized.Sex);
+        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
+        Assert.Equal(expectedStudyTime, deserialized.StudyTime);
         Assert.Equal(expectedWeight, deserialized.Weight);
     }
 
@@ -145,11 +145,11 @@ public class StudyReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
 
@@ -173,16 +173,16 @@ public class StudyReportMetadataTest : TestBase
         Assert.False(model.RawData.ContainsKey("mrn"));
         Assert.Null(model.PatientName);
         Assert.False(model.RawData.ContainsKey("patientName"));
+        Assert.Null(model.Procedure);
+        Assert.False(model.RawData.ContainsKey("procedure"));
         Assert.Null(model.ReferringPhysicianName);
         Assert.False(model.RawData.ContainsKey("referringPhysicianName"));
-        Assert.Null(model.ScanDate);
-        Assert.False(model.RawData.ContainsKey("scanDate"));
-        Assert.Null(model.ScanTime);
-        Assert.False(model.RawData.ContainsKey("scanTime"));
-        Assert.Null(model.ScanType);
-        Assert.False(model.RawData.ContainsKey("scanType"));
         Assert.Null(model.Sex);
         Assert.False(model.RawData.ContainsKey("sex"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyTime);
+        Assert.False(model.RawData.ContainsKey("studyTime"));
         Assert.Null(model.Weight);
         Assert.False(model.RawData.ContainsKey("weight"));
     }
@@ -207,11 +207,11 @@ public class StudyReportMetadataTest : TestBase
             Height = null,
             Mrn = null,
             PatientName = null,
+            Procedure = null,
             ReferringPhysicianName = null,
-            ScanDate = null,
-            ScanTime = null,
-            ScanType = null,
             Sex = null,
+            StudyDate = null,
+            StudyTime = null,
             Weight = null,
         };
 
@@ -227,16 +227,16 @@ public class StudyReportMetadataTest : TestBase
         Assert.False(model.RawData.ContainsKey("mrn"));
         Assert.Null(model.PatientName);
         Assert.False(model.RawData.ContainsKey("patientName"));
+        Assert.Null(model.Procedure);
+        Assert.False(model.RawData.ContainsKey("procedure"));
         Assert.Null(model.ReferringPhysicianName);
         Assert.False(model.RawData.ContainsKey("referringPhysicianName"));
-        Assert.Null(model.ScanDate);
-        Assert.False(model.RawData.ContainsKey("scanDate"));
-        Assert.Null(model.ScanTime);
-        Assert.False(model.RawData.ContainsKey("scanTime"));
-        Assert.Null(model.ScanType);
-        Assert.False(model.RawData.ContainsKey("scanType"));
         Assert.Null(model.Sex);
         Assert.False(model.RawData.ContainsKey("sex"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyTime);
+        Assert.False(model.RawData.ContainsKey("studyTime"));
         Assert.Null(model.Weight);
         Assert.False(model.RawData.ContainsKey("weight"));
     }
@@ -253,11 +253,11 @@ public class StudyReportMetadataTest : TestBase
             Height = null,
             Mrn = null,
             PatientName = null,
+            Procedure = null,
             ReferringPhysicianName = null,
-            ScanDate = null,
-            ScanTime = null,
-            ScanType = null,
             Sex = null,
+            StudyDate = null,
+            StudyTime = null,
             Weight = null,
         };
 
@@ -275,11 +275,11 @@ public class StudyReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
+            Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            ScanDate = "2024-03-15",
-            ScanTime = "14:30",
-            ScanType = "MRI Brain with Contrast",
             Sex = Sex.Female,
+            StudyDate = "2024-03-15",
+            StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
 
