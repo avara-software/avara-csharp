@@ -29,7 +29,9 @@ public interface IStudyService
     /// <summary>
     /// Creates a new study in the AutoScribe system with DICOM metadata and report
     /// generation information. The study can include patient demographics, scan
-    /// details, and references to prior studies/reports for context.
+    /// details, clinical context (indication, history, technologist technique/notes),
+    /// an imaging modality, an external patient identifier for linking studies, and
+    /// external prior reports for comparison context.
     /// </summary>
     Task<StudyCreateResponse> Create(
         StudyCreateParams parameters,

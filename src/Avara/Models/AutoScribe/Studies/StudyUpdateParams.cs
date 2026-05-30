@@ -53,6 +53,32 @@ public record class StudyUpdateParams : ParamsBase
     }
 
     /// <summary>
+    /// Relevant clinical history for the patient/study. Null clears.
+    /// </summary>
+    public string? ClinicalHistory
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("clinicalHistory");
+        }
+        init { this._rawBodyData.Set("clinicalHistory", value); }
+    }
+
+    /// <summary>
+    /// Clinical indication for the study. Null clears.
+    /// </summary>
+    public string? ClinicalIndication
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("clinicalIndication");
+        }
+        init { this._rawBodyData.Set("clinicalIndication", value); }
+    }
+
+    /// <summary>
     /// Express Customer ID for the study, or null to remove. Format: cus_{32-hex-chars}
     /// </summary>
     public string? ExpressCustomerID
@@ -73,6 +99,20 @@ public record class StudyUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Integrator-provided stable patient identifier used to link studies for the
+    /// same patient. Null clears.
+    /// </summary>
+    public string? ExternalPatientID
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("externalPatientId");
+        }
+        init { this._rawBodyData.Set("externalPatientId", value); }
+    }
+
     public IReadOnlyDictionary<string, string>? Metadata
     {
         get
@@ -89,33 +129,36 @@ public record class StudyUpdateParams : ParamsBase
         }
     }
 
-    public IReadOnlyList<string>? PriorReportTexts
+    /// <summary>
+    /// Imaging modality for the study (free text). Null clears.
+    /// </summary>
+    public string? Modality
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableStruct<ImmutableArray<string>>("priorReportTexts");
+            return this._rawBodyData.GetNullableClass<string>("modality");
         }
-        init
-        {
-            this._rawBodyData.Set<ImmutableArray<string>?>(
-                "priorReportTexts",
-                value == null ? null : ImmutableArray.ToImmutableArray(value)
-            );
-        }
+        init { this._rawBodyData.Set("modality", value); }
     }
 
-    public IReadOnlyList<string>? PriorStudyIds
+    /// <summary>
+    /// External prior reports (metadata + full report text) for comparison context.
+    /// Null clears; an array replaces the existing set. Maximum 50 items
+    /// </summary>
+    public IReadOnlyList<StudyUpdateParamsPriorReport>? PriorReports
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableStruct<ImmutableArray<string>>("priorStudyIds");
+            return this._rawBodyData.GetNullableStruct<
+                ImmutableArray<StudyUpdateParamsPriorReport>
+            >("priorReports");
         }
         init
         {
-            this._rawBodyData.Set<ImmutableArray<string>?>(
-                "priorStudyIds",
+            this._rawBodyData.Set<ImmutableArray<StudyUpdateParamsPriorReport>?>(
+                "priorReports",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
@@ -182,6 +225,39 @@ public record class StudyUpdateParams : ParamsBase
 
             this._rawBodyData.Set("studyDescription", value);
         }
+    }
+
+    /// <summary>
+    /// Technologist notes for the study. Null clears; an array replaces the existing
+    /// set. Maximum 50 items, each up to 1000 characters
+    /// </summary>
+    public IReadOnlyList<string>? TechnologistNotes
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<ImmutableArray<string>>("technologistNotes");
+        }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<string>?>(
+                "technologistNotes",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Imaging technique description provided by the technologist. Null clears.
+    /// </summary>
+    public string? TechnologistTechnique
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("technologistTechnique");
+        }
+        init { this._rawBodyData.Set("technologistTechnique", value); }
     }
 
     public StudyUpdateParams() { }
@@ -305,6 +381,166 @@ public record class StudyUpdateParams : ParamsBase
     }
 }
 
+/// <summary>
+/// External prior report metadata and text stored on a study
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<StudyUpdateParamsPriorReport, StudyUpdateParamsPriorReportFromRaw>)
+)]
+public sealed record class StudyUpdateParamsPriorReport : JsonModel
+{
+    /// <summary>
+    /// Full prior report text
+    /// </summary>
+    public required string ReportText
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("reportText");
+        }
+        init { this._rawData.Set("reportText", value); }
+    }
+
+    /// <summary>
+    /// Integrator's external study identifier
+    /// </summary>
+    public string? ExternalStudyID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("externalStudyId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("externalStudyId", value);
+        }
+    }
+
+    /// <summary>
+    /// Imaging modality for the prior study
+    /// </summary>
+    public string? Modality
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("modality");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("modality", value);
+        }
+    }
+
+    /// <summary>
+    /// Prior study date (YYYY-MM-DD)
+    /// </summary>
+    public string? StudyDate
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDate");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyDate", value);
+        }
+    }
+
+    /// <summary>
+    /// Description of the prior study
+    /// </summary>
+    public string? StudyDescription
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDescription");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyDescription", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ReportText;
+        _ = this.ExternalStudyID;
+        _ = this.Modality;
+        _ = this.StudyDate;
+        _ = this.StudyDescription;
+    }
+
+    public StudyUpdateParamsPriorReport() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public StudyUpdateParamsPriorReport(StudyUpdateParamsPriorReport studyUpdateParamsPriorReport)
+        : base(studyUpdateParamsPriorReport) { }
+#pragma warning restore CS8618
+
+    public StudyUpdateParamsPriorReport(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    StudyUpdateParamsPriorReport(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="StudyUpdateParamsPriorReportFromRaw.FromRawUnchecked"/>
+    public static StudyUpdateParamsPriorReport FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public StudyUpdateParamsPriorReport(string reportText)
+        : this()
+    {
+        this.ReportText = reportText;
+    }
+}
+
+class StudyUpdateParamsPriorReportFromRaw : IFromRawJson<StudyUpdateParamsPriorReport>
+{
+    /// <inheritdoc/>
+    public StudyUpdateParamsPriorReport FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => StudyUpdateParamsPriorReport.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(JsonModelConverter<ReportMetadata, ReportMetadataFromRaw>))]
 public sealed record class ReportMetadata : JsonModel
 {
@@ -368,6 +604,19 @@ public sealed record class ReportMetadata : JsonModel
         init { this._rawData.Set("patientName", value); }
     }
 
+    /// <summary>
+    /// Procedure or study type. Nullable on PATCH. Maps to DB scan_type and report_header.scan_type.
+    /// </summary>
+    public string? Procedure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("procedure");
+        }
+        init { this._rawData.Set("procedure", value); }
+    }
+
     public string? ReferringPhysicianName
     {
         get
@@ -378,36 +627,6 @@ public sealed record class ReportMetadata : JsonModel
         init { this._rawData.Set("referringPhysicianName", value); }
     }
 
-    public string? ScanDate
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanDate");
-        }
-        init { this._rawData.Set("scanDate", value); }
-    }
-
-    public string? ScanTime
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanTime");
-        }
-        init { this._rawData.Set("scanTime", value); }
-    }
-
-    public string? ScanType
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanType");
-        }
-        init { this._rawData.Set("scanType", value); }
-    }
-
     public ApiEnum<string, Sex>? Sex
     {
         get
@@ -416,6 +635,32 @@ public sealed record class ReportMetadata : JsonModel
             return this._rawData.GetNullableClass<ApiEnum<string, Sex>>("sex");
         }
         init { this._rawData.Set("sex", value); }
+    }
+
+    /// <summary>
+    /// Study date (YYYY-MM-DD). Nullable on PATCH. Maps to DB scan_date and report_header.scan_date.
+    /// </summary>
+    public string? StudyDate
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDate");
+        }
+        init { this._rawData.Set("studyDate", value); }
+    }
+
+    /// <summary>
+    /// Study time (HH:MM). Nullable on PATCH. Maps to DB scan_time and report_header.scan_time.
+    /// </summary>
+    public string? StudyTime
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyTime");
+        }
+        init { this._rawData.Set("studyTime", value); }
     }
 
     public Weight? Weight
@@ -437,11 +682,11 @@ public sealed record class ReportMetadata : JsonModel
         this.Height?.Validate();
         _ = this.Mrn;
         _ = this.PatientName;
+        _ = this.Procedure;
         _ = this.ReferringPhysicianName;
-        _ = this.ScanDate;
-        _ = this.ScanTime;
-        _ = this.ScanType;
         this.Sex?.Validate();
+        _ = this.StudyDate;
+        _ = this.StudyTime;
         this.Weight?.Validate();
     }
 

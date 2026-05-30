@@ -16,10 +16,23 @@ public class StudyUpdateParamsTest : TestBase
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "Follow-up of previously noted lesion",
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            PriorReportTexts = ["x"],
-            PriorStudyIds = ["string"],
+            Modality = "MRI",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportMetadata = new()
             {
                 Age = "age",
@@ -28,23 +41,38 @@ public class StudyUpdateParamsTest : TestBase
                 Height = new() { Unit = Unit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
+                Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                ScanDate = "7321-69-10",
-                ScanTime = "scanTime",
-                ScanType = "scanType",
                 Sex = Sex.Female,
+                StudyDate = "7321-69-10",
+                StudyTime = "studyTime",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
             },
             Severity = StudyUpdateParamsSeverity.High,
             StudyDescription = "Brain MRI with and without Contrast",
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedAssignedTo = "usr_1234567890abcdef1234567890abcdef";
+        string expectedClinicalHistory = "clinicalHistory";
+        string expectedClinicalIndication = "Follow-up of previously noted lesion";
         string expectedExpressCustomerID = "cus_1234567890abcdef1234567890abcdef";
+        string expectedExternalPatientID = "externalPatientId";
         Dictionary<string, string> expectedMetadata = new() { { "foo", "string" } };
-        List<string> expectedPriorReportTexts = ["x"];
-        List<string> expectedPriorStudyIds = ["string"];
+        string expectedModality = "MRI";
+        List<StudyUpdateParamsPriorReport> expectedPriorReports =
+        [
+            new()
+            {
+                ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                ExternalStudyID = "EXT-2024-001",
+                Modality = "CT",
+                StudyDate = "2024-01-15",
+                StudyDescription = "CT Chest without contrast",
+            },
+        ];
         ReportMetadata expectedReportMetadata = new()
         {
             Age = "age",
@@ -53,20 +81,25 @@ public class StudyUpdateParamsTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "Jane M. Doe",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
         ApiEnum<string, StudyUpdateParamsSeverity> expectedSeverity =
             StudyUpdateParamsSeverity.High;
         string expectedStudyDescription = "Brain MRI with and without Contrast";
+        List<string> expectedTechnologistNotes = ["x"];
+        string expectedTechnologistTechnique = "technologistTechnique";
 
         Assert.Equal(expectedStudyID, parameters.StudyID);
         Assert.Equal(expectedAssignedTo, parameters.AssignedTo);
+        Assert.Equal(expectedClinicalHistory, parameters.ClinicalHistory);
+        Assert.Equal(expectedClinicalIndication, parameters.ClinicalIndication);
         Assert.Equal(expectedExpressCustomerID, parameters.ExpressCustomerID);
+        Assert.Equal(expectedExternalPatientID, parameters.ExternalPatientID);
         Assert.NotNull(parameters.Metadata);
         Assert.Equal(expectedMetadata.Count, parameters.Metadata.Count);
         foreach (var item in expectedMetadata)
@@ -75,21 +108,23 @@ public class StudyUpdateParamsTest : TestBase
 
             Assert.Equal(value, parameters.Metadata[item.Key]);
         }
-        Assert.NotNull(parameters.PriorReportTexts);
-        Assert.Equal(expectedPriorReportTexts.Count, parameters.PriorReportTexts.Count);
-        for (int i = 0; i < expectedPriorReportTexts.Count; i++)
+        Assert.Equal(expectedModality, parameters.Modality);
+        Assert.NotNull(parameters.PriorReports);
+        Assert.Equal(expectedPriorReports.Count, parameters.PriorReports.Count);
+        for (int i = 0; i < expectedPriorReports.Count; i++)
         {
-            Assert.Equal(expectedPriorReportTexts[i], parameters.PriorReportTexts[i]);
-        }
-        Assert.NotNull(parameters.PriorStudyIds);
-        Assert.Equal(expectedPriorStudyIds.Count, parameters.PriorStudyIds.Count);
-        for (int i = 0; i < expectedPriorStudyIds.Count; i++)
-        {
-            Assert.Equal(expectedPriorStudyIds[i], parameters.PriorStudyIds[i]);
+            Assert.Equal(expectedPriorReports[i], parameters.PriorReports[i]);
         }
         Assert.Equal(expectedReportMetadata, parameters.ReportMetadata);
         Assert.Equal(expectedSeverity, parameters.Severity);
         Assert.Equal(expectedStudyDescription, parameters.StudyDescription);
+        Assert.NotNull(parameters.TechnologistNotes);
+        Assert.Equal(expectedTechnologistNotes.Count, parameters.TechnologistNotes.Count);
+        for (int i = 0; i < expectedTechnologistNotes.Count; i++)
+        {
+            Assert.Equal(expectedTechnologistNotes[i], parameters.TechnologistNotes[i]);
+        }
+        Assert.Equal(expectedTechnologistTechnique, parameters.TechnologistTechnique);
     }
 
     [Fact]
@@ -98,9 +133,24 @@ public class StudyUpdateParamsTest : TestBase
         var parameters = new StudyUpdateParams
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "Follow-up of previously noted lesion",
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            PriorReportTexts = ["x"],
-            PriorStudyIds = ["string"],
+            Modality = "MRI",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         Assert.Null(parameters.AssignedTo);
@@ -121,9 +171,24 @@ public class StudyUpdateParamsTest : TestBase
         var parameters = new StudyUpdateParams
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "Follow-up of previously noted lesion",
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            PriorReportTexts = ["x"],
-            PriorStudyIds = ["string"],
+            Modality = "MRI",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
             AssignedTo = null,
@@ -161,23 +226,33 @@ public class StudyUpdateParamsTest : TestBase
                 Height = new() { Unit = Unit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
+                Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                ScanDate = "7321-69-10",
-                ScanTime = "scanTime",
-                ScanType = "scanType",
                 Sex = Sex.Female,
+                StudyDate = "7321-69-10",
+                StudyTime = "studyTime",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
             },
             Severity = StudyUpdateParamsSeverity.High,
             StudyDescription = "Brain MRI with and without Contrast",
         };
 
+        Assert.Null(parameters.ClinicalHistory);
+        Assert.False(parameters.RawBodyData.ContainsKey("clinicalHistory"));
+        Assert.Null(parameters.ClinicalIndication);
+        Assert.False(parameters.RawBodyData.ContainsKey("clinicalIndication"));
+        Assert.Null(parameters.ExternalPatientID);
+        Assert.False(parameters.RawBodyData.ContainsKey("externalPatientId"));
         Assert.Null(parameters.Metadata);
         Assert.False(parameters.RawBodyData.ContainsKey("metadata"));
-        Assert.Null(parameters.PriorReportTexts);
-        Assert.False(parameters.RawBodyData.ContainsKey("priorReportTexts"));
-        Assert.Null(parameters.PriorStudyIds);
-        Assert.False(parameters.RawBodyData.ContainsKey("priorStudyIds"));
+        Assert.Null(parameters.Modality);
+        Assert.False(parameters.RawBodyData.ContainsKey("modality"));
+        Assert.Null(parameters.PriorReports);
+        Assert.False(parameters.RawBodyData.ContainsKey("priorReports"));
+        Assert.Null(parameters.TechnologistNotes);
+        Assert.False(parameters.RawBodyData.ContainsKey("technologistNotes"));
+        Assert.Null(parameters.TechnologistTechnique);
+        Assert.False(parameters.RawBodyData.ContainsKey("technologistTechnique"));
     }
 
     [Fact]
@@ -196,27 +271,42 @@ public class StudyUpdateParamsTest : TestBase
                 Height = new() { Unit = Unit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
+                Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                ScanDate = "7321-69-10",
-                ScanTime = "scanTime",
-                ScanType = "scanType",
                 Sex = Sex.Female,
+                StudyDate = "7321-69-10",
+                StudyTime = "studyTime",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
             },
             Severity = StudyUpdateParamsSeverity.High,
             StudyDescription = "Brain MRI with and without Contrast",
 
+            ClinicalHistory = null,
+            ClinicalIndication = null,
+            ExternalPatientID = null,
             Metadata = null,
-            PriorReportTexts = null,
-            PriorStudyIds = null,
+            Modality = null,
+            PriorReports = null,
+            TechnologistNotes = null,
+            TechnologistTechnique = null,
         };
 
+        Assert.Null(parameters.ClinicalHistory);
+        Assert.True(parameters.RawBodyData.ContainsKey("clinicalHistory"));
+        Assert.Null(parameters.ClinicalIndication);
+        Assert.True(parameters.RawBodyData.ContainsKey("clinicalIndication"));
+        Assert.Null(parameters.ExternalPatientID);
+        Assert.True(parameters.RawBodyData.ContainsKey("externalPatientId"));
         Assert.Null(parameters.Metadata);
         Assert.True(parameters.RawBodyData.ContainsKey("metadata"));
-        Assert.Null(parameters.PriorReportTexts);
-        Assert.True(parameters.RawBodyData.ContainsKey("priorReportTexts"));
-        Assert.Null(parameters.PriorStudyIds);
-        Assert.True(parameters.RawBodyData.ContainsKey("priorStudyIds"));
+        Assert.Null(parameters.Modality);
+        Assert.True(parameters.RawBodyData.ContainsKey("modality"));
+        Assert.Null(parameters.PriorReports);
+        Assert.True(parameters.RawBodyData.ContainsKey("priorReports"));
+        Assert.Null(parameters.TechnologistNotes);
+        Assert.True(parameters.RawBodyData.ContainsKey("technologistNotes"));
+        Assert.Null(parameters.TechnologistTechnique);
+        Assert.True(parameters.RawBodyData.ContainsKey("technologistTechnique"));
     }
 
     [Fact]
@@ -243,10 +333,23 @@ public class StudyUpdateParamsTest : TestBase
         {
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             AssignedTo = "usr_1234567890abcdef1234567890abcdef",
+            ClinicalHistory = "clinicalHistory",
+            ClinicalIndication = "Follow-up of previously noted lesion",
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
+            ExternalPatientID = "externalPatientId",
             Metadata = new Dictionary<string, string>() { { "foo", "string" } },
-            PriorReportTexts = ["x"],
-            PriorStudyIds = ["string"],
+            Modality = "MRI",
+            PriorReports =
+            [
+                new()
+                {
+                    ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+                    ExternalStudyID = "EXT-2024-001",
+                    Modality = "CT",
+                    StudyDate = "2024-01-15",
+                    StudyDescription = "CT Chest without contrast",
+                },
+            ],
             ReportMetadata = new()
             {
                 Age = "age",
@@ -255,20 +358,205 @@ public class StudyUpdateParamsTest : TestBase
                 Height = new() { Unit = Unit.Cm, Value = 170 },
                 Mrn = "mrn",
                 PatientName = "Jane M. Doe",
+                Procedure = "procedure",
                 ReferringPhysicianName = "referringPhysicianName",
-                ScanDate = "7321-69-10",
-                ScanTime = "scanTime",
-                ScanType = "scanType",
                 Sex = Sex.Female,
+                StudyDate = "7321-69-10",
+                StudyTime = "studyTime",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
             },
             Severity = StudyUpdateParamsSeverity.High,
             StudyDescription = "Brain MRI with and without Contrast",
+            TechnologistNotes = ["x"],
+            TechnologistTechnique = "technologistTechnique",
         };
 
         StudyUpdateParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
+    }
+}
+
+public class StudyUpdateParamsPriorReportTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
+        string expectedExternalStudyID = "EXT-2024-001";
+        string expectedModality = "CT";
+        string expectedStudyDate = "2024-01-15";
+        string expectedStudyDescription = "CT Chest without contrast";
+
+        Assert.Equal(expectedReportText, model.ReportText);
+        Assert.Equal(expectedExternalStudyID, model.ExternalStudyID);
+        Assert.Equal(expectedModality, model.Modality);
+        Assert.Equal(expectedStudyDate, model.StudyDate);
+        Assert.Equal(expectedStudyDescription, model.StudyDescription);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StudyUpdateParamsPriorReport>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StudyUpdateParamsPriorReport>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
+        string expectedExternalStudyID = "EXT-2024-001";
+        string expectedModality = "CT";
+        string expectedStudyDate = "2024-01-15";
+        string expectedStudyDescription = "CT Chest without contrast";
+
+        Assert.Equal(expectedReportText, deserialized.ReportText);
+        Assert.Equal(expectedExternalStudyID, deserialized.ExternalStudyID);
+        Assert.Equal(expectedModality, deserialized.Modality);
+        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
+        Assert.Equal(expectedStudyDescription, deserialized.StudyDescription);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+        };
+
+        Assert.Null(model.ExternalStudyID);
+        Assert.False(model.RawData.ContainsKey("externalStudyId"));
+        Assert.Null(model.Modality);
+        Assert.False(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyDescription);
+        Assert.False(model.RawData.ContainsKey("studyDescription"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+
+            // Null should be interpreted as omitted for these properties
+            ExternalStudyID = null,
+            Modality = null,
+            StudyDate = null,
+            StudyDescription = null,
+        };
+
+        Assert.Null(model.ExternalStudyID);
+        Assert.False(model.RawData.ContainsKey("externalStudyId"));
+        Assert.Null(model.Modality);
+        Assert.False(model.RawData.ContainsKey("modality"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyDescription);
+        Assert.False(model.RawData.ContainsKey("studyDescription"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+
+            // Null should be interpreted as omitted for these properties
+            ExternalStudyID = null,
+            Modality = null,
+            StudyDate = null,
+            StudyDescription = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StudyUpdateParamsPriorReport
+        {
+            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
+            ExternalStudyID = "EXT-2024-001",
+            Modality = "CT",
+            StudyDate = "2024-01-15",
+            StudyDescription = "CT Chest without contrast",
+        };
+
+        StudyUpdateParamsPriorReport copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -285,11 +573,11 @@ public class ReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
 
@@ -299,11 +587,11 @@ public class ReportMetadataTest : TestBase
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
         string expectedMrn = "mrn";
         string expectedPatientName = "patientName";
+        string expectedProcedure = "procedure";
         string expectedReferringPhysicianName = "referringPhysicianName";
-        string expectedScanDate = "7321-69-10";
-        string expectedScanTime = "scanTime";
-        string expectedScanType = "scanType";
         ApiEnum<string, Sex> expectedSex = Sex.Female;
+        string expectedStudyDate = "7321-69-10";
+        string expectedStudyTime = "studyTime";
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedAge, model.Age);
@@ -312,11 +600,11 @@ public class ReportMetadataTest : TestBase
         Assert.Equal(expectedHeight, model.Height);
         Assert.Equal(expectedMrn, model.Mrn);
         Assert.Equal(expectedPatientName, model.PatientName);
+        Assert.Equal(expectedProcedure, model.Procedure);
         Assert.Equal(expectedReferringPhysicianName, model.ReferringPhysicianName);
-        Assert.Equal(expectedScanDate, model.ScanDate);
-        Assert.Equal(expectedScanTime, model.ScanTime);
-        Assert.Equal(expectedScanType, model.ScanType);
         Assert.Equal(expectedSex, model.Sex);
+        Assert.Equal(expectedStudyDate, model.StudyDate);
+        Assert.Equal(expectedStudyTime, model.StudyTime);
         Assert.Equal(expectedWeight, model.Weight);
     }
 
@@ -331,11 +619,11 @@ public class ReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
 
@@ -359,11 +647,11 @@ public class ReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
 
@@ -380,11 +668,11 @@ public class ReportMetadataTest : TestBase
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
         string expectedMrn = "mrn";
         string expectedPatientName = "patientName";
+        string expectedProcedure = "procedure";
         string expectedReferringPhysicianName = "referringPhysicianName";
-        string expectedScanDate = "7321-69-10";
-        string expectedScanTime = "scanTime";
-        string expectedScanType = "scanType";
         ApiEnum<string, Sex> expectedSex = Sex.Female;
+        string expectedStudyDate = "7321-69-10";
+        string expectedStudyTime = "studyTime";
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedAge, deserialized.Age);
@@ -393,11 +681,11 @@ public class ReportMetadataTest : TestBase
         Assert.Equal(expectedHeight, deserialized.Height);
         Assert.Equal(expectedMrn, deserialized.Mrn);
         Assert.Equal(expectedPatientName, deserialized.PatientName);
+        Assert.Equal(expectedProcedure, deserialized.Procedure);
         Assert.Equal(expectedReferringPhysicianName, deserialized.ReferringPhysicianName);
-        Assert.Equal(expectedScanDate, deserialized.ScanDate);
-        Assert.Equal(expectedScanTime, deserialized.ScanTime);
-        Assert.Equal(expectedScanType, deserialized.ScanType);
         Assert.Equal(expectedSex, deserialized.Sex);
+        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
+        Assert.Equal(expectedStudyTime, deserialized.StudyTime);
         Assert.Equal(expectedWeight, deserialized.Weight);
     }
 
@@ -412,11 +700,11 @@ public class ReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
 
@@ -440,16 +728,16 @@ public class ReportMetadataTest : TestBase
         Assert.False(model.RawData.ContainsKey("mrn"));
         Assert.Null(model.PatientName);
         Assert.False(model.RawData.ContainsKey("patientName"));
+        Assert.Null(model.Procedure);
+        Assert.False(model.RawData.ContainsKey("procedure"));
         Assert.Null(model.ReferringPhysicianName);
         Assert.False(model.RawData.ContainsKey("referringPhysicianName"));
-        Assert.Null(model.ScanDate);
-        Assert.False(model.RawData.ContainsKey("scanDate"));
-        Assert.Null(model.ScanTime);
-        Assert.False(model.RawData.ContainsKey("scanTime"));
-        Assert.Null(model.ScanType);
-        Assert.False(model.RawData.ContainsKey("scanType"));
         Assert.Null(model.Sex);
         Assert.False(model.RawData.ContainsKey("sex"));
+        Assert.Null(model.StudyDate);
+        Assert.False(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyTime);
+        Assert.False(model.RawData.ContainsKey("studyTime"));
         Assert.Null(model.Weight);
         Assert.False(model.RawData.ContainsKey("weight"));
     }
@@ -473,11 +761,11 @@ public class ReportMetadataTest : TestBase
             Height = null,
             Mrn = null,
             PatientName = null,
+            Procedure = null,
             ReferringPhysicianName = null,
-            ScanDate = null,
-            ScanTime = null,
-            ScanType = null,
             Sex = null,
+            StudyDate = null,
+            StudyTime = null,
             Weight = null,
         };
 
@@ -493,16 +781,16 @@ public class ReportMetadataTest : TestBase
         Assert.True(model.RawData.ContainsKey("mrn"));
         Assert.Null(model.PatientName);
         Assert.True(model.RawData.ContainsKey("patientName"));
+        Assert.Null(model.Procedure);
+        Assert.True(model.RawData.ContainsKey("procedure"));
         Assert.Null(model.ReferringPhysicianName);
         Assert.True(model.RawData.ContainsKey("referringPhysicianName"));
-        Assert.Null(model.ScanDate);
-        Assert.True(model.RawData.ContainsKey("scanDate"));
-        Assert.Null(model.ScanTime);
-        Assert.True(model.RawData.ContainsKey("scanTime"));
-        Assert.Null(model.ScanType);
-        Assert.True(model.RawData.ContainsKey("scanType"));
         Assert.Null(model.Sex);
         Assert.True(model.RawData.ContainsKey("sex"));
+        Assert.Null(model.StudyDate);
+        Assert.True(model.RawData.ContainsKey("studyDate"));
+        Assert.Null(model.StudyTime);
+        Assert.True(model.RawData.ContainsKey("studyTime"));
         Assert.Null(model.Weight);
         Assert.True(model.RawData.ContainsKey("weight"));
     }
@@ -518,11 +806,11 @@ public class ReportMetadataTest : TestBase
             Height = null,
             Mrn = null,
             PatientName = null,
+            Procedure = null,
             ReferringPhysicianName = null,
-            ScanDate = null,
-            ScanTime = null,
-            ScanType = null,
             Sex = null,
+            StudyDate = null,
+            StudyTime = null,
             Weight = null,
         };
 
@@ -540,11 +828,11 @@ public class ReportMetadataTest : TestBase
             Height = new() { Unit = Unit.Cm, Value = 170 },
             Mrn = "mrn",
             PatientName = "patientName",
+            Procedure = "procedure",
             ReferringPhysicianName = "referringPhysicianName",
-            ScanDate = "7321-69-10",
-            ScanTime = "scanTime",
-            ScanType = "scanType",
             Sex = Sex.Female,
+            StudyDate = "7321-69-10",
+            StudyTime = "studyTime",
             Weight = new() { Unit = WeightUnit.Kg, Value = 68 },
         };
 

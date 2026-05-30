@@ -16,7 +16,7 @@ namespace Avara.Models.AutoScribe;
 public sealed record class StudyReportMetadata : JsonModel
 {
     /// <summary>
-    /// Patient's age at time of scan (e.g., '34.5 years', '2 months')
+    /// Patient's age at study date (e.g., '34.5 years', '2 months')
     /// </summary>
     public string? Age
     {
@@ -143,6 +143,28 @@ public sealed record class StudyReportMetadata : JsonModel
     }
 
     /// <summary>
+    /// Procedure or study type (e.g., 'MRI Brain with Contrast'). Maps to database
+    /// scan_type and dictation report_header.scan_type.
+    /// </summary>
+    public string? Procedure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("procedure");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("procedure", value);
+        }
+    }
+
+    /// <summary>
     /// Name of the physician who referred the patient for this scan
     /// </summary>
     public string? ReferringPhysicianName
@@ -164,69 +186,6 @@ public sealed record class StudyReportMetadata : JsonModel
     }
 
     /// <summary>
-    /// Date the scan was performed. Format: YYYY-MM-DD (e.g., '2024-01-15')
-    /// </summary>
-    public string? ScanDate
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanDate");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scanDate", value);
-        }
-    }
-
-    /// <summary>
-    /// Time the scan was performed. Format: HH:MM (e.g., '14:30')
-    /// </summary>
-    public string? ScanTime
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanTime");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scanTime", value);
-        }
-    }
-
-    /// <summary>
-    /// Type of scan or imaging modality (e.g., 'MRI', 'CT', 'X-Ray', 'Ultrasound')
-    /// </summary>
-    public string? ScanType
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("scanType");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scanType", value);
-        }
-    }
-
-    /// <summary>
     /// Patient's biological sex. Options: 'male', 'female', 'other'
     /// </summary>
     public ApiEnum<string, Sex>? Sex
@@ -244,6 +203,48 @@ public sealed record class StudyReportMetadata : JsonModel
             }
 
             this._rawData.Set("sex", value);
+        }
+    }
+
+    /// <summary>
+    /// Study date (YYYY-MM-DD). Maps to database scan_date and dictation report_header.scan_date.
+    /// </summary>
+    public string? StudyDate
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyDate");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyDate", value);
+        }
+    }
+
+    /// <summary>
+    /// Study time (HH:MM). Maps to database scan_time and dictation report_header.scan_time.
+    /// </summary>
+    public string? StudyTime
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("studyTime");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyTime", value);
         }
     }
 
@@ -278,11 +279,11 @@ public sealed record class StudyReportMetadata : JsonModel
         this.Height?.Validate();
         _ = this.Mrn;
         _ = this.PatientName;
+        _ = this.Procedure;
         _ = this.ReferringPhysicianName;
-        _ = this.ScanDate;
-        _ = this.ScanTime;
-        _ = this.ScanType;
         this.Sex?.Validate();
+        _ = this.StudyDate;
+        _ = this.StudyTime;
         this.Weight?.Validate();
     }
 
