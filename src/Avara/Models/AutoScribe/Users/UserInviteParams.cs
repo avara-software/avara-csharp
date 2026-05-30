@@ -5,9 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Users;
 
@@ -49,16 +47,14 @@ public record class UserInviteParams : ParamsBase
     }
 
     /// <summary>
-    /// User's clinical or organizational role
+    /// A user's clinical or organizational role within the clinic.
     /// </summary>
-    public required ApiEnum<string, UserInviteParamsClinicRole> ClinicRole
+    public required ApiEnum<string, ClinicRole> ClinicRole
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<ApiEnum<string, UserInviteParamsClinicRole>>(
-                "clinicRole"
-            );
+            return this._rawBodyData.GetNotNullClass<ApiEnum<string, ClinicRole>>("clinicRole");
         }
         init { this._rawBodyData.Set("clinicRole", value); }
     }
@@ -112,14 +108,17 @@ public record class UserInviteParams : ParamsBase
         init { this._rawBodyData.Set("lastName", value); }
     }
 
-    public required ApiEnum<string, UserInviteParamsLevel> Level
+    /// <summary>
+    /// User access level assignable via the API. 'admin' can manage users/settings,
+    /// 'member' has standard access. 'owner' is dashboard-only and cannot be assigned
+    /// via the API.
+    /// </summary>
+    public required ApiEnum<string, AssignableUserLevel> Level
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<ApiEnum<string, UserInviteParamsLevel>>(
-                "level"
-            );
+            return this._rawBodyData.GetNotNullClass<ApiEnum<string, AssignableUserLevel>>("level");
         }
         init { this._rawBodyData.Set("level", value); }
     }
@@ -333,153 +332,5 @@ public record class UserInviteParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// User's clinical or organizational role
-/// </summary>
-[JsonConverter(typeof(UserInviteParamsClinicRoleConverter))]
-public enum UserInviteParamsClinicRole
-{
-    Radiologist,
-    Cardiologist,
-    Neurologist,
-    Urologist,
-    Gynecologist,
-    Endocrinologist,
-    Doctor,
-    Surgeon,
-    Physician,
-    PhysicianAssistant,
-    NursePractitioner,
-    RegisteredNurse,
-    PatientCareCoordinator,
-    FrontDeskOperator,
-    ImagingTechnologist,
-    PacsAdministrator,
-    SoftwareEngineer,
-    RevenueCycleManager,
-    AdministrativeDirector,
-    AdministrativeAssistant,
-    Other,
-}
-
-sealed class UserInviteParamsClinicRoleConverter : JsonConverter<UserInviteParamsClinicRole>
-{
-    public override UserInviteParamsClinicRole Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "Radiologist" => UserInviteParamsClinicRole.Radiologist,
-            "Cardiologist" => UserInviteParamsClinicRole.Cardiologist,
-            "Neurologist" => UserInviteParamsClinicRole.Neurologist,
-            "Urologist" => UserInviteParamsClinicRole.Urologist,
-            "Gynecologist" => UserInviteParamsClinicRole.Gynecologist,
-            "Endocrinologist" => UserInviteParamsClinicRole.Endocrinologist,
-            "Doctor" => UserInviteParamsClinicRole.Doctor,
-            "Surgeon" => UserInviteParamsClinicRole.Surgeon,
-            "Physician" => UserInviteParamsClinicRole.Physician,
-            "Physician Assistant" => UserInviteParamsClinicRole.PhysicianAssistant,
-            "Nurse Practitioner" => UserInviteParamsClinicRole.NursePractitioner,
-            "Registered Nurse" => UserInviteParamsClinicRole.RegisteredNurse,
-            "Patient Care Coordinator" => UserInviteParamsClinicRole.PatientCareCoordinator,
-            "Front Desk Operator" => UserInviteParamsClinicRole.FrontDeskOperator,
-            "Imaging Technologist" => UserInviteParamsClinicRole.ImagingTechnologist,
-            "PACS Administrator" => UserInviteParamsClinicRole.PacsAdministrator,
-            "Software Engineer" => UserInviteParamsClinicRole.SoftwareEngineer,
-            "Revenue Cycle Manager" => UserInviteParamsClinicRole.RevenueCycleManager,
-            "Administrative Director" => UserInviteParamsClinicRole.AdministrativeDirector,
-            "Administrative Assistant" => UserInviteParamsClinicRole.AdministrativeAssistant,
-            "Other" => UserInviteParamsClinicRole.Other,
-            _ => (UserInviteParamsClinicRole)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserInviteParamsClinicRole value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserInviteParamsClinicRole.Radiologist => "Radiologist",
-                UserInviteParamsClinicRole.Cardiologist => "Cardiologist",
-                UserInviteParamsClinicRole.Neurologist => "Neurologist",
-                UserInviteParamsClinicRole.Urologist => "Urologist",
-                UserInviteParamsClinicRole.Gynecologist => "Gynecologist",
-                UserInviteParamsClinicRole.Endocrinologist => "Endocrinologist",
-                UserInviteParamsClinicRole.Doctor => "Doctor",
-                UserInviteParamsClinicRole.Surgeon => "Surgeon",
-                UserInviteParamsClinicRole.Physician => "Physician",
-                UserInviteParamsClinicRole.PhysicianAssistant => "Physician Assistant",
-                UserInviteParamsClinicRole.NursePractitioner => "Nurse Practitioner",
-                UserInviteParamsClinicRole.RegisteredNurse => "Registered Nurse",
-                UserInviteParamsClinicRole.PatientCareCoordinator => "Patient Care Coordinator",
-                UserInviteParamsClinicRole.FrontDeskOperator => "Front Desk Operator",
-                UserInviteParamsClinicRole.ImagingTechnologist => "Imaging Technologist",
-                UserInviteParamsClinicRole.PacsAdministrator => "PACS Administrator",
-                UserInviteParamsClinicRole.SoftwareEngineer => "Software Engineer",
-                UserInviteParamsClinicRole.RevenueCycleManager => "Revenue Cycle Manager",
-                UserInviteParamsClinicRole.AdministrativeDirector => "Administrative Director",
-                UserInviteParamsClinicRole.AdministrativeAssistant => "Administrative Assistant",
-                UserInviteParamsClinicRole.Other => "Other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(UserInviteParamsLevelConverter))]
-public enum UserInviteParamsLevel
-{
-    Admin,
-    Member,
-}
-
-sealed class UserInviteParamsLevelConverter : JsonConverter<UserInviteParamsLevel>
-{
-    public override UserInviteParamsLevel Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "admin" => UserInviteParamsLevel.Admin,
-            "member" => UserInviteParamsLevel.Member,
-            _ => (UserInviteParamsLevel)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        UserInviteParamsLevel value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                UserInviteParamsLevel.Admin => "admin",
-                UserInviteParamsLevel.Member => "member",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

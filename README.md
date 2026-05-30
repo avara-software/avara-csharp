@@ -24,6 +24,7 @@ See the [`examples`](examples) directory for complete and runnable examples.
 ```csharp
 using System;
 using Avara;
+using Avara.Models;
 using Avara.Models.Viewer.Studies;
 
 AvaraClient client = new();
@@ -285,6 +286,7 @@ To set undocumented parameters, a constructor exists that accepts dictionaries f
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
+using Avara.Models;
 using Avara.Models.Viewer.Studies;
 
 StudyCreateParams parameters = new

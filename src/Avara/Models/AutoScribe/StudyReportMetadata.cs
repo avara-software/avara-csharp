@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe;
 
@@ -331,12 +329,15 @@ class StudyReportMetadataFromRaw : IFromRawJson<StudyReportMetadata>
 [JsonConverter(typeof(JsonModelConverter<Height, HeightFromRaw>))]
 public sealed record class Height : JsonModel
 {
-    public required ApiEnum<string, Unit> Unit
+    /// <summary>
+    /// Unit of measure for a height value. 'in' = inches, 'cm' = centimeters.
+    /// </summary>
+    public required ApiEnum<string, HeightUnit> Unit
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, Unit>>("unit");
+            return this._rawData.GetNotNullClass<ApiEnum<string, HeightUnit>>("unit");
         }
         init { this._rawData.Set("unit", value); }
     }
@@ -393,98 +394,15 @@ class HeightFromRaw : IFromRawJson<Height>
         Height.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(UnitConverter))]
-public enum Unit
-{
-    In,
-    Cm,
-}
-
-sealed class UnitConverter : JsonConverter<Unit>
-{
-    public override Unit Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "in" => Unit.In,
-            "cm" => Unit.Cm,
-            _ => (Unit)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Unit value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Unit.In => "in",
-                Unit.Cm => "cm",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Patient's biological sex. Options: 'male', 'female', 'other'
-/// </summary>
-[JsonConverter(typeof(SexConverter))]
-public enum Sex
-{
-    Male,
-    Female,
-    Other,
-}
-
-sealed class SexConverter : JsonConverter<Sex>
-{
-    public override Sex Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "male" => Sex.Male,
-            "female" => Sex.Female,
-            "other" => Sex.Other,
-            _ => (Sex)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Sex value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Sex.Male => "male",
-                Sex.Female => "female",
-                Sex.Other => "other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
 /// <summary>
 /// Patient's weight with unit (e.g., {value: 150, unit: 'lbs'} or {value: 68, unit: 'kg'})
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<Weight, WeightFromRaw>))]
 public sealed record class Weight : JsonModel
 {
+    /// <summary>
+    /// Unit of measure for a weight value. 'lbs' = pounds, 'kg' = kilograms.
+    /// </summary>
     public required ApiEnum<string, WeightUnit> Unit
     {
         get
@@ -545,48 +463,4 @@ class WeightFromRaw : IFromRawJson<Weight>
     /// <inheritdoc/>
     public Weight FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Weight.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(WeightUnitConverter))]
-public enum WeightUnit
-{
-    Lbs,
-    Kg,
-}
-
-sealed class WeightUnitConverter : JsonConverter<WeightUnit>
-{
-    public override WeightUnit Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "lbs" => WeightUnit.Lbs,
-            "kg" => WeightUnit.Kg,
-            _ => (WeightUnit)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        WeightUnit value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                WeightUnit.Lbs => "lbs",
-                WeightUnit.Kg => "kg",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

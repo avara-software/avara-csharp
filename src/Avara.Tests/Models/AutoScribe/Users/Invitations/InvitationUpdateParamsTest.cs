@@ -1,7 +1,6 @@
 using System;
-using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
 using Avara.Models.AutoScribe.Users.Invitations;
 
 namespace Avara.Tests.Models.AutoScribe.Users.Invitations;
@@ -20,7 +19,7 @@ public class InvitationUpdateParamsTest : TestBase
             FirstName = "Michael",
             HasDashboardAccess = true,
             LastName = "Chen",
-            Level = Level.Admin,
+            Level = AssignableUserLevel.Member,
             MiddleName = "x",
             NpiNumber = "1234567893",
             PhoneNumber = "5551234567",
@@ -35,7 +34,7 @@ public class InvitationUpdateParamsTest : TestBase
         string expectedFirstName = "Michael";
         bool expectedHasDashboardAccess = true;
         string expectedLastName = "Chen";
-        ApiEnum<string, Level> expectedLevel = Level.Admin;
+        ApiEnum<string, AssignableUserLevel> expectedLevel = AssignableUserLevel.Member;
         string expectedMiddleName = "x";
         string expectedNpiNumber = "1234567893";
         string expectedPhoneNumber = "5551234567";
@@ -132,7 +131,7 @@ public class InvitationUpdateParamsTest : TestBase
             FirstName = "Michael",
             HasDashboardAccess = true,
             LastName = "Chen",
-            Level = Level.Admin,
+            Level = AssignableUserLevel.Member,
         };
 
         Assert.Null(parameters.ClinicRole);
@@ -160,7 +159,7 @@ public class InvitationUpdateParamsTest : TestBase
             FirstName = "Michael",
             HasDashboardAccess = true,
             LastName = "Chen",
-            Level = Level.Admin,
+            Level = AssignableUserLevel.Member,
 
             ClinicRole = null,
             MiddleName = null,
@@ -216,7 +215,7 @@ public class InvitationUpdateParamsTest : TestBase
             FirstName = "Michael",
             HasDashboardAccess = true,
             LastName = "Chen",
-            Level = Level.Admin,
+            Level = AssignableUserLevel.Member,
             MiddleName = "x",
             NpiNumber = "1234567893",
             PhoneNumber = "5551234567",
@@ -227,159 +226,5 @@ public class InvitationUpdateParamsTest : TestBase
         InvitationUpdateParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
-    }
-}
-
-public class ClinicRoleTest : TestBase
-{
-    [Theory]
-    [InlineData(ClinicRole.Radiologist)]
-    [InlineData(ClinicRole.Cardiologist)]
-    [InlineData(ClinicRole.Neurologist)]
-    [InlineData(ClinicRole.Urologist)]
-    [InlineData(ClinicRole.Gynecologist)]
-    [InlineData(ClinicRole.Endocrinologist)]
-    [InlineData(ClinicRole.Doctor)]
-    [InlineData(ClinicRole.Surgeon)]
-    [InlineData(ClinicRole.Physician)]
-    [InlineData(ClinicRole.PhysicianAssistant)]
-    [InlineData(ClinicRole.NursePractitioner)]
-    [InlineData(ClinicRole.RegisteredNurse)]
-    [InlineData(ClinicRole.PatientCareCoordinator)]
-    [InlineData(ClinicRole.FrontDeskOperator)]
-    [InlineData(ClinicRole.ImagingTechnologist)]
-    [InlineData(ClinicRole.PacsAdministrator)]
-    [InlineData(ClinicRole.SoftwareEngineer)]
-    [InlineData(ClinicRole.RevenueCycleManager)]
-    [InlineData(ClinicRole.AdministrativeDirector)]
-    [InlineData(ClinicRole.AdministrativeAssistant)]
-    [InlineData(ClinicRole.Other)]
-    public void Validation_Works(ClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ClinicRole> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, ClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(ClinicRole.Radiologist)]
-    [InlineData(ClinicRole.Cardiologist)]
-    [InlineData(ClinicRole.Neurologist)]
-    [InlineData(ClinicRole.Urologist)]
-    [InlineData(ClinicRole.Gynecologist)]
-    [InlineData(ClinicRole.Endocrinologist)]
-    [InlineData(ClinicRole.Doctor)]
-    [InlineData(ClinicRole.Surgeon)]
-    [InlineData(ClinicRole.Physician)]
-    [InlineData(ClinicRole.PhysicianAssistant)]
-    [InlineData(ClinicRole.NursePractitioner)]
-    [InlineData(ClinicRole.RegisteredNurse)]
-    [InlineData(ClinicRole.PatientCareCoordinator)]
-    [InlineData(ClinicRole.FrontDeskOperator)]
-    [InlineData(ClinicRole.ImagingTechnologist)]
-    [InlineData(ClinicRole.PacsAdministrator)]
-    [InlineData(ClinicRole.SoftwareEngineer)]
-    [InlineData(ClinicRole.RevenueCycleManager)]
-    [InlineData(ClinicRole.AdministrativeDirector)]
-    [InlineData(ClinicRole.AdministrativeAssistant)]
-    [InlineData(ClinicRole.Other)]
-    public void SerializationRoundtrip_Works(ClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ClinicRole> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ClinicRole>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, ClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ClinicRole>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class LevelTest : TestBase
-{
-    [Theory]
-    [InlineData(Level.Admin)]
-    [InlineData(Level.Member)]
-    public void Validation_Works(Level rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Level> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Level>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Level.Admin)]
-    [InlineData(Level.Member)]
-    public void SerializationRoundtrip_Works(Level rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Level> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Level>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Level>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Level>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

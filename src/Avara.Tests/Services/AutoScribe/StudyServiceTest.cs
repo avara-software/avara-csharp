@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using Avara.Models;
 using Avara.Models.AutoScribe;
-using Studies = Avara.Models.AutoScribe.Studies;
 
 namespace Avara.Tests.Services.AutoScribe;
 
@@ -17,7 +17,7 @@ public class StudyServiceTest : TestBase
                     Age = "38 years",
                     DateOfBirth = "1985-07-20",
                     FacilityName = "City Medical Center",
-                    Height = new() { Unit = Unit.Cm, Value = 165 },
+                    Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                     Mrn = "MRN-2024-001234",
                     PatientName = "Jane Doe",
                     Procedure = "MRI Brain with Contrast",
@@ -27,7 +27,7 @@ public class StudyServiceTest : TestBase
                     StudyTime = "14:30",
                     Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                 },
-                Severity = Studies::Severity.Normal,
+                Severity = Severity.Normal,
                 StudyDescription = "Brain MRI with Contrast",
                 StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             },

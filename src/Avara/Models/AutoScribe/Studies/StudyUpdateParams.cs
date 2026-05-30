@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.AutoScribe.Studies;
 
@@ -146,18 +145,16 @@ public record class StudyUpdateParams : ParamsBase
     /// External prior reports (metadata + full report text) for comparison context.
     /// Null clears; an array replaces the existing set. Maximum 50 items
     /// </summary>
-    public IReadOnlyList<StudyUpdateParamsPriorReport>? PriorReports
+    public IReadOnlyList<PriorReport>? PriorReports
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableStruct<
-                ImmutableArray<StudyUpdateParamsPriorReport>
-            >("priorReports");
+            return this._rawBodyData.GetNullableStruct<ImmutableArray<PriorReport>>("priorReports");
         }
         init
         {
-            this._rawBodyData.Set<ImmutableArray<StudyUpdateParamsPriorReport>?>(
+            this._rawBodyData.Set<ImmutableArray<PriorReport>?>(
                 "priorReports",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -183,17 +180,15 @@ public record class StudyUpdateParams : ParamsBase
     }
 
     /// <summary>
-    /// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-    /// for immediate attention
+    /// Priority level of a study. 'normal' for routine, 'high' for urgent, 'stat'
+    /// for immediate attention.
     /// </summary>
-    public ApiEnum<string, StudyUpdateParamsSeverity>? Severity
+    public ApiEnum<string, Severity>? Severity
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<ApiEnum<string, StudyUpdateParamsSeverity>>(
-                "severity"
-            );
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, Severity>>("severity");
         }
         init
         {
@@ -381,166 +376,6 @@ public record class StudyUpdateParams : ParamsBase
     }
 }
 
-/// <summary>
-/// External prior report metadata and text stored on a study
-/// </summary>
-[JsonConverter(
-    typeof(JsonModelConverter<StudyUpdateParamsPriorReport, StudyUpdateParamsPriorReportFromRaw>)
-)]
-public sealed record class StudyUpdateParamsPriorReport : JsonModel
-{
-    /// <summary>
-    /// Full prior report text
-    /// </summary>
-    public required string ReportText
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("reportText");
-        }
-        init { this._rawData.Set("reportText", value); }
-    }
-
-    /// <summary>
-    /// Integrator's external study identifier
-    /// </summary>
-    public string? ExternalStudyID
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("externalStudyId");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("externalStudyId", value);
-        }
-    }
-
-    /// <summary>
-    /// Imaging modality for the prior study
-    /// </summary>
-    public string? Modality
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("modality");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("modality", value);
-        }
-    }
-
-    /// <summary>
-    /// Prior study date (YYYY-MM-DD)
-    /// </summary>
-    public string? StudyDate
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("studyDate");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("studyDate", value);
-        }
-    }
-
-    /// <summary>
-    /// Description of the prior study
-    /// </summary>
-    public string? StudyDescription
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("studyDescription");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("studyDescription", value);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        _ = this.ReportText;
-        _ = this.ExternalStudyID;
-        _ = this.Modality;
-        _ = this.StudyDate;
-        _ = this.StudyDescription;
-    }
-
-    public StudyUpdateParamsPriorReport() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public StudyUpdateParamsPriorReport(StudyUpdateParamsPriorReport studyUpdateParamsPriorReport)
-        : base(studyUpdateParamsPriorReport) { }
-#pragma warning restore CS8618
-
-    public StudyUpdateParamsPriorReport(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    StudyUpdateParamsPriorReport(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="StudyUpdateParamsPriorReportFromRaw.FromRawUnchecked"/>
-    public static StudyUpdateParamsPriorReport FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public StudyUpdateParamsPriorReport(string reportText)
-        : this()
-    {
-        this.ReportText = reportText;
-    }
-}
-
-class StudyUpdateParamsPriorReportFromRaw : IFromRawJson<StudyUpdateParamsPriorReport>
-{
-    /// <inheritdoc/>
-    public StudyUpdateParamsPriorReport FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => StudyUpdateParamsPriorReport.FromRawUnchecked(rawData);
-}
-
 [JsonConverter(typeof(JsonModelConverter<ReportMetadata, ReportMetadataFromRaw>))]
 public sealed record class ReportMetadata : JsonModel
 {
@@ -627,6 +462,9 @@ public sealed record class ReportMetadata : JsonModel
         init { this._rawData.Set("referringPhysicianName", value); }
     }
 
+    /// <summary>
+    /// Patient's biological sex. Options: 'male', 'female', 'other'
+    /// </summary>
     public ApiEnum<string, Sex>? Sex
     {
         get
@@ -728,12 +566,15 @@ class ReportMetadataFromRaw : IFromRawJson<ReportMetadata>
 [JsonConverter(typeof(JsonModelConverter<Height, HeightFromRaw>))]
 public sealed record class Height : JsonModel
 {
-    public required ApiEnum<string, Unit> Unit
+    /// <summary>
+    /// Unit of measure for a height value. 'in' = inches, 'cm' = centimeters.
+    /// </summary>
+    public required ApiEnum<string, HeightUnit> Unit
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, Unit>>("unit");
+            return this._rawData.GetNotNullClass<ApiEnum<string, HeightUnit>>("unit");
         }
         init { this._rawData.Set("unit", value); }
     }
@@ -790,92 +631,12 @@ class HeightFromRaw : IFromRawJson<Height>
         Height.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(UnitConverter))]
-public enum Unit
-{
-    In,
-    Cm,
-}
-
-sealed class UnitConverter : JsonConverter<Unit>
-{
-    public override Unit Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "in" => Unit.In,
-            "cm" => Unit.Cm,
-            _ => (Unit)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Unit value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Unit.In => "in",
-                Unit.Cm => "cm",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(SexConverter))]
-public enum Sex
-{
-    Male,
-    Female,
-    Other,
-}
-
-sealed class SexConverter : JsonConverter<Sex>
-{
-    public override Sex Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "male" => Sex.Male,
-            "female" => Sex.Female,
-            "other" => Sex.Other,
-            _ => (Sex)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Sex value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Sex.Male => "male",
-                Sex.Female => "female",
-                Sex.Other => "other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
 [JsonConverter(typeof(JsonModelConverter<Weight, WeightFromRaw>))]
 public sealed record class Weight : JsonModel
 {
+    /// <summary>
+    /// Unit of measure for a weight value. 'lbs' = pounds, 'kg' = kilograms.
+    /// </summary>
     public required ApiEnum<string, WeightUnit> Unit
     {
         get
@@ -936,99 +697,4 @@ class WeightFromRaw : IFromRawJson<Weight>
     /// <inheritdoc/>
     public Weight FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Weight.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(WeightUnitConverter))]
-public enum WeightUnit
-{
-    Lbs,
-    Kg,
-}
-
-sealed class WeightUnitConverter : JsonConverter<WeightUnit>
-{
-    public override WeightUnit Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "lbs" => WeightUnit.Lbs,
-            "kg" => WeightUnit.Kg,
-            _ => (WeightUnit)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        WeightUnit value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                WeightUnit.Lbs => "lbs",
-                WeightUnit.Kg => "kg",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-/// for immediate attention
-/// </summary>
-[JsonConverter(typeof(StudyUpdateParamsSeverityConverter))]
-public enum StudyUpdateParamsSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyUpdateParamsSeverityConverter : JsonConverter<StudyUpdateParamsSeverity>
-{
-    public override StudyUpdateParamsSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyUpdateParamsSeverity.Normal,
-            "high" => StudyUpdateParamsSeverity.High,
-            "stat" => StudyUpdateParamsSeverity.Stat,
-            _ => (StudyUpdateParamsSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyUpdateParamsSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyUpdateParamsSeverity.Normal => "normal",
-                StudyUpdateParamsSeverity.High => "high",
-                StudyUpdateParamsSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

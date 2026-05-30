@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
+using Avara.Models.AutoScribe;
 using Avara.Models.AutoScribe.Studies;
-using AutoScribe = Avara.Models.AutoScribe;
 
 namespace Avara.Tests.Models.AutoScribe.Studies;
 
@@ -23,21 +23,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -95,7 +95,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -104,28 +104,26 @@ public class StudyListResponseTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z");
         bool expectedIsCancelled = false;
-        AutoScribe::StudyReportMetadata expectedReportMetadata = new()
+        StudyReportMetadata expectedReportMetadata = new()
         {
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            Sex = AutoScribe::Sex.Female,
+            Sex = Sex.Female,
             StudyDate = "2024-03-15",
             StudyTime = "14:30",
-            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+            Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
-        ApiEnum<string, StudyListResponseSeverity> expectedSeverity =
-            StudyListResponseSeverity.Normal;
+        ApiEnum<string, Severity> expectedSeverity = Severity.Normal;
         string expectedStudyDescription = "Brain MRI with Contrast";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
-        ApiEnum<string, StudyListResponseStudyReportStatus> expectedStudyReportStatus =
-            StudyListResponseStudyReportStatus.InProgress;
+        ApiEnum<string, StudyReportStatus> expectedStudyReportStatus = StudyReportStatus.InProgress;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z");
         StudyListResponseAssignedTo expectedAssignedTo = new()
         {
@@ -167,7 +165,7 @@ public class StudyListResponseTest : TestBase
             { "priority", "routine" },
         };
         string expectedModality = "modality";
-        List<StudyListResponsePriorReport> expectedPriorReports =
+        List<PriorReport> expectedPriorReports =
         [
             new()
             {
@@ -180,7 +178,11 @@ public class StudyListResponseTest : TestBase
         ];
         List<ReportIDWithStatus> expectedReportIds =
         [
-            new() { ReportID = "rep_1234567890abcdef1234567890abcdef", Status = Status.InProgress },
+            new()
+            {
+                ReportID = "rep_1234567890abcdef1234567890abcdef",
+                Status = ReportStatus.InProgress,
+            },
         ];
         List<string> expectedTechnologistNotes = ["x"];
         string expectedTechnologistTechnique = "technologistTechnique";
@@ -245,21 +247,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -317,7 +319,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -346,21 +348,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -418,7 +420,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -434,28 +436,26 @@ public class StudyListResponseTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z");
         bool expectedIsCancelled = false;
-        AutoScribe::StudyReportMetadata expectedReportMetadata = new()
+        StudyReportMetadata expectedReportMetadata = new()
         {
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
             ReferringPhysicianName = "Dr. Michael Chen",
-            Sex = AutoScribe::Sex.Female,
+            Sex = Sex.Female,
             StudyDate = "2024-03-15",
             StudyTime = "14:30",
-            Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+            Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
-        ApiEnum<string, StudyListResponseSeverity> expectedSeverity =
-            StudyListResponseSeverity.Normal;
+        ApiEnum<string, Severity> expectedSeverity = Severity.Normal;
         string expectedStudyDescription = "Brain MRI with Contrast";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
-        ApiEnum<string, StudyListResponseStudyReportStatus> expectedStudyReportStatus =
-            StudyListResponseStudyReportStatus.InProgress;
+        ApiEnum<string, StudyReportStatus> expectedStudyReportStatus = StudyReportStatus.InProgress;
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z");
         StudyListResponseAssignedTo expectedAssignedTo = new()
         {
@@ -497,7 +497,7 @@ public class StudyListResponseTest : TestBase
             { "priority", "routine" },
         };
         string expectedModality = "modality";
-        List<StudyListResponsePriorReport> expectedPriorReports =
+        List<PriorReport> expectedPriorReports =
         [
             new()
             {
@@ -510,7 +510,11 @@ public class StudyListResponseTest : TestBase
         ];
         List<ReportIDWithStatus> expectedReportIds =
         [
-            new() { ReportID = "rep_1234567890abcdef1234567890abcdef", Status = Status.InProgress },
+            new()
+            {
+                ReportID = "rep_1234567890abcdef1234567890abcdef",
+                Status = ReportStatus.InProgress,
+            },
         ];
         List<string> expectedTechnologistNotes = ["x"];
         string expectedTechnologistTechnique = "technologistTechnique";
@@ -575,21 +579,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -647,7 +651,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -670,21 +674,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -747,21 +751,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -817,21 +821,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -900,21 +904,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -976,21 +980,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -1013,7 +1017,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -1052,21 +1056,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -1089,7 +1093,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -1111,21 +1115,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -1148,7 +1152,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -1197,21 +1201,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             Metadata = new Dictionary<string, string>()
             {
@@ -1234,7 +1238,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -1266,21 +1270,21 @@ public class StudyListResponseTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = AutoScribe::Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
                 ReferringPhysicianName = "Dr. Michael Chen",
-                Sex = AutoScribe::Sex.Female,
+                Sex = Sex.Female,
                 StudyDate = "2024-03-15",
                 StudyTime = "14:30",
-                Weight = new() { Unit = AutoScribe::WeightUnit.Kg, Value = 62 },
+                Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Severity = StudyListResponseSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "Brain MRI with Contrast",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-            StudyReportStatus = StudyListResponseStudyReportStatus.InProgress,
+            StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
             AssignedTo = new()
             {
@@ -1338,7 +1342,7 @@ public class StudyListResponseTest : TestBase
                 new()
                 {
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
-                    Status = Status.InProgress,
+                    Status = ReportStatus.InProgress,
                 },
             ],
             TechnologistNotes = ["x"],
@@ -1348,128 +1352,6 @@ public class StudyListResponseTest : TestBase
         StudyListResponse copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class StudyListResponseSeverityTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyListResponseSeverity.Normal)]
-    [InlineData(StudyListResponseSeverity.High)]
-    [InlineData(StudyListResponseSeverity.Stat)]
-    public void Validation_Works(StudyListResponseSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListResponseSeverity> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyListResponseSeverity.Normal)]
-    [InlineData(StudyListResponseSeverity.High)]
-    [InlineData(StudyListResponseSeverity.Stat)]
-    public void SerializationRoundtrip_Works(StudyListResponseSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListResponseSeverity> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class StudyListResponseStudyReportStatusTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyListResponseStudyReportStatus.Unassigned)]
-    [InlineData(StudyListResponseStudyReportStatus.Assigned)]
-    [InlineData(StudyListResponseStudyReportStatus.InProgress)]
-    [InlineData(StudyListResponseStudyReportStatus.Completed)]
-    [InlineData(StudyListResponseStudyReportStatus.AddendumActive)]
-    public void Validation_Works(StudyListResponseStudyReportStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListResponseStudyReportStatus> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseStudyReportStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyListResponseStudyReportStatus.Unassigned)]
-    [InlineData(StudyListResponseStudyReportStatus.Assigned)]
-    [InlineData(StudyListResponseStudyReportStatus.InProgress)]
-    [InlineData(StudyListResponseStudyReportStatus.Completed)]
-    [InlineData(StudyListResponseStudyReportStatus.AddendumActive)]
-    public void SerializationRoundtrip_Works(StudyListResponseStudyReportStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListResponseStudyReportStatus> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyListResponseStudyReportStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListResponseStudyReportStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, StudyListResponseStudyReportStatus>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
     }
 }
 
@@ -2127,189 +2009,6 @@ public class StudyListResponseExpressCustomerTest : TestBase
         };
 
         StudyListResponseExpressCustomer copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class StudyListResponsePriorReportTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
-        string expectedExternalStudyID = "EXT-2024-001";
-        string expectedModality = "CT";
-        string expectedStudyDate = "2024-01-15";
-        string expectedStudyDescription = "CT Chest without contrast";
-
-        Assert.Equal(expectedReportText, model.ReportText);
-        Assert.Equal(expectedExternalStudyID, model.ExternalStudyID);
-        Assert.Equal(expectedModality, model.Modality);
-        Assert.Equal(expectedStudyDate, model.StudyDate);
-        Assert.Equal(expectedStudyDescription, model.StudyDescription);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyListResponsePriorReport>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyListResponsePriorReport>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        string expectedReportText = "IMPRESSION: No acute cardiopulmonary process.";
-        string expectedExternalStudyID = "EXT-2024-001";
-        string expectedModality = "CT";
-        string expectedStudyDate = "2024-01-15";
-        string expectedStudyDescription = "CT Chest without contrast";
-
-        Assert.Equal(expectedReportText, deserialized.ReportText);
-        Assert.Equal(expectedExternalStudyID, deserialized.ExternalStudyID);
-        Assert.Equal(expectedModality, deserialized.Modality);
-        Assert.Equal(expectedStudyDate, deserialized.StudyDate);
-        Assert.Equal(expectedStudyDescription, deserialized.StudyDescription);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-        };
-
-        Assert.Null(model.ExternalStudyID);
-        Assert.False(model.RawData.ContainsKey("externalStudyId"));
-        Assert.Null(model.Modality);
-        Assert.False(model.RawData.ContainsKey("modality"));
-        Assert.Null(model.StudyDate);
-        Assert.False(model.RawData.ContainsKey("studyDate"));
-        Assert.Null(model.StudyDescription);
-        Assert.False(model.RawData.ContainsKey("studyDescription"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-
-            // Null should be interpreted as omitted for these properties
-            ExternalStudyID = null,
-            Modality = null,
-            StudyDate = null,
-            StudyDescription = null,
-        };
-
-        Assert.Null(model.ExternalStudyID);
-        Assert.False(model.RawData.ContainsKey("externalStudyId"));
-        Assert.Null(model.Modality);
-        Assert.False(model.RawData.ContainsKey("modality"));
-        Assert.Null(model.StudyDate);
-        Assert.False(model.RawData.ContainsKey("studyDate"));
-        Assert.Null(model.StudyDescription);
-        Assert.False(model.RawData.ContainsKey("studyDescription"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-
-            // Null should be interpreted as omitted for these properties
-            ExternalStudyID = null,
-            Modality = null,
-            StudyDate = null,
-            StudyDescription = null,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new StudyListResponsePriorReport
-        {
-            ReportText = "IMPRESSION: No acute cardiopulmonary process.",
-            ExternalStudyID = "EXT-2024-001",
-            Modality = "CT",
-            StudyDate = "2024-01-15",
-            StudyDescription = "CT Chest without contrast",
-        };
-
-        StudyListResponsePriorReport copied = new(model);
 
         Assert.Equal(model, copied);
     }

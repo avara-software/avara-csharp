@@ -5,9 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Users.Invitations;
 
@@ -47,6 +45,9 @@ public record class InvitationUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// A user's clinical or organizational role within the clinic.
+    /// </summary>
     public ApiEnum<string, ClinicRole>? ClinicRole
     {
         get
@@ -120,12 +121,19 @@ public record class InvitationUpdateParams : ParamsBase
         }
     }
 
-    public ApiEnum<string, Level>? Level
+    /// <summary>
+    /// User access level assignable via the API. 'admin' can manage users/settings,
+    /// 'member' has standard access. 'owner' is dashboard-only and cannot be assigned
+    /// via the API.
+    /// </summary>
+    public ApiEnum<string, AssignableUserLevel>? Level
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<ApiEnum<string, Level>>("level");
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, AssignableUserLevel>>(
+                "level"
+            );
         }
         init
         {
@@ -296,146 +304,5 @@ public record class InvitationUpdateParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-[JsonConverter(typeof(ClinicRoleConverter))]
-public enum ClinicRole
-{
-    Radiologist,
-    Cardiologist,
-    Neurologist,
-    Urologist,
-    Gynecologist,
-    Endocrinologist,
-    Doctor,
-    Surgeon,
-    Physician,
-    PhysicianAssistant,
-    NursePractitioner,
-    RegisteredNurse,
-    PatientCareCoordinator,
-    FrontDeskOperator,
-    ImagingTechnologist,
-    PacsAdministrator,
-    SoftwareEngineer,
-    RevenueCycleManager,
-    AdministrativeDirector,
-    AdministrativeAssistant,
-    Other,
-}
-
-sealed class ClinicRoleConverter : JsonConverter<ClinicRole>
-{
-    public override ClinicRole Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "Radiologist" => ClinicRole.Radiologist,
-            "Cardiologist" => ClinicRole.Cardiologist,
-            "Neurologist" => ClinicRole.Neurologist,
-            "Urologist" => ClinicRole.Urologist,
-            "Gynecologist" => ClinicRole.Gynecologist,
-            "Endocrinologist" => ClinicRole.Endocrinologist,
-            "Doctor" => ClinicRole.Doctor,
-            "Surgeon" => ClinicRole.Surgeon,
-            "Physician" => ClinicRole.Physician,
-            "Physician Assistant" => ClinicRole.PhysicianAssistant,
-            "Nurse Practitioner" => ClinicRole.NursePractitioner,
-            "Registered Nurse" => ClinicRole.RegisteredNurse,
-            "Patient Care Coordinator" => ClinicRole.PatientCareCoordinator,
-            "Front Desk Operator" => ClinicRole.FrontDeskOperator,
-            "Imaging Technologist" => ClinicRole.ImagingTechnologist,
-            "PACS Administrator" => ClinicRole.PacsAdministrator,
-            "Software Engineer" => ClinicRole.SoftwareEngineer,
-            "Revenue Cycle Manager" => ClinicRole.RevenueCycleManager,
-            "Administrative Director" => ClinicRole.AdministrativeDirector,
-            "Administrative Assistant" => ClinicRole.AdministrativeAssistant,
-            "Other" => ClinicRole.Other,
-            _ => (ClinicRole)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        ClinicRole value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                ClinicRole.Radiologist => "Radiologist",
-                ClinicRole.Cardiologist => "Cardiologist",
-                ClinicRole.Neurologist => "Neurologist",
-                ClinicRole.Urologist => "Urologist",
-                ClinicRole.Gynecologist => "Gynecologist",
-                ClinicRole.Endocrinologist => "Endocrinologist",
-                ClinicRole.Doctor => "Doctor",
-                ClinicRole.Surgeon => "Surgeon",
-                ClinicRole.Physician => "Physician",
-                ClinicRole.PhysicianAssistant => "Physician Assistant",
-                ClinicRole.NursePractitioner => "Nurse Practitioner",
-                ClinicRole.RegisteredNurse => "Registered Nurse",
-                ClinicRole.PatientCareCoordinator => "Patient Care Coordinator",
-                ClinicRole.FrontDeskOperator => "Front Desk Operator",
-                ClinicRole.ImagingTechnologist => "Imaging Technologist",
-                ClinicRole.PacsAdministrator => "PACS Administrator",
-                ClinicRole.SoftwareEngineer => "Software Engineer",
-                ClinicRole.RevenueCycleManager => "Revenue Cycle Manager",
-                ClinicRole.AdministrativeDirector => "Administrative Director",
-                ClinicRole.AdministrativeAssistant => "Administrative Assistant",
-                ClinicRole.Other => "Other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(LevelConverter))]
-public enum Level
-{
-    Admin,
-    Member,
-}
-
-sealed class LevelConverter : JsonConverter<Level>
-{
-    public override Level Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "admin" => Level.Admin,
-            "member" => Level.Member,
-            _ => (Level)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Level value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Level.Admin => "admin",
-                Level.Member => "member",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

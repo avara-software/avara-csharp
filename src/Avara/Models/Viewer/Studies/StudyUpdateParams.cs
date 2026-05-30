@@ -5,9 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Studies;
 
@@ -67,17 +65,15 @@ public record class StudyUpdateParams : ParamsBase
     }
 
     /// <summary>
-    /// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-    /// for immediate attention
+    /// Priority level of a study. 'normal' for routine, 'high' for urgent, 'stat'
+    /// for immediate attention.
     /// </summary>
-    public ApiEnum<string, StudyUpdateParamsSeverity>? Severity
+    public ApiEnum<string, Severity>? Severity
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<ApiEnum<string, StudyUpdateParamsSeverity>>(
-                "severity"
-            );
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, Severity>>("severity");
         }
         init
         {
@@ -111,6 +107,10 @@ public record class StudyUpdateParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Viewer completion status for a study. 'incomplete' = not yet finished in
+    /// the viewer, 'complete' = finished.
+    /// </summary>
     public ApiEnum<string, StudyViewerStatus>? StudyViewerStatus
     {
         get
@@ -249,100 +249,5 @@ public record class StudyUpdateParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// Priority level of the study. 'normal' for routine, 'high' for urgent, 'stat'
-/// for immediate attention
-/// </summary>
-[JsonConverter(typeof(StudyUpdateParamsSeverityConverter))]
-public enum StudyUpdateParamsSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyUpdateParamsSeverityConverter : JsonConverter<StudyUpdateParamsSeverity>
-{
-    public override StudyUpdateParamsSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyUpdateParamsSeverity.Normal,
-            "high" => StudyUpdateParamsSeverity.High,
-            "stat" => StudyUpdateParamsSeverity.Stat,
-            _ => (StudyUpdateParamsSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyUpdateParamsSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyUpdateParamsSeverity.Normal => "normal",
-                StudyUpdateParamsSeverity.High => "high",
-                StudyUpdateParamsSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(StudyViewerStatusConverter))]
-public enum StudyViewerStatus
-{
-    Incomplete,
-    Complete,
-}
-
-sealed class StudyViewerStatusConverter : JsonConverter<StudyViewerStatus>
-{
-    public override StudyViewerStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "incomplete" => StudyViewerStatus.Incomplete,
-            "complete" => StudyViewerStatus.Complete,
-            _ => (StudyViewerStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyViewerStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyViewerStatus.Incomplete => "incomplete",
-                StudyViewerStatus.Complete => "complete",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

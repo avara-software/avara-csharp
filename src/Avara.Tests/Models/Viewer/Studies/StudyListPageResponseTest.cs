@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
+using Avara.Models;
+using Avara.Models.Viewer;
 using Avara.Models.Viewer.Studies;
 
 namespace Avara.Tests.Models.Viewer.Studies;
@@ -21,11 +23,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -76,11 +78,11 @@ public class StudyListPageResponseTest : TestBase
                 CancelledAt = null,
                 CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                 IsCancelled = false,
-                Severity = StudyListResponseSeverity.High,
+                Severity = Severity.High,
                 StudyDescription = "CT Chest/Abdomen/Pelvis",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                StudyViewerStatus = StudyViewerStatus.Incomplete,
                 UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                 AssignedTo = new()
                 {
@@ -144,11 +146,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -213,11 +215,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -275,11 +277,11 @@ public class StudyListPageResponseTest : TestBase
                 CancelledAt = null,
                 CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                 IsCancelled = false,
-                Severity = StudyListResponseSeverity.High,
+                Severity = Severity.High,
                 StudyDescription = "CT Chest/Abdomen/Pelvis",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                StudyViewerStatus = StudyViewerStatus.Incomplete,
                 UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                 AssignedTo = new()
                 {
@@ -343,11 +345,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -406,11 +408,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -469,11 +471,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -531,11 +533,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -597,11 +599,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {
@@ -662,11 +664,11 @@ public class StudyListPageResponseTest : TestBase
                     CancelledAt = null,
                     CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
                     IsCancelled = false,
-                    Severity = StudyListResponseSeverity.High,
+                    Severity = Severity.High,
                     StudyDescription = "CT Chest/Abdomen/Pelvis",
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
-                    StudyViewerStatus = StudyListResponseStudyViewerStatus.Incomplete,
+                    StudyViewerStatus = StudyViewerStatus.Incomplete,
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
                     AssignedTo = new()
                     {

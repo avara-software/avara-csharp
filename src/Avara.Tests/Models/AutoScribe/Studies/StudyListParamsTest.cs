@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
+using Avara.Models.AutoScribe;
 using Avara.Models.AutoScribe.Studies;
 
 namespace Avara.Tests.Models.AutoScribe.Studies;
@@ -19,7 +19,7 @@ public class StudyListParamsTest : TestBase
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             IsCancelled = false,
             Limit = 20,
-            Severity = StudyListParamsSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
         };
@@ -29,7 +29,7 @@ public class StudyListParamsTest : TestBase
         string expectedExpressCustomerID = "cus_1234567890abcdef1234567890abcdef";
         bool expectedIsCancelled = false;
         double expectedLimit = 20;
-        ApiEnum<string, StudyListParamsSeverity> expectedSeverity = StudyListParamsSeverity.Normal;
+        ApiEnum<string, Severity> expectedSeverity = Severity.Normal;
         string expectedStudyDescription = "CT Head";
         List<ApiEnum<string, StudyReportStatus>> expectedStudyReportStatus =
         [
@@ -109,7 +109,7 @@ public class StudyListParamsTest : TestBase
         {
             Cursor = "eyJvZmZzZXQiOjIwfQ==",
             Limit = 20,
-            Severity = StudyListParamsSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
         };
@@ -129,7 +129,7 @@ public class StudyListParamsTest : TestBase
         {
             Cursor = "eyJvZmZzZXQiOjIwfQ==",
             Limit = 20,
-            Severity = StudyListParamsSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
 
@@ -156,7 +156,7 @@ public class StudyListParamsTest : TestBase
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             IsCancelled = false,
             Limit = 20,
-            Severity = StudyListParamsSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
         };
@@ -183,7 +183,7 @@ public class StudyListParamsTest : TestBase
             ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             IsCancelled = false,
             Limit = 20,
-            Severity = StudyListParamsSeverity.Normal,
+            Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
         };
@@ -191,129 +191,5 @@ public class StudyListParamsTest : TestBase
         StudyListParams copied = new(parameters);
 
         Assert.Equal(parameters, copied);
-    }
-}
-
-public class StudyListParamsSeverityTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyListParamsSeverity.Normal)]
-    [InlineData(StudyListParamsSeverity.High)]
-    [InlineData(StudyListParamsSeverity.Stat)]
-    public void Validation_Works(StudyListParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListParamsSeverity> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyListParamsSeverity.Normal)]
-    [InlineData(StudyListParamsSeverity.High)]
-    [InlineData(StudyListParamsSeverity.Stat)]
-    public void SerializationRoundtrip_Works(StudyListParamsSeverity rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyListParamsSeverity> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyListParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyListParamsSeverity>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyListParamsSeverity>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class StudyReportStatusTest : TestBase
-{
-    [Theory]
-    [InlineData(StudyReportStatus.Unassigned)]
-    [InlineData(StudyReportStatus.Assigned)]
-    [InlineData(StudyReportStatus.InProgress)]
-    [InlineData(StudyReportStatus.Completed)]
-    [InlineData(StudyReportStatus.AddendumActive)]
-    public void Validation_Works(StudyReportStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyReportStatus> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyReportStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(StudyReportStatus.Unassigned)]
-    [InlineData(StudyReportStatus.Assigned)]
-    [InlineData(StudyReportStatus.InProgress)]
-    [InlineData(StudyReportStatus.Completed)]
-    [InlineData(StudyReportStatus.AddendumActive)]
-    public void SerializationRoundtrip_Works(StudyReportStatus rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, StudyReportStatus> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyReportStatus>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, StudyReportStatus>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, StudyReportStatus>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

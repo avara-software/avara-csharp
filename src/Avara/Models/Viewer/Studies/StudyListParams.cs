@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Studies;
 
@@ -105,14 +103,12 @@ public record class StudyListParams : ParamsBase
     /// <summary>
     /// Filter by study severity
     /// </summary>
-    public ApiEnum<string, StudyListParamsSeverity>? Severity
+    public ApiEnum<string, Severity>? Severity
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, StudyListParamsSeverity>>(
-                "severity"
-            );
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Severity>>("severity");
         }
         init
         {
@@ -149,14 +145,14 @@ public record class StudyListParams : ParamsBase
     /// <summary>
     /// Filter by study viewer status
     /// </summary>
-    public ApiEnum<string, StudyListParamsStudyViewerStatus>? StudyViewerStatus
+    public ApiEnum<string, StudyViewerStatus>? StudyViewerStatus
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<
-                ApiEnum<string, StudyListParamsStudyViewerStatus>
-            >("studyViewerStatus");
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, StudyViewerStatus>>(
+                "studyViewerStatus"
+            );
         }
         init
         {
@@ -256,103 +252,5 @@ public record class StudyListParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
-    }
-}
-
-/// <summary>
-/// Filter by study severity
-/// </summary>
-[JsonConverter(typeof(StudyListParamsSeverityConverter))]
-public enum StudyListParamsSeverity
-{
-    Normal,
-    High,
-    Stat,
-}
-
-sealed class StudyListParamsSeverityConverter : JsonConverter<StudyListParamsSeverity>
-{
-    public override StudyListParamsSeverity Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "normal" => StudyListParamsSeverity.Normal,
-            "high" => StudyListParamsSeverity.High,
-            "stat" => StudyListParamsSeverity.Stat,
-            _ => (StudyListParamsSeverity)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyListParamsSeverity value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyListParamsSeverity.Normal => "normal",
-                StudyListParamsSeverity.High => "high",
-                StudyListParamsSeverity.Stat => "stat",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Filter by study viewer status
-/// </summary>
-[JsonConverter(typeof(StudyListParamsStudyViewerStatusConverter))]
-public enum StudyListParamsStudyViewerStatus
-{
-    Incomplete,
-    Complete,
-}
-
-sealed class StudyListParamsStudyViewerStatusConverter
-    : JsonConverter<StudyListParamsStudyViewerStatus>
-{
-    public override StudyListParamsStudyViewerStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "incomplete" => StudyListParamsStudyViewerStatus.Incomplete,
-            "complete" => StudyListParamsStudyViewerStatus.Complete,
-            _ => (StudyListParamsStudyViewerStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        StudyListParamsStudyViewerStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                StudyListParamsStudyViewerStatus.Incomplete => "incomplete",
-                StudyListParamsStudyViewerStatus.Complete => "complete",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }

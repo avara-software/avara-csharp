@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
 using Avara.Models.AutoScribe;
 using Avara.Models.AutoScribe.Reports;
 
@@ -28,7 +27,7 @@ public class ReportListResponseTest : TestBase
                         Age = "38 years",
                         DateOfBirth = "1985-07-20",
                         FacilityName = "City Medical Center",
-                        Height = new() { Unit = Unit.Cm, Value = 165 },
+                        Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
                         Procedure = "MRI Brain with Contrast",
@@ -38,7 +37,7 @@ public class ReportListResponseTest : TestBase
                         StudyTime = "14:30",
                         Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                     },
-                    Status = Status.Completed,
+                    Status = ReportStatus.Completed,
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                     UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -63,7 +62,7 @@ public class ReportListResponseTest : TestBase
                     Age = "38 years",
                     DateOfBirth = "1985-07-20",
                     FacilityName = "City Medical Center",
-                    Height = new() { Unit = Unit.Cm, Value = 165 },
+                    Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                     Mrn = "MRN-2024-001234",
                     PatientName = "Jane Doe",
                     Procedure = "MRI Brain with Contrast",
@@ -73,7 +72,7 @@ public class ReportListResponseTest : TestBase
                     StudyTime = "14:30",
                     Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                 },
-                Status = Status.Completed,
+                Status = ReportStatus.Completed,
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                 UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -111,7 +110,7 @@ public class ReportListResponseTest : TestBase
                         Age = "38 years",
                         DateOfBirth = "1985-07-20",
                         FacilityName = "City Medical Center",
-                        Height = new() { Unit = Unit.Cm, Value = 165 },
+                        Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
                         Procedure = "MRI Brain with Contrast",
@@ -121,7 +120,7 @@ public class ReportListResponseTest : TestBase
                         StudyTime = "14:30",
                         Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                     },
-                    Status = Status.Completed,
+                    Status = ReportStatus.Completed,
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                     UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -160,7 +159,7 @@ public class ReportListResponseTest : TestBase
                         Age = "38 years",
                         DateOfBirth = "1985-07-20",
                         FacilityName = "City Medical Center",
-                        Height = new() { Unit = Unit.Cm, Value = 165 },
+                        Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
                         Procedure = "MRI Brain with Contrast",
@@ -170,7 +169,7 @@ public class ReportListResponseTest : TestBase
                         StudyTime = "14:30",
                         Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                     },
-                    Status = Status.Completed,
+                    Status = ReportStatus.Completed,
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                     UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -202,7 +201,7 @@ public class ReportListResponseTest : TestBase
                     Age = "38 years",
                     DateOfBirth = "1985-07-20",
                     FacilityName = "City Medical Center",
-                    Height = new() { Unit = Unit.Cm, Value = 165 },
+                    Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                     Mrn = "MRN-2024-001234",
                     PatientName = "Jane Doe",
                     Procedure = "MRI Brain with Contrast",
@@ -212,7 +211,7 @@ public class ReportListResponseTest : TestBase
                     StudyTime = "14:30",
                     Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                 },
-                Status = Status.Completed,
+                Status = ReportStatus.Completed,
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                 UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -250,7 +249,7 @@ public class ReportListResponseTest : TestBase
                         Age = "38 years",
                         DateOfBirth = "1985-07-20",
                         FacilityName = "City Medical Center",
-                        Height = new() { Unit = Unit.Cm, Value = 165 },
+                        Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
                         Procedure = "MRI Brain with Contrast",
@@ -260,7 +259,7 @@ public class ReportListResponseTest : TestBase
                         StudyTime = "14:30",
                         Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                     },
-                    Status = Status.Completed,
+                    Status = ReportStatus.Completed,
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                     UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -293,7 +292,7 @@ public class ReportListResponseTest : TestBase
                         Age = "38 years",
                         DateOfBirth = "1985-07-20",
                         FacilityName = "City Medical Center",
-                        Height = new() { Unit = Unit.Cm, Value = 165 },
+                        Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                         Mrn = "MRN-2024-001234",
                         PatientName = "Jane Doe",
                         Procedure = "MRI Brain with Contrast",
@@ -303,7 +302,7 @@ public class ReportListResponseTest : TestBase
                         StudyTime = "14:30",
                         Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
                     },
-                    Status = Status.Completed,
+                    Status = ReportStatus.Completed,
                     StudyID = "stu_1234567890abcdef1234567890abcdef",
                     UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
                     UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -337,7 +336,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -347,7 +346,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -364,7 +363,7 @@ public class ReportTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -374,7 +373,7 @@ public class ReportTest : TestBase
             StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
-        ApiEnum<string, Status> expectedStatus = Status.Completed;
+        ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z");
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
@@ -407,7 +406,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -417,7 +416,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -445,7 +444,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -455,7 +454,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -476,7 +475,7 @@ public class ReportTest : TestBase
             Age = "38 years",
             DateOfBirth = "1985-07-20",
             FacilityName = "City Medical Center",
-            Height = new() { Unit = Unit.Cm, Value = 165 },
+            Height = new() { Unit = HeightUnit.Cm, Value = 165 },
             Mrn = "MRN-2024-001234",
             PatientName = "Jane Doe",
             Procedure = "MRI Brain with Contrast",
@@ -486,7 +485,7 @@ public class ReportTest : TestBase
             StudyTime = "14:30",
             Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
         };
-        ApiEnum<string, Status> expectedStatus = Status.Completed;
+        ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         DateTimeOffset expectedUpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z");
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
@@ -519,7 +518,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -529,7 +528,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -554,7 +553,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -564,7 +563,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -588,7 +587,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -598,7 +597,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -621,7 +620,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -631,7 +630,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -658,7 +657,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -668,7 +667,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -694,7 +693,7 @@ public class ReportTest : TestBase
                 Age = "38 years",
                 DateOfBirth = "1985-07-20",
                 FacilityName = "City Medical Center",
-                Height = new() { Unit = Unit.Cm, Value = 165 },
+                Height = new() { Unit = HeightUnit.Cm, Value = 165 },
                 Mrn = "MRN-2024-001234",
                 PatientName = "Jane Doe",
                 Procedure = "MRI Brain with Contrast",
@@ -704,7 +703,7 @@ public class ReportTest : TestBase
                 StudyTime = "14:30",
                 Weight = new() { Unit = WeightUnit.Kg, Value = 62 },
             },
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             UserID = "usr_1234567890abcdef1234567890abcdef",
@@ -715,63 +714,5 @@ public class ReportTest : TestBase
         Report copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class StatusTest : TestBase
-{
-    [Theory]
-    [InlineData(Status.InProgress)]
-    [InlineData(Status.Completed)]
-    public void Validation_Works(Status rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Status> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Status.InProgress)]
-    [InlineData(Status.Completed)]
-    public void SerializationRoundtrip_Works(Status rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Status> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

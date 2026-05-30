@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
-using Avara.Exceptions;
 
 namespace Avara.Models.Viewer.Users.Invitations;
 
@@ -44,16 +43,14 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// Clinical or organizational role for the invited user
+    /// A user's clinical or organizational role within the clinic.
     /// </summary>
-    public required ApiEnum<string, InvitationRetrieveResponseClinicRole> ClinicRole
+    public required ApiEnum<string, ClinicRole> ClinicRole
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, InvitationRetrieveResponseClinicRole>
-            >("clinicRole");
+            return this._rawData.GetNotNullClass<ApiEnum<string, ClinicRole>>("clinicRole");
         }
         init { this._rawData.Set("clinicRole", value); }
     }
@@ -137,7 +134,8 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// How the invitation was created - 'dashboard' or 'api'
+    /// How a user/invitation was created - via the dashboard UI ('dashboard') or
+    /// the API ('api').
     /// </summary>
     public required ApiEnum<string, InvitedSource> InvitedSource
     {
@@ -177,31 +175,28 @@ public sealed record class InvitationRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// Access level for the invited user. 'admin' or 'member' when created via API
+    /// User access level. 'owner' has full control (dashboard-only, not assignable
+    /// via API), 'admin' can manage users/settings, 'member' has standard access.
     /// </summary>
-    public required ApiEnum<string, InvitationRetrieveResponseLevel> Level
+    public required ApiEnum<string, UserLevel> Level
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, InvitationRetrieveResponseLevel>>(
-                "level"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, UserLevel>>("level");
         }
         init { this._rawData.Set("level", value); }
     }
 
     /// <summary>
-    /// Invitation status: 'sent', 'accepted', 'rejected', or 'revoked'
+    /// Lifecycle status of an invitation: 'sent', 'accepted', 'rejected', or 'revoked'.
     /// </summary>
-    public required ApiEnum<string, InvitationRetrieveResponseStatus> Status
+    public required ApiEnum<string, InvitationStatus> Status
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, InvitationRetrieveResponseStatus>>(
-                "status"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, InvitationStatus>>("status");
         }
         init { this._rawData.Set("status", value); }
     }
@@ -369,267 +364,4 @@ class InvitationRetrieveResponseFromRaw : IFromRawJson<InvitationRetrieveRespons
     public InvitationRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InvitationRetrieveResponse.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Clinical or organizational role for the invited user
-/// </summary>
-[JsonConverter(typeof(InvitationRetrieveResponseClinicRoleConverter))]
-public enum InvitationRetrieveResponseClinicRole
-{
-    Radiologist,
-    Cardiologist,
-    Neurologist,
-    Urologist,
-    Gynecologist,
-    Endocrinologist,
-    Doctor,
-    Surgeon,
-    Physician,
-    PhysicianAssistant,
-    NursePractitioner,
-    RegisteredNurse,
-    PatientCareCoordinator,
-    FrontDeskOperator,
-    ImagingTechnologist,
-    PacsAdministrator,
-    SoftwareEngineer,
-    RevenueCycleManager,
-    AdministrativeDirector,
-    AdministrativeAssistant,
-    Other,
-}
-
-sealed class InvitationRetrieveResponseClinicRoleConverter
-    : JsonConverter<InvitationRetrieveResponseClinicRole>
-{
-    public override InvitationRetrieveResponseClinicRole Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "Radiologist" => InvitationRetrieveResponseClinicRole.Radiologist,
-            "Cardiologist" => InvitationRetrieveResponseClinicRole.Cardiologist,
-            "Neurologist" => InvitationRetrieveResponseClinicRole.Neurologist,
-            "Urologist" => InvitationRetrieveResponseClinicRole.Urologist,
-            "Gynecologist" => InvitationRetrieveResponseClinicRole.Gynecologist,
-            "Endocrinologist" => InvitationRetrieveResponseClinicRole.Endocrinologist,
-            "Doctor" => InvitationRetrieveResponseClinicRole.Doctor,
-            "Surgeon" => InvitationRetrieveResponseClinicRole.Surgeon,
-            "Physician" => InvitationRetrieveResponseClinicRole.Physician,
-            "Physician Assistant" => InvitationRetrieveResponseClinicRole.PhysicianAssistant,
-            "Nurse Practitioner" => InvitationRetrieveResponseClinicRole.NursePractitioner,
-            "Registered Nurse" => InvitationRetrieveResponseClinicRole.RegisteredNurse,
-            "Patient Care Coordinator" =>
-                InvitationRetrieveResponseClinicRole.PatientCareCoordinator,
-            "Front Desk Operator" => InvitationRetrieveResponseClinicRole.FrontDeskOperator,
-            "Imaging Technologist" => InvitationRetrieveResponseClinicRole.ImagingTechnologist,
-            "PACS Administrator" => InvitationRetrieveResponseClinicRole.PacsAdministrator,
-            "Software Engineer" => InvitationRetrieveResponseClinicRole.SoftwareEngineer,
-            "Revenue Cycle Manager" => InvitationRetrieveResponseClinicRole.RevenueCycleManager,
-            "Administrative Director" =>
-                InvitationRetrieveResponseClinicRole.AdministrativeDirector,
-            "Administrative Assistant" =>
-                InvitationRetrieveResponseClinicRole.AdministrativeAssistant,
-            "Other" => InvitationRetrieveResponseClinicRole.Other,
-            _ => (InvitationRetrieveResponseClinicRole)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        InvitationRetrieveResponseClinicRole value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                InvitationRetrieveResponseClinicRole.Radiologist => "Radiologist",
-                InvitationRetrieveResponseClinicRole.Cardiologist => "Cardiologist",
-                InvitationRetrieveResponseClinicRole.Neurologist => "Neurologist",
-                InvitationRetrieveResponseClinicRole.Urologist => "Urologist",
-                InvitationRetrieveResponseClinicRole.Gynecologist => "Gynecologist",
-                InvitationRetrieveResponseClinicRole.Endocrinologist => "Endocrinologist",
-                InvitationRetrieveResponseClinicRole.Doctor => "Doctor",
-                InvitationRetrieveResponseClinicRole.Surgeon => "Surgeon",
-                InvitationRetrieveResponseClinicRole.Physician => "Physician",
-                InvitationRetrieveResponseClinicRole.PhysicianAssistant => "Physician Assistant",
-                InvitationRetrieveResponseClinicRole.NursePractitioner => "Nurse Practitioner",
-                InvitationRetrieveResponseClinicRole.RegisteredNurse => "Registered Nurse",
-                InvitationRetrieveResponseClinicRole.PatientCareCoordinator =>
-                    "Patient Care Coordinator",
-                InvitationRetrieveResponseClinicRole.FrontDeskOperator => "Front Desk Operator",
-                InvitationRetrieveResponseClinicRole.ImagingTechnologist => "Imaging Technologist",
-                InvitationRetrieveResponseClinicRole.PacsAdministrator => "PACS Administrator",
-                InvitationRetrieveResponseClinicRole.SoftwareEngineer => "Software Engineer",
-                InvitationRetrieveResponseClinicRole.RevenueCycleManager => "Revenue Cycle Manager",
-                InvitationRetrieveResponseClinicRole.AdministrativeDirector =>
-                    "Administrative Director",
-                InvitationRetrieveResponseClinicRole.AdministrativeAssistant =>
-                    "Administrative Assistant",
-                InvitationRetrieveResponseClinicRole.Other => "Other",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// How the invitation was created - 'dashboard' or 'api'
-/// </summary>
-[JsonConverter(typeof(InvitedSourceConverter))]
-public enum InvitedSource
-{
-    Dashboard,
-    Api,
-}
-
-sealed class InvitedSourceConverter : JsonConverter<InvitedSource>
-{
-    public override InvitedSource Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "dashboard" => InvitedSource.Dashboard,
-            "api" => InvitedSource.Api,
-            _ => (InvitedSource)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        InvitedSource value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                InvitedSource.Dashboard => "dashboard",
-                InvitedSource.Api => "api",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Access level for the invited user. 'admin' or 'member' when created via API
-/// </summary>
-[JsonConverter(typeof(InvitationRetrieveResponseLevelConverter))]
-public enum InvitationRetrieveResponseLevel
-{
-    Owner,
-    Admin,
-    Member,
-}
-
-sealed class InvitationRetrieveResponseLevelConverter
-    : JsonConverter<InvitationRetrieveResponseLevel>
-{
-    public override InvitationRetrieveResponseLevel Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "owner" => InvitationRetrieveResponseLevel.Owner,
-            "admin" => InvitationRetrieveResponseLevel.Admin,
-            "member" => InvitationRetrieveResponseLevel.Member,
-            _ => (InvitationRetrieveResponseLevel)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        InvitationRetrieveResponseLevel value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                InvitationRetrieveResponseLevel.Owner => "owner",
-                InvitationRetrieveResponseLevel.Admin => "admin",
-                InvitationRetrieveResponseLevel.Member => "member",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Invitation status: 'sent', 'accepted', 'rejected', or 'revoked'
-/// </summary>
-[JsonConverter(typeof(InvitationRetrieveResponseStatusConverter))]
-public enum InvitationRetrieveResponseStatus
-{
-    Sent,
-    Accepted,
-    Rejected,
-    Revoked,
-}
-
-sealed class InvitationRetrieveResponseStatusConverter
-    : JsonConverter<InvitationRetrieveResponseStatus>
-{
-    public override InvitationRetrieveResponseStatus Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "sent" => InvitationRetrieveResponseStatus.Sent,
-            "accepted" => InvitationRetrieveResponseStatus.Accepted,
-            "rejected" => InvitationRetrieveResponseStatus.Rejected,
-            "revoked" => InvitationRetrieveResponseStatus.Revoked,
-            _ => (InvitationRetrieveResponseStatus)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        InvitationRetrieveResponseStatus value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                InvitationRetrieveResponseStatus.Sent => "sent",
-                InvitationRetrieveResponseStatus.Accepted => "accepted",
-                InvitationRetrieveResponseStatus.Rejected => "rejected",
-                InvitationRetrieveResponseStatus.Revoked => "revoked",
-                _ => throw new AvaraInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

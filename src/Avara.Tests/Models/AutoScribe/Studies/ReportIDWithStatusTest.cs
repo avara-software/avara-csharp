@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models.AutoScribe;
 using Avara.Models.AutoScribe.Studies;
 
 namespace Avara.Tests.Models.AutoScribe.Studies;
@@ -13,11 +13,11 @@ public class ReportIDWithStatusTest : TestBase
         var model = new ReportIDWithStatus
         {
             ReportID = "rep_1234567890abcdef1234567890abcdef",
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
         };
 
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
-        ApiEnum<string, Status> expectedStatus = Status.Completed;
+        ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
 
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedStatus, model.Status);
@@ -29,7 +29,7 @@ public class ReportIDWithStatusTest : TestBase
         var model = new ReportIDWithStatus
         {
             ReportID = "rep_1234567890abcdef1234567890abcdef",
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -47,7 +47,7 @@ public class ReportIDWithStatusTest : TestBase
         var model = new ReportIDWithStatus
         {
             ReportID = "rep_1234567890abcdef1234567890abcdef",
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -58,7 +58,7 @@ public class ReportIDWithStatusTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
-        ApiEnum<string, Status> expectedStatus = Status.Completed;
+        ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
 
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedStatus, deserialized.Status);
@@ -70,7 +70,7 @@ public class ReportIDWithStatusTest : TestBase
         var model = new ReportIDWithStatus
         {
             ReportID = "rep_1234567890abcdef1234567890abcdef",
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
         };
 
         model.Validate();
@@ -82,69 +82,11 @@ public class ReportIDWithStatusTest : TestBase
         var model = new ReportIDWithStatus
         {
             ReportID = "rep_1234567890abcdef1234567890abcdef",
-            Status = Status.Completed,
+            Status = ReportStatus.Completed,
         };
 
         ReportIDWithStatus copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class StatusTest : TestBase
-{
-    [Theory]
-    [InlineData(Status.InProgress)]
-    [InlineData(Status.Completed)]
-    public void Validation_Works(Status rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Status> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Status.InProgress)]
-    [InlineData(Status.Completed)]
-    public void SerializationRoundtrip_Works(Status rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Status> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

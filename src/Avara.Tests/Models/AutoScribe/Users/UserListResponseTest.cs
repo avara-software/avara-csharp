@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 using Avara.Core;
-using Avara.Exceptions;
+using Avara.Models;
 using Avara.Models.AutoScribe.Users;
 
 namespace Avara.Tests.Models.AutoScribe.Users;
@@ -15,15 +15,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             NpiNumber = "1234567893",
@@ -34,17 +34,15 @@ public class UserListResponseTest : TestBase
 
         bool expectedCanCreateReports = true;
         bool expectedCanManageStudies = true;
-        ApiEnum<string, UserListResponseClinicRole> expectedClinicRole =
-            UserListResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z");
         string expectedEmail = "dr.johnson@hospital.org";
         string expectedFirstName = "Sarah";
         bool expectedHasDashboardAccess = true;
-        ApiEnum<string, UserListResponseInvitedSource> expectedInvitedSource =
-            UserListResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         DateTimeOffset expectedLastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z");
         string expectedLastName = "Johnson";
-        ApiEnum<string, UserListResponseLevel> expectedLevel = UserListResponseLevel.Member;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedMiddleName = "Marie";
         string expectedNpiNumber = "1234567893";
@@ -78,15 +76,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             NpiNumber = "1234567893",
@@ -111,15 +109,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             NpiNumber = "1234567893",
@@ -137,17 +135,15 @@ public class UserListResponseTest : TestBase
 
         bool expectedCanCreateReports = true;
         bool expectedCanManageStudies = true;
-        ApiEnum<string, UserListResponseClinicRole> expectedClinicRole =
-            UserListResponseClinicRole.Radiologist;
+        ApiEnum<string, ClinicRole> expectedClinicRole = ClinicRole.Radiologist;
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z");
         string expectedEmail = "dr.johnson@hospital.org";
         string expectedFirstName = "Sarah";
         bool expectedHasDashboardAccess = true;
-        ApiEnum<string, UserListResponseInvitedSource> expectedInvitedSource =
-            UserListResponseInvitedSource.Api;
+        ApiEnum<string, InvitedSource> expectedInvitedSource = InvitedSource.Api;
         DateTimeOffset expectedLastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z");
         string expectedLastName = "Johnson";
-        ApiEnum<string, UserListResponseLevel> expectedLevel = UserListResponseLevel.Member;
+        ApiEnum<string, UserLevel> expectedLevel = UserLevel.Member;
         string expectedUserID = "usr_1234567890abcdef1234567890abcdef";
         string expectedMiddleName = "Marie";
         string expectedNpiNumber = "1234567893";
@@ -181,15 +177,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             NpiNumber = "1234567893",
@@ -208,15 +204,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
         };
 
@@ -239,15 +235,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
         };
 
@@ -261,15 +257,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
 
             // Null should be interpreted as omitted for these properties
@@ -299,15 +295,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
 
             // Null should be interpreted as omitted for these properties
@@ -328,15 +324,15 @@ public class UserListResponseTest : TestBase
         {
             CanCreateReports = true,
             CanManageStudies = true,
-            ClinicRole = UserListResponseClinicRole.Radiologist,
+            ClinicRole = ClinicRole.Radiologist,
             CreatedAt = DateTimeOffset.Parse("2024-01-15T10:00:00Z"),
             Email = "dr.johnson@hospital.org",
             FirstName = "Sarah",
             HasDashboardAccess = true,
-            InvitedSource = UserListResponseInvitedSource.Api,
+            InvitedSource = InvitedSource.Api,
             LastLoginAt = DateTimeOffset.Parse("2024-03-15T09:00:00Z"),
             LastName = "Johnson",
-            Level = UserListResponseLevel.Member,
+            Level = UserLevel.Member,
             UserID = "usr_1234567890abcdef1234567890abcdef",
             MiddleName = "Marie",
             NpiNumber = "1234567893",
@@ -348,217 +344,5 @@ public class UserListResponseTest : TestBase
         UserListResponse copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class UserListResponseClinicRoleTest : TestBase
-{
-    [Theory]
-    [InlineData(UserListResponseClinicRole.Radiologist)]
-    [InlineData(UserListResponseClinicRole.Cardiologist)]
-    [InlineData(UserListResponseClinicRole.Neurologist)]
-    [InlineData(UserListResponseClinicRole.Urologist)]
-    [InlineData(UserListResponseClinicRole.Gynecologist)]
-    [InlineData(UserListResponseClinicRole.Endocrinologist)]
-    [InlineData(UserListResponseClinicRole.Doctor)]
-    [InlineData(UserListResponseClinicRole.Surgeon)]
-    [InlineData(UserListResponseClinicRole.Physician)]
-    [InlineData(UserListResponseClinicRole.PhysicianAssistant)]
-    [InlineData(UserListResponseClinicRole.NursePractitioner)]
-    [InlineData(UserListResponseClinicRole.RegisteredNurse)]
-    [InlineData(UserListResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(UserListResponseClinicRole.FrontDeskOperator)]
-    [InlineData(UserListResponseClinicRole.ImagingTechnologist)]
-    [InlineData(UserListResponseClinicRole.PacsAdministrator)]
-    [InlineData(UserListResponseClinicRole.SoftwareEngineer)]
-    [InlineData(UserListResponseClinicRole.RevenueCycleManager)]
-    [InlineData(UserListResponseClinicRole.AdministrativeDirector)]
-    [InlineData(UserListResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(UserListResponseClinicRole.Other)]
-    public void Validation_Works(UserListResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseClinicRole> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserListResponseClinicRole.Radiologist)]
-    [InlineData(UserListResponseClinicRole.Cardiologist)]
-    [InlineData(UserListResponseClinicRole.Neurologist)]
-    [InlineData(UserListResponseClinicRole.Urologist)]
-    [InlineData(UserListResponseClinicRole.Gynecologist)]
-    [InlineData(UserListResponseClinicRole.Endocrinologist)]
-    [InlineData(UserListResponseClinicRole.Doctor)]
-    [InlineData(UserListResponseClinicRole.Surgeon)]
-    [InlineData(UserListResponseClinicRole.Physician)]
-    [InlineData(UserListResponseClinicRole.PhysicianAssistant)]
-    [InlineData(UserListResponseClinicRole.NursePractitioner)]
-    [InlineData(UserListResponseClinicRole.RegisteredNurse)]
-    [InlineData(UserListResponseClinicRole.PatientCareCoordinator)]
-    [InlineData(UserListResponseClinicRole.FrontDeskOperator)]
-    [InlineData(UserListResponseClinicRole.ImagingTechnologist)]
-    [InlineData(UserListResponseClinicRole.PacsAdministrator)]
-    [InlineData(UserListResponseClinicRole.SoftwareEngineer)]
-    [InlineData(UserListResponseClinicRole.RevenueCycleManager)]
-    [InlineData(UserListResponseClinicRole.AdministrativeDirector)]
-    [InlineData(UserListResponseClinicRole.AdministrativeAssistant)]
-    [InlineData(UserListResponseClinicRole.Other)]
-    public void SerializationRoundtrip_Works(UserListResponseClinicRole rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseClinicRole> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseClinicRole>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseClinicRole>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseClinicRole>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class UserListResponseInvitedSourceTest : TestBase
-{
-    [Theory]
-    [InlineData(UserListResponseInvitedSource.Dashboard)]
-    [InlineData(UserListResponseInvitedSource.Api)]
-    public void Validation_Works(UserListResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseInvitedSource> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseInvitedSource>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserListResponseInvitedSource.Dashboard)]
-    [InlineData(UserListResponseInvitedSource.Api)]
-    public void SerializationRoundtrip_Works(UserListResponseInvitedSource rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseInvitedSource> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserListResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseInvitedSource>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, UserListResponseInvitedSource>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class UserListResponseLevelTest : TestBase
-{
-    [Theory]
-    [InlineData(UserListResponseLevel.Owner)]
-    [InlineData(UserListResponseLevel.Admin)]
-    [InlineData(UserListResponseLevel.Member)]
-    public void Validation_Works(UserListResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseLevel> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<AvaraInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(UserListResponseLevel.Owner)]
-    [InlineData(UserListResponseLevel.Admin)]
-    [InlineData(UserListResponseLevel.Member)]
-    public void SerializationRoundtrip_Works(UserListResponseLevel rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, UserListResponseLevel> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseLevel>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseLevel>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserListResponseLevel>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
