@@ -29,6 +29,7 @@ public class WebhookEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
@@ -68,6 +69,7 @@ public class WebhookEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",

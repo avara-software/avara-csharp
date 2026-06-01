@@ -13,6 +13,7 @@ public class ReportTextResponseTest : TestBase
     {
         ReportTextResponse value = new SingleReportTextResponse()
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -46,6 +47,7 @@ public class ReportTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -79,6 +81,7 @@ public class ReportTextResponseTest : TestBase
     {
         ReportTextResponse value = new SingleReportTextResponse()
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -118,6 +121,7 @@ public class ReportTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -160,6 +164,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -182,6 +187,7 @@ public class SingleReportTextResponseTest : TestBase
                 "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.",
         };
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         StudyReportMetadata expectedSnapshotMetadata = new()
         {
@@ -203,6 +209,7 @@ public class SingleReportTextResponseTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.";
 
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedSnapshotMetadata, model.SnapshotMetadata);
         Assert.Equal(expectedStudyID, model.StudyID);
@@ -215,6 +222,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -251,6 +259,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -280,6 +289,7 @@ public class SingleReportTextResponseTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         StudyReportMetadata expectedSnapshotMetadata = new()
         {
@@ -301,6 +311,7 @@ public class SingleReportTextResponseTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.";
 
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedSnapshotMetadata, deserialized.SnapshotMetadata);
         Assert.Equal(expectedStudyID, deserialized.StudyID);
@@ -313,6 +324,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -343,6 +355,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -372,6 +385,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -400,6 +414,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -432,6 +447,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -463,6 +479,7 @@ public class SingleReportTextResponseTest : TestBase
     {
         var model = new SingleReportTextResponse
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -502,6 +519,7 @@ public class ListReportsTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -532,6 +550,7 @@ public class ListReportsTextResponseTest : TestBase
         [
             new()
             {
+                IsCritical = false,
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 SnapshotMetadata = new()
                 {
@@ -575,6 +594,7 @@ public class ListReportsTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -619,6 +639,7 @@ public class ListReportsTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -656,6 +677,7 @@ public class ListReportsTextResponseTest : TestBase
         [
             new()
             {
+                IsCritical = false,
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 SnapshotMetadata = new()
                 {
@@ -699,6 +721,7 @@ public class ListReportsTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {
@@ -737,6 +760,7 @@ public class ListReportsTextResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = false,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     SnapshotMetadata = new()
                     {

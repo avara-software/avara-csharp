@@ -15,6 +15,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -42,6 +43,7 @@ public class ReportTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z");
         bool expectedIsAddendum = false;
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         DateTimeOffset expectedSignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z");
         StudyReportMetadata expectedSnapshotMetadata = new()
@@ -68,6 +70,7 @@ public class ReportTest : TestBase
 
         Assert.Equal(expectedCreatedAt, model.CreatedAt);
         Assert.Equal(expectedIsAddendum, model.IsAddendum);
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedSignedAt, model.SignedAt);
         Assert.Equal(expectedSnapshotMetadata, model.SnapshotMetadata);
@@ -85,6 +88,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -123,6 +127,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -154,6 +159,7 @@ public class ReportTest : TestBase
 
         DateTimeOffset expectedCreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z");
         bool expectedIsAddendum = false;
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         DateTimeOffset expectedSignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z");
         StudyReportMetadata expectedSnapshotMetadata = new()
@@ -180,6 +186,7 @@ public class ReportTest : TestBase
 
         Assert.Equal(expectedCreatedAt, deserialized.CreatedAt);
         Assert.Equal(expectedIsAddendum, deserialized.IsAddendum);
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedSignedAt, deserialized.SignedAt);
         Assert.Equal(expectedSnapshotMetadata, deserialized.SnapshotMetadata);
@@ -197,6 +204,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -232,6 +240,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -266,6 +275,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -299,6 +309,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -336,6 +347,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()
@@ -372,6 +384,7 @@ public class ReportTest : TestBase
         {
             CreatedAt = DateTimeOffset.Parse("2024-03-15T14:30:00Z"),
             IsAddendum = false,
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SignedAt = DateTimeOffset.Parse("2024-03-15T16:00:00Z"),
             SnapshotMetadata = new()

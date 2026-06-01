@@ -73,6 +73,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -94,6 +95,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -159,6 +161,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             ExpressCustomerName = "City Medical Center",
         };
         string expectedExternalPatientID = "externalPatientId";
+        bool expectedIsCritical = true;
         Dictionary<string, string> expectedMetadata = new()
         {
             { "department", "radiology" },
@@ -180,6 +183,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         [
             new()
             {
+                IsCritical = null,
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 Status = ReportStatus.InProgress,
             },
@@ -204,6 +208,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         Assert.Equal(expectedCreatedByUser, model.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, model.ExpressCustomer);
         Assert.Equal(expectedExternalPatientID, model.ExternalPatientID);
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.NotNull(model.Metadata);
         Assert.Equal(expectedMetadata.Count, model.Metadata.Count);
         foreach (var item in expectedMetadata)
@@ -297,6 +302,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -318,6 +324,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -398,6 +405,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -419,6 +427,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -491,6 +500,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             ExpressCustomerName = "City Medical Center",
         };
         string expectedExternalPatientID = "externalPatientId";
+        bool expectedIsCritical = true;
         Dictionary<string, string> expectedMetadata = new()
         {
             { "department", "radiology" },
@@ -512,6 +522,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         [
             new()
             {
+                IsCritical = null,
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 Status = ReportStatus.InProgress,
             },
@@ -536,6 +547,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         Assert.Equal(expectedCreatedByUser, deserialized.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, deserialized.ExpressCustomer);
         Assert.Equal(expectedExternalPatientID, deserialized.ExternalPatientID);
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.NotNull(deserialized.Metadata);
         Assert.Equal(expectedMetadata.Count, deserialized.Metadata.Count);
         foreach (var item in expectedMetadata)
@@ -629,6 +641,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -650,6 +663,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -728,6 +742,8 @@ public class StudyRetrieveByUidResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
         };
 
+        Assert.Null(model.IsCritical);
+        Assert.False(model.RawData.ContainsKey("isCritical"));
         Assert.Null(model.Metadata);
         Assert.False(model.RawData.ContainsKey("metadata"));
         Assert.Null(model.PriorReports);
@@ -875,12 +891,15 @@ public class StudyRetrieveByUidResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
+            IsCritical = null,
             Metadata = null,
             PriorReports = null,
             ReportIds = null,
             TechnologistNotes = null,
         };
 
+        Assert.Null(model.IsCritical);
+        Assert.False(model.RawData.ContainsKey("isCritical"));
         Assert.Null(model.Metadata);
         Assert.False(model.RawData.ContainsKey("metadata"));
         Assert.Null(model.PriorReports);
@@ -958,6 +977,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
+            IsCritical = null,
             Metadata = null,
             PriorReports = null,
             ReportIds = null,
@@ -996,6 +1016,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -1016,6 +1037,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -1072,6 +1094,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -1092,6 +1115,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -1131,6 +1155,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -1151,6 +1176,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -1217,6 +1243,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -1237,6 +1264,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },
@@ -1320,6 +1348,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
                 { "department", "radiology" },
@@ -1341,6 +1370,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             [
                 new()
                 {
+                    IsCritical = null,
                     ReportID = "rep_1234567890abcdef1234567890abcdef",
                     Status = ReportStatus.InProgress,
                 },

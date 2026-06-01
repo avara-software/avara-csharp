@@ -16,6 +16,19 @@ namespace Avara.Models.Webhooks;
 public sealed record class ReportDeliveredEventData : JsonModel
 {
     /// <summary>
+    /// Whether the report was marked critical at sign-out.
+    /// </summary>
+    public required bool IsCritical
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("isCritical");
+        }
+        init { this._rawData.Set("isCritical", value); }
+    }
+
+    /// <summary>
     /// Presigned URL for PDF download. Time-limited, typically valid for 1 hour.
     /// </summary>
     public required string PresignedUrl
@@ -78,6 +91,7 @@ public sealed record class ReportDeliveredEventData : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.IsCritical;
         _ = this.PresignedUrl;
         _ = this.ReportID;
         _ = this.StudyID;

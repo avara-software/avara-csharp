@@ -12,6 +12,7 @@ public class ReportPdfItemTest : TestBase
     {
         var model = new ReportPdfItem
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
@@ -33,6 +34,7 @@ public class ReportPdfItemTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
         };
 
+        bool expectedIsCritical = false;
         string expectedPresignedUrl =
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
@@ -54,6 +56,7 @@ public class ReportPdfItemTest : TestBase
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
 
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedPresignedUrl, model.PresignedUrl);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedSnapshotMetadata, model.SnapshotMetadata);
@@ -66,6 +69,7 @@ public class ReportPdfItemTest : TestBase
     {
         var model = new ReportPdfItem
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
@@ -101,6 +105,7 @@ public class ReportPdfItemTest : TestBase
     {
         var model = new ReportPdfItem
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
@@ -129,6 +134,7 @@ public class ReportPdfItemTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        bool expectedIsCritical = false;
         string expectedPresignedUrl =
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
@@ -150,6 +156,7 @@ public class ReportPdfItemTest : TestBase
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
         string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123";
 
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedPresignedUrl, deserialized.PresignedUrl);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedSnapshotMetadata, deserialized.SnapshotMetadata);
@@ -162,6 +169,7 @@ public class ReportPdfItemTest : TestBase
     {
         var model = new ReportPdfItem
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
@@ -191,6 +199,7 @@ public class ReportPdfItemTest : TestBase
     {
         var model = new ReportPdfItem
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=abc123",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()

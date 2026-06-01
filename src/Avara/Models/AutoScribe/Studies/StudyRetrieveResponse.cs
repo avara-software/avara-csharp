@@ -243,6 +243,27 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 
     /// <summary>
+    /// Whether the primary report was marked as critical at sign-out
+    /// </summary>
+    public bool? IsCritical
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isCritical");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("isCritical", value);
+        }
+    }
+
+    /// <summary>
     /// Custom key-value metadata for the study. Maximum 50 pairs, keys up to 100
     /// chars, values up to 1000 chars
     /// </summary>
@@ -385,6 +406,7 @@ public sealed record class StudyRetrieveResponse : JsonModel
         this.CreatedByUser?.Validate();
         this.ExpressCustomer?.Validate();
         _ = this.ExternalPatientID;
+        _ = this.IsCritical;
         _ = this.Metadata;
         _ = this.Modality;
         foreach (var item in this.PriorReports ?? [])

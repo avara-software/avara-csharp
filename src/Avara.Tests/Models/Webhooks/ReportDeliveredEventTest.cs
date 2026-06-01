@@ -14,6 +14,7 @@ public class ReportDeliveredEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
@@ -25,6 +26,7 @@ public class ReportDeliveredEventTest : TestBase
         string expectedID = "whe_1234567890abcdef1234567890abcdef";
         ReportDeliveredEventData expectedData = new()
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -45,6 +47,7 @@ public class ReportDeliveredEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
@@ -70,6 +73,7 @@ public class ReportDeliveredEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
@@ -88,6 +92,7 @@ public class ReportDeliveredEventTest : TestBase
         string expectedID = "whe_1234567890abcdef1234567890abcdef";
         ReportDeliveredEventData expectedData = new()
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -108,6 +113,7 @@ public class ReportDeliveredEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
@@ -127,6 +133,7 @@ public class ReportDeliveredEventTest : TestBase
             ID = "whe_1234567890abcdef1234567890abcdef",
             Data = new()
             {
+                IsCritical = false,
                 PresignedUrl =
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
