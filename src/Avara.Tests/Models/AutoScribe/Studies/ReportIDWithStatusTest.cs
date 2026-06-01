@@ -12,13 +12,16 @@ public class ReportIDWithStatusTest : TestBase
     {
         var model = new ReportIDWithStatus
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             Status = ReportStatus.Completed,
         };
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
 
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedStatus, model.Status);
     }
@@ -28,6 +31,7 @@ public class ReportIDWithStatusTest : TestBase
     {
         var model = new ReportIDWithStatus
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             Status = ReportStatus.Completed,
         };
@@ -46,6 +50,7 @@ public class ReportIDWithStatusTest : TestBase
     {
         var model = new ReportIDWithStatus
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             Status = ReportStatus.Completed,
         };
@@ -57,9 +62,11 @@ public class ReportIDWithStatusTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         ApiEnum<string, ReportStatus> expectedStatus = ReportStatus.Completed;
 
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedStatus, deserialized.Status);
     }
@@ -69,6 +76,7 @@ public class ReportIDWithStatusTest : TestBase
     {
         var model = new ReportIDWithStatus
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             Status = ReportStatus.Completed,
         };
@@ -81,6 +89,7 @@ public class ReportIDWithStatusTest : TestBase
     {
         var model = new ReportIDWithStatus
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             Status = ReportStatus.Completed,
         };

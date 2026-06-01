@@ -78,6 +78,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -99,6 +100,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -173,6 +175,7 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerName = "City Medical Center",
                 },
                 ExternalPatientID = "externalPatientId",
+                IsCritical = true,
                 Metadata = new Dictionary<string, string>()
                 {
                     { "department", "radiology" },
@@ -194,6 +197,7 @@ public class StudyListPageResponseTest : TestBase
                 [
                     new()
                     {
+                        IsCritical = null,
                         ReportID = "rep_1234567890abcdef1234567890abcdef",
                         Status = ReportStatus.InProgress,
                     },
@@ -281,6 +285,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -302,6 +307,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -390,6 +396,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -411,6 +418,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -492,6 +500,7 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerName = "City Medical Center",
                 },
                 ExternalPatientID = "externalPatientId",
+                IsCritical = true,
                 Metadata = new Dictionary<string, string>()
                 {
                     { "department", "radiology" },
@@ -513,6 +522,7 @@ public class StudyListPageResponseTest : TestBase
                 [
                     new()
                     {
+                        IsCritical = null,
                         ReportID = "rep_1234567890abcdef1234567890abcdef",
                         Status = ReportStatus.InProgress,
                     },
@@ -600,6 +610,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -621,6 +632,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -703,6 +715,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -724,6 +737,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -806,6 +820,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -827,6 +842,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -908,6 +924,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -929,6 +946,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -1014,6 +1032,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -1035,6 +1054,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },
@@ -1119,6 +1139,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
                         { "department", "radiology" },
@@ -1140,6 +1161,7 @@ public class StudyListPageResponseTest : TestBase
                     [
                         new()
                         {
+                            IsCritical = null,
                             ReportID = "rep_1234567890abcdef1234567890abcdef",
                             Status = ReportStatus.InProgress,
                         },

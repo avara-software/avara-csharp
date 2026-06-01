@@ -14,6 +14,20 @@ namespace Avara.Models.AutoScribe.Reports;
 public sealed record class ReportPdfItem : JsonModel
 {
     /// <summary>
+    /// Whether the report was marked critical at sign-out. null when the report
+    /// is not yet completed; true/false once completed.
+    /// </summary>
+    public required bool? IsCritical
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isCritical");
+        }
+        init { this._rawData.Set("isCritical", value); }
+    }
+
+    /// <summary>
     /// Time-limited presigned URL to download the PDF (expires after 1 hour)
     /// </summary>
     public required string PresignedUrl
@@ -81,6 +95,7 @@ public sealed record class ReportPdfItem : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.IsCritical;
         _ = this.PresignedUrl;
         _ = this.ReportID;
         this.SnapshotMetadata.Validate();

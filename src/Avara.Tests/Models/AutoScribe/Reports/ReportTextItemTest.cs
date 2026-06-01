@@ -12,6 +12,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -34,6 +35,7 @@ public class ReportTextItemTest : TestBase
                 "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.",
         };
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         StudyReportMetadata expectedSnapshotMetadata = new()
         {
@@ -55,6 +57,7 @@ public class ReportTextItemTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.";
 
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedSnapshotMetadata, model.SnapshotMetadata);
         Assert.Equal(expectedStudyID, model.StudyID);
@@ -67,6 +70,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -103,6 +107,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -132,6 +137,7 @@ public class ReportTextItemTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        bool expectedIsCritical = false;
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         StudyReportMetadata expectedSnapshotMetadata = new()
         {
@@ -153,6 +159,7 @@ public class ReportTextItemTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality. IMPRESSION: Unremarkable brain MRI.";
 
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedSnapshotMetadata, deserialized.SnapshotMetadata);
         Assert.Equal(expectedStudyID, deserialized.StudyID);
@@ -165,6 +172,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -195,6 +203,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -224,6 +233,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -252,6 +262,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -284,6 +295,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {
@@ -315,6 +327,7 @@ public class ReportTextItemTest : TestBase
     {
         var model = new ReportTextItem
         {
+            IsCritical = false,
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             SnapshotMetadata = new()
             {

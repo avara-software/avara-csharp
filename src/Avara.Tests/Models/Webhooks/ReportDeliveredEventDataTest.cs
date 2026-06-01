@@ -11,12 +11,14 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
+        bool expectedIsCritical = false;
         string expectedPresignedUrl =
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
@@ -24,6 +26,7 @@ public class ReportDeliveredEventDataTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality...";
 
+        Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.Equal(expectedPresignedUrl, model.PresignedUrl);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedStudyID, model.StudyID);
@@ -35,6 +38,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -55,6 +59,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -68,6 +73,7 @@ public class ReportDeliveredEventDataTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        bool expectedIsCritical = false;
         string expectedPresignedUrl =
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
@@ -75,6 +81,7 @@ public class ReportDeliveredEventDataTest : TestBase
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality...";
 
+        Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.Equal(expectedPresignedUrl, deserialized.PresignedUrl);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedStudyID, deserialized.StudyID);
@@ -86,6 +93,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -100,6 +108,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -114,6 +123,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -127,6 +137,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -144,6 +155,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
@@ -160,6 +172,7 @@ public class ReportDeliveredEventDataTest : TestBase
     {
         var model = new ReportDeliveredEventData
         {
+            IsCritical = false,
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",

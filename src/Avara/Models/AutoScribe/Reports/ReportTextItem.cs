@@ -14,6 +14,20 @@ namespace Avara.Models.AutoScribe.Reports;
 public sealed record class ReportTextItem : JsonModel
 {
     /// <summary>
+    /// Whether the report was marked critical at sign-out. null when the report
+    /// is not yet completed; true/false once completed.
+    /// </summary>
+    public required bool? IsCritical
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isCritical");
+        }
+        init { this._rawData.Set("isCritical", value); }
+    }
+
+    /// <summary>
     /// Unique report identifier. Format: rep_{32-hex-chars}
     /// </summary>
     public required string ReportID
@@ -89,6 +103,7 @@ public sealed record class ReportTextItem : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.IsCritical;
         _ = this.ReportID;
         this.SnapshotMetadata.Validate();
         _ = this.StudyID;
