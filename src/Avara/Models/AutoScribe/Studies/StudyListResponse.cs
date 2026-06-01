@@ -243,7 +243,7 @@ public sealed record class StudyListResponse : JsonModel
     }
 
     /// <summary>
-    /// Whether the primary report was marked as critical at sign-out
+    /// Whether the primary report was marked as critical at sign-off
     /// </summary>
     public bool? IsCritical
     {

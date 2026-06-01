@@ -16,7 +16,7 @@ namespace Avara.Models.Webhooks;
 public sealed record class ReportDeliveredEventData : JsonModel
 {
     /// <summary>
-    /// Whether the report was marked critical at sign-out.
+    /// Whether the report was marked critical at sign-off.
     /// </summary>
     public required bool IsCritical
     {

@@ -291,7 +291,7 @@ sealed class ReportPdfResponseConverter : JsonConverter<ReportPdfResponse>
 public sealed record class SingleReportPdfResponse : JsonModel
 {
     /// <summary>
-    /// Whether the report was marked critical at sign-out. null when the report
+    /// Whether the report was marked critical at sign-off. null when the report
     /// is not yet completed; true/false once completed.
     /// </summary>
     public required bool? IsCritical
