@@ -36,7 +36,7 @@ public record class UnwrapWebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.ID,
                 reportDelivered: (x) => x.ID,
-                secondaryCaptureAccessRequested: (x) => x.ID
+                secondaryCaptureAccessRequested: (x) => x.STAINLESS_FIXME_ID
             );
         }
     }
@@ -48,7 +48,7 @@ public record class UnwrapWebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.Type,
                 reportDelivered: (x) => x.Type,
-                secondaryCaptureAccessRequested: (x) => x.Type
+                secondaryCaptureAccessRequested: (x) => x.STAINLESS_FIXME_Type
             );
         }
     }
@@ -66,7 +66,7 @@ public record class UnwrapWebhookEvent : ModelBase
     }
 
     public UnwrapWebhookEvent(
-        SecondaryCaptureAccessRequestedEvent value,
+        SecondaryCaptureAccessRequestedWebhookEvent value,
         JsonElement? element = null
     )
     {
@@ -125,24 +125,24 @@ public record class UnwrapWebhookEvent : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="SecondaryCaptureAccessRequestedEvent"/>.
+    /// type <see cref="SecondaryCaptureAccessRequestedWebhookEvent"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickSecondaryCaptureAccessRequested(out var value)) {
-    ///     // `value` is of type `SecondaryCaptureAccessRequestedEvent`
+    ///     // `value` is of type `SecondaryCaptureAccessRequestedWebhookEvent`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
     public bool TryPickSecondaryCaptureAccessRequested(
-        [NotNullWhen(true)] out SecondaryCaptureAccessRequestedEvent? value
+        [NotNullWhen(true)] out SecondaryCaptureAccessRequestedWebhookEvent? value
     )
     {
-        value = this.Value as SecondaryCaptureAccessRequestedEvent;
+        value = this.Value as SecondaryCaptureAccessRequestedWebhookEvent;
         return value != null;
     }
 
@@ -162,7 +162,7 @@ public record class UnwrapWebhookEvent : ModelBase
     /// instance.Switch(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedWebhookEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -170,7 +170,7 @@ public record class UnwrapWebhookEvent : ModelBase
     public void Switch(
         Action<StudyAccessRequestedEvent> studyAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
-        Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested
+        Action<SecondaryCaptureAccessRequestedWebhookEvent> secondaryCaptureAccessRequested
     )
     {
         switch (this.Value)
@@ -181,7 +181,7 @@ public record class UnwrapWebhookEvent : ModelBase
             case ReportDeliveredEvent value:
                 reportDelivered(value);
                 break;
-            case SecondaryCaptureAccessRequestedEvent value:
+            case SecondaryCaptureAccessRequestedWebhookEvent value:
                 secondaryCaptureAccessRequested(value);
                 break;
             default:
@@ -208,7 +208,7 @@ public record class UnwrapWebhookEvent : ModelBase
     /// var result = instance.Match(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedWebhookEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -216,14 +216,16 @@ public record class UnwrapWebhookEvent : ModelBase
     public T Match<T>(
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
-        Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested
+        Func<SecondaryCaptureAccessRequestedWebhookEvent, T> secondaryCaptureAccessRequested
     )
     {
         return this.Value switch
         {
             StudyAccessRequestedEvent value => studyAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
-            SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
+            SecondaryCaptureAccessRequestedWebhookEvent value => secondaryCaptureAccessRequested(
+                value
+            ),
             _ => throw new AvaraInvalidDataException(
                 "Data did not match any variant of UnwrapWebhookEvent"
             ),
@@ -236,7 +238,7 @@ public record class UnwrapWebhookEvent : ModelBase
     public static implicit operator UnwrapWebhookEvent(ReportDeliveredEvent value) => new(value);
 
     public static implicit operator UnwrapWebhookEvent(
-        SecondaryCaptureAccessRequestedEvent value
+        SecondaryCaptureAccessRequestedWebhookEvent value
     ) => new(value);
 
     /// <summary>
@@ -286,7 +288,7 @@ public record class UnwrapWebhookEvent : ModelBase
         {
             StudyAccessRequestedEvent _ => 0,
             ReportDeliveredEvent _ => 1,
-            SecondaryCaptureAccessRequestedEvent _ => 2,
+            SecondaryCaptureAccessRequestedWebhookEvent _ => 2,
             _ => -1,
         };
     }
@@ -358,7 +360,7 @@ sealed class UnwrapWebhookEventConverter : JsonConverter<UnwrapWebhookEvent>
                 try
                 {
                     var deserialized =
-                        JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedEvent>(
+                        JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedWebhookEvent>(
                             element,
                             options
                         );

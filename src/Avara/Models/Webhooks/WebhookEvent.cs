@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -66,7 +68,7 @@ public record class WebhookEvent : ModelBase
         this._element = element;
     }
 
-    public WebhookEvent(SecondaryCaptureAccessRequestedEvent value, JsonElement? element = null)
+    public WebhookEvent(SecondaryCaptureAccessRequested value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -123,24 +125,24 @@ public record class WebhookEvent : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="SecondaryCaptureAccessRequestedEvent"/>.
+    /// type <see cref="SecondaryCaptureAccessRequested"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickSecondaryCaptureAccessRequested(out var value)) {
-    ///     // `value` is of type `SecondaryCaptureAccessRequestedEvent`
+    ///     // `value` is of type `SecondaryCaptureAccessRequested`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
     public bool TryPickSecondaryCaptureAccessRequested(
-        [NotNullWhen(true)] out SecondaryCaptureAccessRequestedEvent? value
+        [NotNullWhen(true)] out SecondaryCaptureAccessRequested? value
     )
     {
-        value = this.Value as SecondaryCaptureAccessRequestedEvent;
+        value = this.Value as SecondaryCaptureAccessRequested;
         return value != null;
     }
 
@@ -160,7 +162,7 @@ public record class WebhookEvent : ModelBase
     /// instance.Switch(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequested value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -168,7 +170,7 @@ public record class WebhookEvent : ModelBase
     public void Switch(
         Action<StudyAccessRequestedEvent> studyAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
-        Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested
+        Action<SecondaryCaptureAccessRequested> secondaryCaptureAccessRequested
     )
     {
         switch (this.Value)
@@ -179,7 +181,7 @@ public record class WebhookEvent : ModelBase
             case ReportDeliveredEvent value:
                 reportDelivered(value);
                 break;
-            case SecondaryCaptureAccessRequestedEvent value:
+            case SecondaryCaptureAccessRequested value:
                 secondaryCaptureAccessRequested(value);
                 break;
             default:
@@ -206,7 +208,7 @@ public record class WebhookEvent : ModelBase
     /// var result = instance.Match(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequested value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -214,14 +216,14 @@ public record class WebhookEvent : ModelBase
     public T Match<T>(
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
-        Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested
+        Func<SecondaryCaptureAccessRequested, T> secondaryCaptureAccessRequested
     )
     {
         return this.Value switch
         {
             StudyAccessRequestedEvent value => studyAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
-            SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
+            SecondaryCaptureAccessRequested value => secondaryCaptureAccessRequested(value),
             _ => throw new AvaraInvalidDataException(
                 "Data did not match any variant of WebhookEvent"
             ),
@@ -232,7 +234,7 @@ public record class WebhookEvent : ModelBase
 
     public static implicit operator WebhookEvent(ReportDeliveredEvent value) => new(value);
 
-    public static implicit operator WebhookEvent(SecondaryCaptureAccessRequestedEvent value) =>
+    public static implicit operator WebhookEvent(SecondaryCaptureAccessRequested value) =>
         new(value);
 
     /// <summary>
@@ -280,7 +282,7 @@ public record class WebhookEvent : ModelBase
         {
             StudyAccessRequestedEvent _ => 0,
             ReportDeliveredEvent _ => 1,
-            SecondaryCaptureAccessRequestedEvent _ => 2,
+            SecondaryCaptureAccessRequested _ => 2,
             _ => -1,
         };
     }
@@ -351,11 +353,10 @@ sealed class WebhookEventConverter : JsonConverter<WebhookEvent>
             {
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedEvent>(
-                            element,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<SecondaryCaptureAccessRequested>(
+                        element,
+                        options
+                    );
                     if (deserialized != null)
                     {
                         return new(deserialized, element);
@@ -383,4 +384,237 @@ sealed class WebhookEventConverter : JsonConverter<WebhookEvent>
     {
         JsonSerializer.Serialize(writer, value.Json, options);
     }
+}
+
+/// <summary>
+/// Webhook event sent when Avara needs presigned UPLOAD URLs for a secondary capture
+/// DICOM. This is a synchronous webhook - you must respond with the upload URLs within
+/// the request timeout.
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SecondaryCaptureAccessRequested,
+        SecondaryCaptureAccessRequestedFromRaw
+    >)
+)]
+public sealed record class SecondaryCaptureAccessRequested : JsonModel
+{
+    /// <summary>
+    /// Unique webhook event ID. Format: whe_{32-hex-chars}
+    /// </summary>
+    public required string ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
+        init { this._rawData.Set("id", value); }
+    }
+
+    /// <summary>
+    /// Event payload containing study + (optional) series/SOP information for a
+    /// secondary capture upload
+    /// </summary>
+    public required Data Data
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Data>("data");
+        }
+        init { this._rawData.Set("data", value); }
+    }
+
+    /// <summary>
+    /// Event type identifier
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ID;
+        this.Data.Validate();
+        if (
+            !JsonElement.DeepEquals(
+                this.Type,
+                JsonSerializer.SerializeToElement("secondary_capture.access_requested")
+            )
+        )
+        {
+            throw new AvaraInvalidDataException("Invalid value given for constant");
+        }
+    }
+
+    public SecondaryCaptureAccessRequested()
+    {
+        this.Type = JsonSerializer.SerializeToElement("secondary_capture.access_requested");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SecondaryCaptureAccessRequested(
+        SecondaryCaptureAccessRequested secondaryCaptureAccessRequested
+    )
+        : base(secondaryCaptureAccessRequested) { }
+#pragma warning restore CS8618
+
+    public SecondaryCaptureAccessRequested(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("secondary_capture.access_requested");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SecondaryCaptureAccessRequested(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SecondaryCaptureAccessRequestedFromRaw.FromRawUnchecked"/>
+    public static SecondaryCaptureAccessRequested FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SecondaryCaptureAccessRequestedFromRaw : IFromRawJson<SecondaryCaptureAccessRequested>
+{
+    /// <inheritdoc/>
+    public SecondaryCaptureAccessRequested FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SecondaryCaptureAccessRequested.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Event payload containing study + (optional) series/SOP information for a secondary
+/// capture upload
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : JsonModel
+{
+    /// <summary>
+    /// Avara study ID. Format: stu_{32-hex-chars}
+    /// </summary>
+    public required string StudyID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyId");
+        }
+        init { this._rawData.Set("studyId", value); }
+    }
+
+    /// <summary>
+    /// DICOM Study Instance UID. Must be a valid DICOM UID format (e.g., '1.2.840.10008.5.1.4.1.1.2')
+    /// </summary>
+    public required string StudyInstanceUid
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyInstanceUid");
+        }
+        init { this._rawData.Set("studyInstanceUid", value); }
+    }
+
+    /// <summary>
+    /// DICOM Series Instance UID generated for the new secondary capture series (when available).
+    /// </summary>
+    public string? SeriesInstanceUid
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("seriesInstanceUid");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("seriesInstanceUid", value);
+        }
+    }
+
+    /// <summary>
+    /// DICOM SOP Instance UID generated for the new secondary capture object (when available).
+    /// </summary>
+    public string? SopInstanceUid
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sopInstanceUid");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("sopInstanceUid", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.StudyID;
+        _ = this.StudyInstanceUid;
+        _ = this.SeriesInstanceUid;
+        _ = this.SopInstanceUid;
+    }
+
+    public Data() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Data(Data data)
+        : base(data) { }
+#pragma warning restore CS8618
+
+    public Data(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Data(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="DataFromRaw.FromRawUnchecked"/>
+    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class DataFromRaw : IFromRawJson<Data>
+{
+    /// <inheritdoc/>
+    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Data.FromRawUnchecked(rawData);
 }
