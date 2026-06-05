@@ -41,6 +41,23 @@ public class UnwrapWebhookEventTest : TestBase
     }
 
     [Fact]
+    public void SecondaryCaptureAccessRequestedValidationWorks()
+    {
+        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
+                SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
+            },
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void StudyAccessRequestedSerializationRoundtripWorks()
     {
         UnwrapWebhookEvent value = new StudyAccessRequestedEvent()
@@ -75,6 +92,29 @@ public class UnwrapWebhookEventTest : TestBase
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
+            },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<UnwrapWebhookEvent>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void SecondaryCaptureAccessRequestedSerializationRoundtripWorks()
+    {
+        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
+                SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
             },
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
