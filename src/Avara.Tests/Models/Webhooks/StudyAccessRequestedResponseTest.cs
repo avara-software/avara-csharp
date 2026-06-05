@@ -19,6 +19,15 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            MediaUrls =
+            [
+                new()
+                {
+                    MimeType = "application/pdf",
+                    Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                    FileName = "clinical-report.pdf",
+                },
+            ],
         };
 
         bool expectedAuthorized = true;
@@ -28,6 +37,15 @@ public class StudyAccessRequestedResponseTest : TestBase
             "https://storage.example.com/dicom/image2.dcm?token=def456",
         ];
         string expectedError = "Study not found in PACS";
+        List<StudyAccessRequestedMediaUrl> expectedMediaUrls =
+        [
+            new()
+            {
+                MimeType = "application/pdf",
+                Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                FileName = "clinical-report.pdf",
+            },
+        ];
 
         Assert.Equal(expectedAuthorized, model.Authorized);
         Assert.Equal(expectedUrls.Count, model.Urls.Count);
@@ -36,6 +54,12 @@ public class StudyAccessRequestedResponseTest : TestBase
             Assert.Equal(expectedUrls[i], model.Urls[i]);
         }
         Assert.Equal(expectedError, model.Error);
+        Assert.NotNull(model.MediaUrls);
+        Assert.Equal(expectedMediaUrls.Count, model.MediaUrls.Count);
+        for (int i = 0; i < expectedMediaUrls.Count; i++)
+        {
+            Assert.Equal(expectedMediaUrls[i], model.MediaUrls[i]);
+        }
     }
 
     [Fact]
@@ -50,6 +74,15 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            MediaUrls =
+            [
+                new()
+                {
+                    MimeType = "application/pdf",
+                    Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                    FileName = "clinical-report.pdf",
+                },
+            ],
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -73,6 +106,15 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            MediaUrls =
+            [
+                new()
+                {
+                    MimeType = "application/pdf",
+                    Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                    FileName = "clinical-report.pdf",
+                },
+            ],
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -89,6 +131,15 @@ public class StudyAccessRequestedResponseTest : TestBase
             "https://storage.example.com/dicom/image2.dcm?token=def456",
         ];
         string expectedError = "Study not found in PACS";
+        List<StudyAccessRequestedMediaUrl> expectedMediaUrls =
+        [
+            new()
+            {
+                MimeType = "application/pdf",
+                Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                FileName = "clinical-report.pdf",
+            },
+        ];
 
         Assert.Equal(expectedAuthorized, deserialized.Authorized);
         Assert.Equal(expectedUrls.Count, deserialized.Urls.Count);
@@ -97,6 +148,12 @@ public class StudyAccessRequestedResponseTest : TestBase
             Assert.Equal(expectedUrls[i], deserialized.Urls[i]);
         }
         Assert.Equal(expectedError, deserialized.Error);
+        Assert.NotNull(deserialized.MediaUrls);
+        Assert.Equal(expectedMediaUrls.Count, deserialized.MediaUrls.Count);
+        for (int i = 0; i < expectedMediaUrls.Count; i++)
+        {
+            Assert.Equal(expectedMediaUrls[i], deserialized.MediaUrls[i]);
+        }
     }
 
     [Fact]
@@ -111,6 +168,15 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            MediaUrls =
+            [
+                new()
+                {
+                    MimeType = "application/pdf",
+                    Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                    FileName = "clinical-report.pdf",
+                },
+            ],
         };
 
         model.Validate();
@@ -131,6 +197,8 @@ public class StudyAccessRequestedResponseTest : TestBase
 
         Assert.Null(model.Error);
         Assert.False(model.RawData.ContainsKey("error"));
+        Assert.Null(model.MediaUrls);
+        Assert.False(model.RawData.ContainsKey("mediaUrls"));
     }
 
     [Fact]
@@ -163,10 +231,13 @@ public class StudyAccessRequestedResponseTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Error = null,
+            MediaUrls = null,
         };
 
         Assert.Null(model.Error);
         Assert.False(model.RawData.ContainsKey("error"));
+        Assert.Null(model.MediaUrls);
+        Assert.False(model.RawData.ContainsKey("mediaUrls"));
     }
 
     [Fact]
@@ -183,6 +254,7 @@ public class StudyAccessRequestedResponseTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Error = null,
+            MediaUrls = null,
         };
 
         model.Validate();
@@ -200,6 +272,15 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            MediaUrls =
+            [
+                new()
+                {
+                    MimeType = "application/pdf",
+                    Url = "https://storage.example.com/media/report.pdf?token=ghi789",
+                    FileName = "clinical-report.pdf",
+                },
+            ],
         };
 
         StudyAccessRequestedResponse copied = new(model);

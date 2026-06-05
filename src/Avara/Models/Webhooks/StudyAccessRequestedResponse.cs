@@ -10,7 +10,7 @@ namespace Avara.Models.Webhooks;
 
 /// <summary>
 /// Response expected by Avara for study access webhook. Provide presigned URLs for
-/// DICOM images.
+/// DICOM images and optionally for non-DICOM media.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<StudyAccessRequestedResponse, StudyAccessRequestedResponseFromRaw>)
@@ -70,12 +70,43 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
         }
     }
 
+    /// <summary>
+    /// Optional presigned URLs for non-DICOM media (images, PDFs, videos) associated
+    /// with the study.
+    /// </summary>
+    public IReadOnlyList<StudyAccessRequestedMediaUrl>? MediaUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<StudyAccessRequestedMediaUrl>>(
+                "mediaUrls"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<ImmutableArray<StudyAccessRequestedMediaUrl>?>(
+                "mediaUrls",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Authorized;
         _ = this.Urls;
         _ = this.Error;
+        foreach (var item in this.MediaUrls ?? [])
+        {
+            item.Validate();
+        }
     }
 
     public StudyAccessRequestedResponse() { }
