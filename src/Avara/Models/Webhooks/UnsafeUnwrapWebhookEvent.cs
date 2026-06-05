@@ -36,7 +36,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.ID,
                 reportDelivered: (x) => x.ID,
-                secondaryCaptureAccessRequested: (x) => x.STAINLESS_FIXME_ID
+                secondaryCaptureAccessRequested: (x) => x.ID
             );
         }
     }
@@ -48,7 +48,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.Type,
                 reportDelivered: (x) => x.Type,
-                secondaryCaptureAccessRequested: (x) => x.STAINLESS_FIXME_Type
+                secondaryCaptureAccessRequested: (x) => x.Type
             );
         }
     }
@@ -66,7 +66,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     }
 
     public UnsafeUnwrapWebhookEvent(
-        SecondaryCaptureAccessRequestedWebhookEvent value,
+        SecondaryCaptureAccessRequestedEvent value,
         JsonElement? element = null
     )
     {
@@ -125,24 +125,24 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="SecondaryCaptureAccessRequestedWebhookEvent"/>.
+    /// type <see cref="SecondaryCaptureAccessRequestedEvent"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickSecondaryCaptureAccessRequested(out var value)) {
-    ///     // `value` is of type `SecondaryCaptureAccessRequestedWebhookEvent`
+    ///     // `value` is of type `SecondaryCaptureAccessRequestedEvent`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
     public bool TryPickSecondaryCaptureAccessRequested(
-        [NotNullWhen(true)] out SecondaryCaptureAccessRequestedWebhookEvent? value
+        [NotNullWhen(true)] out SecondaryCaptureAccessRequestedEvent? value
     )
     {
-        value = this.Value as SecondaryCaptureAccessRequestedWebhookEvent;
+        value = this.Value as SecondaryCaptureAccessRequestedEvent;
         return value != null;
     }
 
@@ -162,7 +162,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// instance.Switch(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedWebhookEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -170,7 +170,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     public void Switch(
         Action<StudyAccessRequestedEvent> studyAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
-        Action<SecondaryCaptureAccessRequestedWebhookEvent> secondaryCaptureAccessRequested
+        Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested
     )
     {
         switch (this.Value)
@@ -181,7 +181,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
             case ReportDeliveredEvent value:
                 reportDelivered(value);
                 break;
-            case SecondaryCaptureAccessRequestedWebhookEvent value:
+            case SecondaryCaptureAccessRequestedEvent value:
                 secondaryCaptureAccessRequested(value);
                 break;
             default:
@@ -208,7 +208,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// var result = instance.Match(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedWebhookEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -216,16 +216,14 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     public T Match<T>(
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
-        Func<SecondaryCaptureAccessRequestedWebhookEvent, T> secondaryCaptureAccessRequested
+        Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested
     )
     {
         return this.Value switch
         {
             StudyAccessRequestedEvent value => studyAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
-            SecondaryCaptureAccessRequestedWebhookEvent value => secondaryCaptureAccessRequested(
-                value
-            ),
+            SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
             _ => throw new AvaraInvalidDataException(
                 "Data did not match any variant of UnsafeUnwrapWebhookEvent"
             ),
@@ -239,7 +237,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
         new(value);
 
     public static implicit operator UnsafeUnwrapWebhookEvent(
-        SecondaryCaptureAccessRequestedWebhookEvent value
+        SecondaryCaptureAccessRequestedEvent value
     ) => new(value);
 
     /// <summary>
@@ -289,7 +287,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
         {
             StudyAccessRequestedEvent _ => 0,
             ReportDeliveredEvent _ => 1,
-            SecondaryCaptureAccessRequestedWebhookEvent _ => 2,
+            SecondaryCaptureAccessRequestedEvent _ => 2,
             _ => -1,
         };
     }
@@ -361,7 +359,7 @@ sealed class UnsafeUnwrapWebhookEventConverter : JsonConverter<UnsafeUnwrapWebho
                 try
                 {
                     var deserialized =
-                        JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedWebhookEvent>(
+                        JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedEvent>(
                             element,
                             options
                         );

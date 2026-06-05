@@ -43,15 +43,15 @@ public class UnwrapWebhookEventTest : TestBase
     [Fact]
     public void SecondaryCaptureAccessRequestedValidationWorks()
     {
-        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedWebhookEvent()
+        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedEvent()
         {
-            STAINLESS_FIXME_ID = "whe_1234567890abcdef1234567890abcdef",
-            STAINLESS_FIXME_Data = new()
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
             {
-                STAINLESS_FIXME_StudyID = "stu_1234567890abcdef1234567890abcdef",
-                STAINLESS_FIXME_StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
-                STAINLESS_FIXME_SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
-                STAINLESS_FIXME_SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
+                StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
+                SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
             },
         };
         value.Validate();
@@ -106,15 +106,15 @@ public class UnwrapWebhookEventTest : TestBase
     [Fact]
     public void SecondaryCaptureAccessRequestedSerializationRoundtripWorks()
     {
-        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedWebhookEvent()
+        UnwrapWebhookEvent value = new SecondaryCaptureAccessRequestedEvent()
         {
-            STAINLESS_FIXME_ID = "whe_1234567890abcdef1234567890abcdef",
-            STAINLESS_FIXME_Data = new()
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
             {
-                STAINLESS_FIXME_StudyID = "stu_1234567890abcdef1234567890abcdef",
-                STAINLESS_FIXME_StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
-                STAINLESS_FIXME_SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
-                STAINLESS_FIXME_SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
+                StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                SeriesInstanceUid = "1.2.840.113619.2.55.3.1234567890.1",
+                SopInstanceUid = "1.2.840.113619.2.55.3.1234567890.1.1",
             },
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
