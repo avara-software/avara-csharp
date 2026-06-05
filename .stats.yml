@@ -1,4 +1,4 @@
 configured_endpoints: 50
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/avara/avara-46860807ca82f5b3e499d0d31aa5e6ab616f47072a040f61262f06fe1ccaefcf.yml
-openapi_spec_hash: 8afd138efc065d12879c065693ecd307
-config_hash: 4c38e30eeae8ca88705f61e79a8aeb57
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/avara/avara-8ea6cd53d649def4937faa3404edc2c5627090961b4adcce31f8756e438f6938.yml
+openapi_spec_hash: f38eca35710259e6bca1096a702b796b
+config_hash: d2cd6e1799b797a023d24eb3786af5e8
