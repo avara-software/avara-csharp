@@ -28,9 +28,16 @@ public sealed class AutoScribeService : IAutoScribeService
         _client = client;
 
         _withRawResponse = new(() => new AutoScribeServiceWithRawResponse(client.WithRawResponse));
+        _clinicalReferences = new(() => new ClinicalReferenceService(client));
         _studies = new(() => new StudyService(client));
         _users = new(() => new UserService(client));
         _reports = new(() => new ReportService(client));
+    }
+
+    readonly Lazy<IClinicalReferenceService> _clinicalReferences;
+    public IClinicalReferenceService ClinicalReferences
+    {
+        get { return _clinicalReferences.Value; }
     }
 
     readonly Lazy<IStudyService> _studies;
@@ -69,9 +76,16 @@ public sealed class AutoScribeServiceWithRawResponse : IAutoScribeServiceWithRaw
     {
         _client = client;
 
+        _clinicalReferences = new(() => new ClinicalReferenceServiceWithRawResponse(client));
         _studies = new(() => new StudyServiceWithRawResponse(client));
         _users = new(() => new UserServiceWithRawResponse(client));
         _reports = new(() => new ReportServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<IClinicalReferenceServiceWithRawResponse> _clinicalReferences;
+    public IClinicalReferenceServiceWithRawResponse ClinicalReferences
+    {
+        get { return _clinicalReferences.Value; }
     }
 
     readonly Lazy<IStudyServiceWithRawResponse> _studies;

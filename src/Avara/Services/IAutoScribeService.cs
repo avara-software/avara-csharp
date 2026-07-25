@@ -24,6 +24,8 @@ public interface IAutoScribeService
     /// </summary>
     IAutoScribeService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    IClinicalReferenceService ClinicalReferences { get; }
+
     IStudyService Studies { get; }
 
     IUserService Users { get; }
@@ -43,6 +45,8 @@ public interface IAutoScribeServiceWithRawResponse
     /// <para>The original service is not modified.</para>
     /// </summary>
     IAutoScribeServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IClinicalReferenceServiceWithRawResponse ClinicalReferences { get; }
 
     IStudyServiceWithRawResponse Studies { get; }
 
