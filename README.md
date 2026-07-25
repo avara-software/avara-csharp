@@ -161,7 +161,7 @@ To iterate through all results across all pages, use the `Paginate` method, whic
 ```csharp
 using System;
 
-var page = await client.AutoScribe.Studies.List(parameters);
+var page = await client.AutoScribe.ClinicalReferences.List(parameters);
 await foreach (var item in page.Paginate())
 {
     Console.WriteLine(item);
@@ -175,7 +175,7 @@ To access individual page items and manually request the next page, use the `Ite
 ```csharp
 using System;
 
-var page = await client.AutoScribe.Studies.List();
+var page = await client.AutoScribe.ClinicalReferences.List();
 while (true)
 {
     foreach (var item in page.Items)
