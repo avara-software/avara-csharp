@@ -242,10 +242,7 @@ sealed class ReportPdfResponseConverter : JsonConverter<ReportPdfResponse>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<SingleReportPdfResponse>(
-                element,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<ListReportsPdfResponse>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -259,7 +256,10 @@ sealed class ReportPdfResponseConverter : JsonConverter<ReportPdfResponse>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ListReportsPdfResponse>(element, options);
+            var deserialized = JsonSerializer.Deserialize<SingleReportPdfResponse>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();

@@ -243,7 +243,7 @@ sealed class ReportTextResponseConverter : JsonConverter<ReportTextResponse>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<SingleReportTextResponse>(
+            var deserialized = JsonSerializer.Deserialize<ListReportsTextResponse>(
                 element,
                 options
             );
@@ -260,7 +260,7 @@ sealed class ReportTextResponseConverter : JsonConverter<ReportTextResponse>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ListReportsTextResponse>(
+            var deserialized = JsonSerializer.Deserialize<SingleReportTextResponse>(
                 element,
                 options
             );
