@@ -15,7 +15,7 @@ public enum ClinicalReferenceType
     Facility,
     ReferringProvider,
     StudyDescription,
-    ImagingProtocol,
+    Procedure,
 }
 
 sealed class ClinicalReferenceTypeConverter : JsonConverter<ClinicalReferenceType>
@@ -31,7 +31,7 @@ sealed class ClinicalReferenceTypeConverter : JsonConverter<ClinicalReferenceTyp
             "facility" => ClinicalReferenceType.Facility,
             "referring_provider" => ClinicalReferenceType.ReferringProvider,
             "study_description" => ClinicalReferenceType.StudyDescription,
-            "imaging_protocol" => ClinicalReferenceType.ImagingProtocol,
+            "procedure" => ClinicalReferenceType.Procedure,
             _ => (ClinicalReferenceType)(-1),
         };
     }
@@ -49,7 +49,7 @@ sealed class ClinicalReferenceTypeConverter : JsonConverter<ClinicalReferenceTyp
                 ClinicalReferenceType.Facility => "facility",
                 ClinicalReferenceType.ReferringProvider => "referring_provider",
                 ClinicalReferenceType.StudyDescription => "study_description",
-                ClinicalReferenceType.ImagingProtocol => "imaging_protocol",
+                ClinicalReferenceType.Procedure => "procedure",
                 _ => throw new AvaraInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

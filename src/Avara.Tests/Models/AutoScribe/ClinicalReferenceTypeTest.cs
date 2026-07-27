@@ -11,7 +11,7 @@ public class ClinicalReferenceTypeTest : TestBase
     [InlineData(ClinicalReferenceType.Facility)]
     [InlineData(ClinicalReferenceType.ReferringProvider)]
     [InlineData(ClinicalReferenceType.StudyDescription)]
-    [InlineData(ClinicalReferenceType.ImagingProtocol)]
+    [InlineData(ClinicalReferenceType.Procedure)]
     public void Validation_Works(ClinicalReferenceType rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -35,7 +35,7 @@ public class ClinicalReferenceTypeTest : TestBase
     [InlineData(ClinicalReferenceType.Facility)]
     [InlineData(ClinicalReferenceType.ReferringProvider)]
     [InlineData(ClinicalReferenceType.StudyDescription)]
-    [InlineData(ClinicalReferenceType.ImagingProtocol)]
+    [InlineData(ClinicalReferenceType.Procedure)]
     public void SerializationRoundtrip_Works(ClinicalReferenceType rawValue)
     {
         // force implicit conversion because Theory can't do that for us
