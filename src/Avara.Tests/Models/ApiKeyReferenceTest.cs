@@ -13,15 +13,21 @@ public class ApiKeyReferenceTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
 
         string expectedApiKeyID = "550e8400-e29b-41d4-a716-446655440000";
         string expectedDescription = "Production API Key";
+        bool expectedIsClinicalContextEnrichmentEnabled = true;
         bool expectedIsViewerEnabled = true;
 
         Assert.Equal(expectedApiKeyID, model.ApiKeyID);
         Assert.Equal(expectedDescription, model.Description);
+        Assert.Equal(
+            expectedIsClinicalContextEnrichmentEnabled,
+            model.IsClinicalContextEnrichmentEnabled
+        );
         Assert.Equal(expectedIsViewerEnabled, model.IsViewerEnabled);
     }
 
@@ -32,6 +38,7 @@ public class ApiKeyReferenceTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
 
@@ -51,6 +58,7 @@ public class ApiKeyReferenceTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
 
@@ -63,10 +71,15 @@ public class ApiKeyReferenceTest : TestBase
 
         string expectedApiKeyID = "550e8400-e29b-41d4-a716-446655440000";
         string expectedDescription = "Production API Key";
+        bool expectedIsClinicalContextEnrichmentEnabled = true;
         bool expectedIsViewerEnabled = true;
 
         Assert.Equal(expectedApiKeyID, deserialized.ApiKeyID);
         Assert.Equal(expectedDescription, deserialized.Description);
+        Assert.Equal(
+            expectedIsClinicalContextEnrichmentEnabled,
+            deserialized.IsClinicalContextEnrichmentEnabled
+        );
         Assert.Equal(expectedIsViewerEnabled, deserialized.IsViewerEnabled);
     }
 
@@ -77,6 +90,7 @@ public class ApiKeyReferenceTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
 
@@ -92,6 +106,8 @@ public class ApiKeyReferenceTest : TestBase
             Description = "Production API Key",
         };
 
+        Assert.Null(model.IsClinicalContextEnrichmentEnabled);
+        Assert.False(model.RawData.ContainsKey("isClinicalContextEnrichmentEnabled"));
         Assert.Null(model.IsViewerEnabled);
         Assert.False(model.RawData.ContainsKey("isViewerEnabled"));
     }
@@ -117,9 +133,12 @@ public class ApiKeyReferenceTest : TestBase
             Description = "Production API Key",
 
             // Null should be interpreted as omitted for these properties
+            IsClinicalContextEnrichmentEnabled = null,
             IsViewerEnabled = null,
         };
 
+        Assert.Null(model.IsClinicalContextEnrichmentEnabled);
+        Assert.False(model.RawData.ContainsKey("isClinicalContextEnrichmentEnabled"));
         Assert.Null(model.IsViewerEnabled);
         Assert.False(model.RawData.ContainsKey("isViewerEnabled"));
     }
@@ -133,6 +152,7 @@ public class ApiKeyReferenceTest : TestBase
             Description = "Production API Key",
 
             // Null should be interpreted as omitted for these properties
+            IsClinicalContextEnrichmentEnabled = null,
             IsViewerEnabled = null,
         };
 
@@ -146,6 +166,7 @@ public class ApiKeyReferenceTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
 

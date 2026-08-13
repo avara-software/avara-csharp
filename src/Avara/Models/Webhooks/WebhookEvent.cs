@@ -10,7 +10,9 @@ namespace Avara.Models.Webhooks;
 /// <summary>
 /// Union of all Avara webhook event types. Use the 'type' field to discriminate between
 /// event types. Events: study.access_requested (synchronous), report.delivered (asynchronous),
-/// secondary_capture.access_requested (synchronous).
+/// secondary_capture.access_requested (synchronous), modality_worklist.requested
+/// (synchronous), patient_study.enrichment_requested (synchronous soft), clinical_context.enrichment_requested
+/// (synchronous soft).
 /// </summary>
 [JsonConverter(typeof(WebhookEventConverter))]
 public record class WebhookEvent : ModelBase
@@ -37,7 +39,10 @@ public record class WebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.ID,
                 reportDelivered: (x) => x.ID,
-                secondaryCaptureAccessRequested: (x) => x.ID
+                secondaryCaptureAccessRequested: (x) => x.ID,
+                modalityWorklistRequested: (x) => x.ID,
+                patientStudyEnrichmentRequested: (x) => x.ID,
+                clinicalContextEnrichmentRequested: (x) => x.ID
             );
         }
     }
@@ -49,7 +54,10 @@ public record class WebhookEvent : ModelBase
             return Match(
                 studyAccessRequested: (x) => x.Type,
                 reportDelivered: (x) => x.Type,
-                secondaryCaptureAccessRequested: (x) => x.Type
+                secondaryCaptureAccessRequested: (x) => x.Type,
+                modalityWorklistRequested: (x) => x.Type,
+                patientStudyEnrichmentRequested: (x) => x.Type,
+                clinicalContextEnrichmentRequested: (x) => x.Type
             );
         }
     }
@@ -67,6 +75,24 @@ public record class WebhookEvent : ModelBase
     }
 
     public WebhookEvent(SecondaryCaptureAccessRequestedEvent value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public WebhookEvent(ModalityWorklistRequestedEvent value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public WebhookEvent(PatientStudyEnrichmentRequestedEvent value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public WebhookEvent(ClinicalContextEnrichmentRequestedEvent value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -145,6 +171,75 @@ public record class WebhookEvent : ModelBase
     }
 
     /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ModalityWorklistRequestedEvent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickModalityWorklistRequested(out var value)) {
+    ///     // `value` is of type `ModalityWorklistRequestedEvent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickModalityWorklistRequested(
+        [NotNullWhen(true)] out ModalityWorklistRequestedEvent? value
+    )
+    {
+        value = this.Value as ModalityWorklistRequestedEvent;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="PatientStudyEnrichmentRequestedEvent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickPatientStudyEnrichmentRequested(out var value)) {
+    ///     // `value` is of type `PatientStudyEnrichmentRequestedEvent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickPatientStudyEnrichmentRequested(
+        [NotNullWhen(true)] out PatientStudyEnrichmentRequestedEvent? value
+    )
+    {
+        value = this.Value as PatientStudyEnrichmentRequestedEvent;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ClinicalContextEnrichmentRequestedEvent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickClinicalContextEnrichmentRequested(out var value)) {
+    ///     // `value` is of type `ClinicalContextEnrichmentRequestedEvent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickClinicalContextEnrichmentRequested(
+        [NotNullWhen(true)] out ClinicalContextEnrichmentRequestedEvent? value
+    )
+    {
+        value = this.Value as ClinicalContextEnrichmentRequestedEvent;
+        return value != null;
+    }
+
+    /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
@@ -160,7 +255,10 @@ public record class WebhookEvent : ModelBase
     /// instance.Switch(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
+    ///     (ModalityWorklistRequestedEvent value) =&gt; {...},
+    ///     (PatientStudyEnrichmentRequestedEvent value) =&gt; {...},
+    ///     (ClinicalContextEnrichmentRequestedEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -168,7 +266,10 @@ public record class WebhookEvent : ModelBase
     public void Switch(
         Action<StudyAccessRequestedEvent> studyAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
-        Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested
+        Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested,
+        Action<ModalityWorklistRequestedEvent> modalityWorklistRequested,
+        Action<PatientStudyEnrichmentRequestedEvent> patientStudyEnrichmentRequested,
+        Action<ClinicalContextEnrichmentRequestedEvent> clinicalContextEnrichmentRequested
     )
     {
         switch (this.Value)
@@ -181,6 +282,15 @@ public record class WebhookEvent : ModelBase
                 break;
             case SecondaryCaptureAccessRequestedEvent value:
                 secondaryCaptureAccessRequested(value);
+                break;
+            case ModalityWorklistRequestedEvent value:
+                modalityWorklistRequested(value);
+                break;
+            case PatientStudyEnrichmentRequestedEvent value:
+                patientStudyEnrichmentRequested(value);
+                break;
+            case ClinicalContextEnrichmentRequestedEvent value:
+                clinicalContextEnrichmentRequested(value);
                 break;
             default:
                 throw new AvaraInvalidDataException(
@@ -206,7 +316,10 @@ public record class WebhookEvent : ModelBase
     /// var result = instance.Match(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
-    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...}
+    ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
+    ///     (ModalityWorklistRequestedEvent value) =&gt; {...},
+    ///     (PatientStudyEnrichmentRequestedEvent value) =&gt; {...},
+    ///     (ClinicalContextEnrichmentRequestedEvent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -214,7 +327,10 @@ public record class WebhookEvent : ModelBase
     public T Match<T>(
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
-        Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested
+        Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested,
+        Func<ModalityWorklistRequestedEvent, T> modalityWorklistRequested,
+        Func<PatientStudyEnrichmentRequestedEvent, T> patientStudyEnrichmentRequested,
+        Func<ClinicalContextEnrichmentRequestedEvent, T> clinicalContextEnrichmentRequested
     )
     {
         return this.Value switch
@@ -222,6 +338,11 @@ public record class WebhookEvent : ModelBase
             StudyAccessRequestedEvent value => studyAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
             SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
+            ModalityWorklistRequestedEvent value => modalityWorklistRequested(value),
+            PatientStudyEnrichmentRequestedEvent value => patientStudyEnrichmentRequested(value),
+            ClinicalContextEnrichmentRequestedEvent value => clinicalContextEnrichmentRequested(
+                value
+            ),
             _ => throw new AvaraInvalidDataException(
                 "Data did not match any variant of WebhookEvent"
             ),
@@ -233,6 +354,15 @@ public record class WebhookEvent : ModelBase
     public static implicit operator WebhookEvent(ReportDeliveredEvent value) => new(value);
 
     public static implicit operator WebhookEvent(SecondaryCaptureAccessRequestedEvent value) =>
+        new(value);
+
+    public static implicit operator WebhookEvent(ModalityWorklistRequestedEvent value) =>
+        new(value);
+
+    public static implicit operator WebhookEvent(PatientStudyEnrichmentRequestedEvent value) =>
+        new(value);
+
+    public static implicit operator WebhookEvent(ClinicalContextEnrichmentRequestedEvent value) =>
         new(value);
 
     /// <summary>
@@ -254,7 +384,10 @@ public record class WebhookEvent : ModelBase
         this.Switch(
             (studyAccessRequested) => studyAccessRequested.Validate(),
             (reportDelivered) => reportDelivered.Validate(),
-            (secondaryCaptureAccessRequested) => secondaryCaptureAccessRequested.Validate()
+            (secondaryCaptureAccessRequested) => secondaryCaptureAccessRequested.Validate(),
+            (modalityWorklistRequested) => modalityWorklistRequested.Validate(),
+            (patientStudyEnrichmentRequested) => patientStudyEnrichmentRequested.Validate(),
+            (clinicalContextEnrichmentRequested) => clinicalContextEnrichmentRequested.Validate()
         );
     }
 
@@ -281,6 +414,9 @@ public record class WebhookEvent : ModelBase
             StudyAccessRequestedEvent _ => 0,
             ReportDeliveredEvent _ => 1,
             SecondaryCaptureAccessRequestedEvent _ => 2,
+            ModalityWorklistRequestedEvent _ => 3,
+            PatientStudyEnrichmentRequestedEvent _ => 4,
+            ClinicalContextEnrichmentRequestedEvent _ => 5,
             _ => -1,
         };
     }
@@ -353,6 +489,68 @@ sealed class WebhookEventConverter : JsonConverter<WebhookEvent>
                 {
                     var deserialized =
                         JsonSerializer.Deserialize<SecondaryCaptureAccessRequestedEvent>(
+                            element,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new(deserialized, element);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // ignore
+                }
+
+                return new(element);
+            }
+            case "modality_worklist.requested":
+            {
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<ModalityWorklistRequestedEvent>(
+                        element,
+                        options
+                    );
+                    if (deserialized != null)
+                    {
+                        return new(deserialized, element);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // ignore
+                }
+
+                return new(element);
+            }
+            case "patient_study.enrichment_requested":
+            {
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<PatientStudyEnrichmentRequestedEvent>(
+                            element,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new(deserialized, element);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // ignore
+                }
+
+                return new(element);
+            }
+            case "clinical_context.enrichment_requested":
+            {
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<ClinicalContextEnrichmentRequestedEvent>(
                             element,
                             options
                         );

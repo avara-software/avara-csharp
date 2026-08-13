@@ -38,6 +38,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -84,6 +85,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
         UserReference expectedCreatedByUser = new()
@@ -158,6 +160,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -219,6 +222,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -272,6 +276,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
         {
             ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
             Description = "Production API Key",
+            IsClinicalContextEnrichmentEnabled = true,
             IsViewerEnabled = true,
         };
         UserReference expectedCreatedByUser = new()
@@ -346,6 +351,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -401,6 +407,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -452,6 +459,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -502,6 +510,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -556,6 +565,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()
@@ -729,6 +739,7 @@ public class StudyRetrieveByUidResponseTest : TestBase
             {
                 ApiKeyID = "550e8400-e29b-41d4-a716-446655440000",
                 Description = "Production API Key",
+                IsClinicalContextEnrichmentEnabled = true,
                 IsViewerEnabled = true,
             },
             CreatedByUser = new()

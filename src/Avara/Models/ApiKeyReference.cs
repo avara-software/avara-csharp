@@ -40,6 +40,27 @@ public sealed record class ApiKeyReference : JsonModel
     }
 
     /// <summary>
+    /// Whether this API key has a clinical-context enrichment webhook configured
+    /// </summary>
+    public bool? IsClinicalContextEnrichmentEnabled
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isClinicalContextEnrichmentEnabled");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("isClinicalContextEnrichmentEnabled", value);
+        }
+    }
+
+    /// <summary>
     /// Whether this API key has access to the Viewer product
     /// </summary>
     public bool? IsViewerEnabled
@@ -65,6 +86,7 @@ public sealed record class ApiKeyReference : JsonModel
     {
         _ = this.ApiKeyID;
         _ = this.Description;
+        _ = this.IsClinicalContextEnrichmentEnabled;
         _ = this.IsViewerEnabled;
     }
 
