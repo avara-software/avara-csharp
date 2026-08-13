@@ -3,6 +3,7 @@ using Avara.Exceptions;
 using Avara.Models;
 using Avara.Models.AutoScribe;
 using Avara.Models.Viewer;
+using Webhooks = Avara.Models.Webhooks;
 
 namespace Avara.Core;
 
@@ -37,6 +38,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, StudyReportStatus>(),
             new ApiEnumConverter<string, WeightUnit>(),
             new ApiEnumConverter<string, StudyViewerStatus>(),
+            new ApiEnumConverter<string, Webhooks::Unit>(),
+            new ApiEnumConverter<string, Webhooks::Severity>(),
+            new ApiEnumConverter<string, Webhooks::Sex>(),
+            new ApiEnumConverter<string, Webhooks::WeightUnit>(),
         },
     };
 
