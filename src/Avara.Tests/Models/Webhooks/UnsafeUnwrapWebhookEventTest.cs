@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
 using Avara.Models.Webhooks;
@@ -6,6 +7,24 @@ namespace Avara.Tests.Models.Webhooks;
 
 public class UnsafeUnwrapWebhookEventTest : TestBase
 {
+    [Fact]
+    public void EphemeralAccessRequestedValidationWorks()
+    {
+        UnsafeUnwrapWebhookEvent value = new EphemeralAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                RetrievalID = "order-12345",
+                Options = new Dictionary<string, JsonElement>()
+                {
+                    { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
+                },
+            },
+        };
+        value.Validate();
+    }
+
     [Fact]
     public void StudyAccessRequestedValidationWorks()
     {
@@ -109,6 +128,30 @@ public class UnsafeUnwrapWebhookEventTest : TestBase
             },
         };
         value.Validate();
+    }
+
+    [Fact]
+    public void EphemeralAccessRequestedSerializationRoundtripWorks()
+    {
+        UnsafeUnwrapWebhookEvent value = new EphemeralAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                RetrievalID = "order-12345",
+                Options = new Dictionary<string, JsonElement>()
+                {
+                    { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
+                },
+            },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<UnsafeUnwrapWebhookEvent>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 
     [Fact]

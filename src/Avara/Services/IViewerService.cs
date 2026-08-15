@@ -24,6 +24,8 @@ public interface IViewerService
     /// </summary>
     IViewerService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    IEphemeralSessionService EphemeralSessions { get; }
+
     IStudyService Studies { get; }
 
     IUserService Users { get; }
@@ -41,6 +43,8 @@ public interface IViewerServiceWithRawResponse
     /// <para>The original service is not modified.</para>
     /// </summary>
     IViewerServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IEphemeralSessionServiceWithRawResponse EphemeralSessions { get; }
 
     IStudyServiceWithRawResponse Studies { get; }
 

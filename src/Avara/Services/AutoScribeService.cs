@@ -29,6 +29,7 @@ public sealed class AutoScribeService : IAutoScribeService
 
         _withRawResponse = new(() => new AutoScribeServiceWithRawResponse(client.WithRawResponse));
         _clinicalReferences = new(() => new ClinicalReferenceService(client));
+        _ephemeralSessions = new(() => new EphemeralSessionService(client));
         _studies = new(() => new StudyService(client));
         _users = new(() => new UserService(client));
         _reports = new(() => new ReportService(client));
@@ -38,6 +39,12 @@ public sealed class AutoScribeService : IAutoScribeService
     public IClinicalReferenceService ClinicalReferences
     {
         get { return _clinicalReferences.Value; }
+    }
+
+    readonly Lazy<IEphemeralSessionService> _ephemeralSessions;
+    public IEphemeralSessionService EphemeralSessions
+    {
+        get { return _ephemeralSessions.Value; }
     }
 
     readonly Lazy<IStudyService> _studies;
@@ -77,6 +84,7 @@ public sealed class AutoScribeServiceWithRawResponse : IAutoScribeServiceWithRaw
         _client = client;
 
         _clinicalReferences = new(() => new ClinicalReferenceServiceWithRawResponse(client));
+        _ephemeralSessions = new(() => new EphemeralSessionServiceWithRawResponse(client));
         _studies = new(() => new StudyServiceWithRawResponse(client));
         _users = new(() => new UserServiceWithRawResponse(client));
         _reports = new(() => new ReportServiceWithRawResponse(client));
@@ -86,6 +94,12 @@ public sealed class AutoScribeServiceWithRawResponse : IAutoScribeServiceWithRaw
     public IClinicalReferenceServiceWithRawResponse ClinicalReferences
     {
         get { return _clinicalReferences.Value; }
+    }
+
+    readonly Lazy<IEphemeralSessionServiceWithRawResponse> _ephemeralSessions;
+    public IEphemeralSessionServiceWithRawResponse EphemeralSessions
+    {
+        get { return _ephemeralSessions.Value; }
     }
 
     readonly Lazy<IStudyServiceWithRawResponse> _studies;

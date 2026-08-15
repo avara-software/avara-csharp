@@ -23,8 +23,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
             NumberOfFrames = 1,
             PhotometricInterpretation = "MONOCHROME2",
             PixelRepresentation = 0,
-            RescaleIntercept = 0,
-            RescaleSlope = 0,
+            RescaleIntercept = -1024,
+            RescaleSlope = 1,
             Rows = 512,
             SamplesPerPixel = 1,
         };
@@ -41,8 +41,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
         double expectedNumberOfFrames = 1;
         string expectedPhotometricInterpretation = "MONOCHROME2";
         double expectedPixelRepresentation = 0;
-        double expectedRescaleIntercept = 0;
-        double expectedRescaleSlope = 0;
+        double expectedRescaleIntercept = -1024;
+        double expectedRescaleSlope = 1;
         double expectedRows = 512;
         double expectedSamplesPerPixel = 1;
 
@@ -81,8 +81,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
             NumberOfFrames = 1,
             PhotometricInterpretation = "MONOCHROME2",
             PixelRepresentation = 0,
-            RescaleIntercept = 0,
-            RescaleSlope = 0,
+            RescaleIntercept = -1024,
+            RescaleSlope = 1,
             Rows = 512,
             SamplesPerPixel = 1,
         };
@@ -113,8 +113,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
             NumberOfFrames = 1,
             PhotometricInterpretation = "MONOCHROME2",
             PixelRepresentation = 0,
-            RescaleIntercept = 0,
-            RescaleSlope = 0,
+            RescaleIntercept = -1024,
+            RescaleSlope = 1,
             Rows = 512,
             SamplesPerPixel = 1,
         };
@@ -138,8 +138,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
         double expectedNumberOfFrames = 1;
         string expectedPhotometricInterpretation = "MONOCHROME2";
         double expectedPixelRepresentation = 0;
-        double expectedRescaleIntercept = 0;
-        double expectedRescaleSlope = 0;
+        double expectedRescaleIntercept = -1024;
+        double expectedRescaleSlope = 1;
         double expectedRows = 512;
         double expectedSamplesPerPixel = 1;
 
@@ -178,8 +178,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
             NumberOfFrames = 1,
             PhotometricInterpretation = "MONOCHROME2",
             PixelRepresentation = 0,
-            RescaleIntercept = 0,
-            RescaleSlope = 0,
+            RescaleIntercept = -1024,
+            RescaleSlope = 1,
             Rows = 512,
             SamplesPerPixel = 1,
         };
@@ -338,8 +338,8 @@ public class StudyAccessRequestedManifestSopTest : TestBase
             NumberOfFrames = 1,
             PhotometricInterpretation = "MONOCHROME2",
             PixelRepresentation = 0,
-            RescaleIntercept = 0,
-            RescaleSlope = 0,
+            RescaleIntercept = -1024,
+            RescaleSlope = 1,
             Rows = 512,
             SamplesPerPixel = 1,
         };

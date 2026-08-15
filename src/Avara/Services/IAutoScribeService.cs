@@ -26,6 +26,8 @@ public interface IAutoScribeService
 
     IClinicalReferenceService ClinicalReferences { get; }
 
+    IEphemeralSessionService EphemeralSessions { get; }
+
     IStudyService Studies { get; }
 
     IUserService Users { get; }
@@ -47,6 +49,8 @@ public interface IAutoScribeServiceWithRawResponse
     IAutoScribeServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IClinicalReferenceServiceWithRawResponse ClinicalReferences { get; }
+
+    IEphemeralSessionServiceWithRawResponse EphemeralSessions { get; }
 
     IStudyServiceWithRawResponse Studies { get; }
 
