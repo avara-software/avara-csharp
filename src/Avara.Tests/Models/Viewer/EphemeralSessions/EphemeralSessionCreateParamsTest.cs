@@ -13,14 +13,14 @@ public class EphemeralSessionCreateParamsTest : TestBase
         var parameters = new EphemeralSessionCreateParams
         {
             RetrievalID = "order-12345",
-            Options = new Dictionary<string, JsonElement?>()
+            Options = new Dictionary<string, JsonElement>()
             {
                 { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
         string expectedRetrievalID = "order-12345";
-        Dictionary<string, JsonElement?> expectedOptions = new()
+        Dictionary<string, JsonElement> expectedOptions = new()
         {
             { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
         };
@@ -32,14 +32,7 @@ public class EphemeralSessionCreateParamsTest : TestBase
         {
             Assert.True(parameters.Options.TryGetValue(item.Key, out var value));
 
-            Assert.True(
-                (value == null && parameters.Options[item.Key] == null)
-                    || (
-                        value != null
-                        && parameters.Options[item.Key] != null
-                        && JsonElement.DeepEquals(value!.Value, parameters.Options[item.Key]!.Value)
-                    )
-            );
+            Assert.True(JsonElement.DeepEquals(value, parameters.Options[item.Key]));
         }
     }
 
@@ -88,7 +81,7 @@ public class EphemeralSessionCreateParamsTest : TestBase
         var parameters = new EphemeralSessionCreateParams
         {
             RetrievalID = "order-12345",
-            Options = new Dictionary<string, JsonElement?>()
+            Options = new Dictionary<string, JsonElement>()
             {
                 { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
             },

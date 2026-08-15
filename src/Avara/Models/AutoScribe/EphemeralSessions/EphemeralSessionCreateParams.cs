@@ -46,12 +46,12 @@ public record class EphemeralSessionCreateParams : ParamsBase
     /// does not read or edit it. Hard cap 3072 bytes on JSON.stringify. Examples:
     /// studyInstanceUids or internal ids for multi-study reads. Not for URLs or manifests.
     /// </summary>
-    public IReadOnlyDictionary<string, JsonElement?>? Options
+    public IReadOnlyDictionary<string, JsonElement>? Options
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement?>>(
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "options"
             );
         }
@@ -62,7 +62,7 @@ public record class EphemeralSessionCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData.Set<FrozenDictionary<string, JsonElement?>?>(
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
                 "options",
                 value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
