@@ -10,7 +10,8 @@ namespace Avara.Models.Webhooks;
 
 /// <summary>
 /// Response expected by Avara for study access webhook. Provide presigned URLs for
-/// DICOM images and optionally for non-DICOM media.
+/// DICOM images and optionally non-DICOM media. Optionally include a study manifest
+/// to improve progressive loading of legacy DICOM; it is not required.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<StudyAccessRequestedResponse, StudyAccessRequestedResponseFromRaw>)
@@ -71,6 +72,30 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
     }
 
     /// <summary>
+    /// Optional sidecar for this study. Not required — omit if you do not have it.
+    /// Recommended when you can provide it, especially for very large studies. Enables
+    /// progressive loading of legacy multi-SOP DICOM so readers can scroll before
+    /// every file is parsed. Invalid or incomplete values are ignored; URLs still load.
+    /// </summary>
+    public StudyAccessRequestedManifest? Manifest
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<StudyAccessRequestedManifest>("manifest");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("manifest", value);
+        }
+    }
+
+    /// <summary>
     /// Optional presigned URLs for non-DICOM media (images, PDFs, videos) associated
     /// with the study.
     /// </summary>
@@ -103,6 +128,7 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
         _ = this.Authorized;
         _ = this.Urls;
         _ = this.Error;
+        this.Manifest?.Validate();
         foreach (var item in this.MediaUrls ?? [])
         {
             item.Validate();

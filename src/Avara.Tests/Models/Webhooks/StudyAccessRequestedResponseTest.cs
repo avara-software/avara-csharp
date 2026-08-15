@@ -19,6 +19,42 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            Manifest = new()
+            {
+                Series =
+                [
+                    new()
+                    {
+                        Modality = "CT",
+                        SeriesDescription = "AXIAL CT",
+                        SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                        SeriesNumber = 1,
+                        Sops =
+                        [
+                            new()
+                            {
+                                SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                                SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                                BitsAllocated = 16,
+                                BitsStored = 16,
+                                Columns = 512,
+                                HighBit = 15,
+                                InstanceNumber = 1,
+                                IsDoubleFloatPixelData = true,
+                                IsFloatPixelData = true,
+                                NumberOfFrames = 1,
+                                PhotometricInterpretation = "MONOCHROME2",
+                                PixelRepresentation = 0,
+                                RescaleIntercept = 0,
+                                RescaleSlope = 0,
+                                Rows = 512,
+                                SamplesPerPixel = 1,
+                            },
+                        ],
+                    },
+                ],
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
             MediaUrls =
             [
                 new()
@@ -37,6 +73,42 @@ public class StudyAccessRequestedResponseTest : TestBase
             "https://storage.example.com/dicom/image2.dcm?token=def456",
         ];
         string expectedError = "Study not found in PACS";
+        StudyAccessRequestedManifest expectedManifest = new()
+        {
+            Series =
+            [
+                new()
+                {
+                    Modality = "CT",
+                    SeriesDescription = "AXIAL CT",
+                    SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                    SeriesNumber = 1,
+                    Sops =
+                    [
+                        new()
+                        {
+                            SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                            SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                            BitsAllocated = 16,
+                            BitsStored = 16,
+                            Columns = 512,
+                            HighBit = 15,
+                            InstanceNumber = 1,
+                            IsDoubleFloatPixelData = true,
+                            IsFloatPixelData = true,
+                            NumberOfFrames = 1,
+                            PhotometricInterpretation = "MONOCHROME2",
+                            PixelRepresentation = 0,
+                            RescaleIntercept = 0,
+                            RescaleSlope = 0,
+                            Rows = 512,
+                            SamplesPerPixel = 1,
+                        },
+                    ],
+                },
+            ],
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+        };
         List<StudyAccessRequestedMediaUrl> expectedMediaUrls =
         [
             new()
@@ -54,6 +126,7 @@ public class StudyAccessRequestedResponseTest : TestBase
             Assert.Equal(expectedUrls[i], model.Urls[i]);
         }
         Assert.Equal(expectedError, model.Error);
+        Assert.Equal(expectedManifest, model.Manifest);
         Assert.NotNull(model.MediaUrls);
         Assert.Equal(expectedMediaUrls.Count, model.MediaUrls.Count);
         for (int i = 0; i < expectedMediaUrls.Count; i++)
@@ -74,6 +147,42 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            Manifest = new()
+            {
+                Series =
+                [
+                    new()
+                    {
+                        Modality = "CT",
+                        SeriesDescription = "AXIAL CT",
+                        SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                        SeriesNumber = 1,
+                        Sops =
+                        [
+                            new()
+                            {
+                                SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                                SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                                BitsAllocated = 16,
+                                BitsStored = 16,
+                                Columns = 512,
+                                HighBit = 15,
+                                InstanceNumber = 1,
+                                IsDoubleFloatPixelData = true,
+                                IsFloatPixelData = true,
+                                NumberOfFrames = 1,
+                                PhotometricInterpretation = "MONOCHROME2",
+                                PixelRepresentation = 0,
+                                RescaleIntercept = 0,
+                                RescaleSlope = 0,
+                                Rows = 512,
+                                SamplesPerPixel = 1,
+                            },
+                        ],
+                    },
+                ],
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
             MediaUrls =
             [
                 new()
@@ -106,6 +215,42 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            Manifest = new()
+            {
+                Series =
+                [
+                    new()
+                    {
+                        Modality = "CT",
+                        SeriesDescription = "AXIAL CT",
+                        SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                        SeriesNumber = 1,
+                        Sops =
+                        [
+                            new()
+                            {
+                                SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                                SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                                BitsAllocated = 16,
+                                BitsStored = 16,
+                                Columns = 512,
+                                HighBit = 15,
+                                InstanceNumber = 1,
+                                IsDoubleFloatPixelData = true,
+                                IsFloatPixelData = true,
+                                NumberOfFrames = 1,
+                                PhotometricInterpretation = "MONOCHROME2",
+                                PixelRepresentation = 0,
+                                RescaleIntercept = 0,
+                                RescaleSlope = 0,
+                                Rows = 512,
+                                SamplesPerPixel = 1,
+                            },
+                        ],
+                    },
+                ],
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
             MediaUrls =
             [
                 new()
@@ -131,6 +276,42 @@ public class StudyAccessRequestedResponseTest : TestBase
             "https://storage.example.com/dicom/image2.dcm?token=def456",
         ];
         string expectedError = "Study not found in PACS";
+        StudyAccessRequestedManifest expectedManifest = new()
+        {
+            Series =
+            [
+                new()
+                {
+                    Modality = "CT",
+                    SeriesDescription = "AXIAL CT",
+                    SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                    SeriesNumber = 1,
+                    Sops =
+                    [
+                        new()
+                        {
+                            SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                            SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                            BitsAllocated = 16,
+                            BitsStored = 16,
+                            Columns = 512,
+                            HighBit = 15,
+                            InstanceNumber = 1,
+                            IsDoubleFloatPixelData = true,
+                            IsFloatPixelData = true,
+                            NumberOfFrames = 1,
+                            PhotometricInterpretation = "MONOCHROME2",
+                            PixelRepresentation = 0,
+                            RescaleIntercept = 0,
+                            RescaleSlope = 0,
+                            Rows = 512,
+                            SamplesPerPixel = 1,
+                        },
+                    ],
+                },
+            ],
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+        };
         List<StudyAccessRequestedMediaUrl> expectedMediaUrls =
         [
             new()
@@ -148,6 +329,7 @@ public class StudyAccessRequestedResponseTest : TestBase
             Assert.Equal(expectedUrls[i], deserialized.Urls[i]);
         }
         Assert.Equal(expectedError, deserialized.Error);
+        Assert.Equal(expectedManifest, deserialized.Manifest);
         Assert.NotNull(deserialized.MediaUrls);
         Assert.Equal(expectedMediaUrls.Count, deserialized.MediaUrls.Count);
         for (int i = 0; i < expectedMediaUrls.Count; i++)
@@ -168,6 +350,42 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            Manifest = new()
+            {
+                Series =
+                [
+                    new()
+                    {
+                        Modality = "CT",
+                        SeriesDescription = "AXIAL CT",
+                        SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                        SeriesNumber = 1,
+                        Sops =
+                        [
+                            new()
+                            {
+                                SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                                SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                                BitsAllocated = 16,
+                                BitsStored = 16,
+                                Columns = 512,
+                                HighBit = 15,
+                                InstanceNumber = 1,
+                                IsDoubleFloatPixelData = true,
+                                IsFloatPixelData = true,
+                                NumberOfFrames = 1,
+                                PhotometricInterpretation = "MONOCHROME2",
+                                PixelRepresentation = 0,
+                                RescaleIntercept = 0,
+                                RescaleSlope = 0,
+                                Rows = 512,
+                                SamplesPerPixel = 1,
+                            },
+                        ],
+                    },
+                ],
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
             MediaUrls =
             [
                 new()
@@ -197,6 +415,8 @@ public class StudyAccessRequestedResponseTest : TestBase
 
         Assert.Null(model.Error);
         Assert.False(model.RawData.ContainsKey("error"));
+        Assert.Null(model.Manifest);
+        Assert.False(model.RawData.ContainsKey("manifest"));
         Assert.Null(model.MediaUrls);
         Assert.False(model.RawData.ContainsKey("mediaUrls"));
     }
@@ -231,11 +451,14 @@ public class StudyAccessRequestedResponseTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Error = null,
+            Manifest = null,
             MediaUrls = null,
         };
 
         Assert.Null(model.Error);
         Assert.False(model.RawData.ContainsKey("error"));
+        Assert.Null(model.Manifest);
+        Assert.False(model.RawData.ContainsKey("manifest"));
         Assert.Null(model.MediaUrls);
         Assert.False(model.RawData.ContainsKey("mediaUrls"));
     }
@@ -254,6 +477,7 @@ public class StudyAccessRequestedResponseTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Error = null,
+            Manifest = null,
             MediaUrls = null,
         };
 
@@ -272,6 +496,42 @@ public class StudyAccessRequestedResponseTest : TestBase
                 "https://storage.example.com/dicom/image2.dcm?token=def456",
             ],
             Error = "Study not found in PACS",
+            Manifest = new()
+            {
+                Series =
+                [
+                    new()
+                    {
+                        Modality = "CT",
+                        SeriesDescription = "AXIAL CT",
+                        SeriesInstanceUid = "1.2.840.113619.2.55.3.1.3.1",
+                        SeriesNumber = 1,
+                        Sops =
+                        [
+                            new()
+                            {
+                                SopClassUid = "1.2.840.10008.5.1.4.1.1.2",
+                                SopInstanceUid = "1.2.840.113619.2.55.3.1.4.1",
+                                BitsAllocated = 16,
+                                BitsStored = 16,
+                                Columns = 512,
+                                HighBit = 15,
+                                InstanceNumber = 1,
+                                IsDoubleFloatPixelData = true,
+                                IsFloatPixelData = true,
+                                NumberOfFrames = 1,
+                                PhotometricInterpretation = "MONOCHROME2",
+                                PixelRepresentation = 0,
+                                RescaleIntercept = 0,
+                                RescaleSlope = 0,
+                                Rows = 512,
+                                SamplesPerPixel = 1,
+                            },
+                        ],
+                    },
+                ],
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
             MediaUrls =
             [
                 new()
