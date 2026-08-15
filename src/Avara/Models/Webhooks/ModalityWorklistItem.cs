@@ -121,6 +121,10 @@ public sealed record class ModalityWorklistItem : JsonModel
         init { this._rawData.Set("RequestedProcedureDescription", value); }
     }
 
+    /// <summary>
+    /// Scheduled procedure steps for this worklist item. Most appointments/studies
+    /// have a single step; include additional steps only when the RIS schedules multiple.
+    /// </summary>
     public required IReadOnlyList<ModalityWorklistScheduledStep> ScheduledProcedureStepSequence
     {
         get

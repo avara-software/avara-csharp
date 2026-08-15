@@ -9,17 +9,20 @@ using Avara.Core;
 namespace Avara.Models.Webhooks;
 
 /// <summary>
-/// Response expected by Avara for study access webhook. Provide presigned URLs for
-/// DICOM images and optionally non-DICOM media. Optionally include a study manifest
-/// to improve progressive loading of legacy DICOM; it is not required.
+/// Synchronous response with presigned DICOM URLs and optionally non-DICOM media.
+/// Optionally include a manifests array (one study per item) to improve progressive
+/// loading of legacy DICOM; it is not required.
 /// </summary>
 [JsonConverter(
-    typeof(JsonModelConverter<StudyAccessRequestedResponse, StudyAccessRequestedResponseFromRaw>)
+    typeof(JsonModelConverter<
+        EphemeralAccessRequestedResponse,
+        EphemeralAccessRequestedResponseFromRaw
+    >)
 )]
-public sealed record class StudyAccessRequestedResponse : JsonModel
+public sealed record class EphemeralAccessRequestedResponse : JsonModel
 {
     /// <summary>
-    /// Whether access is authorized for this study
+    /// Whether access is authorized for this ephemeral session
     /// </summary>
     public required bool Authorized
     {
@@ -32,7 +35,7 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
     }
 
     /// <summary>
-    /// Flat list of presigned URLs for DICOM images. Include all image URLs for the study.
+    /// Flat list of presigned URLs for DICOM images across the session.
     /// </summary>
     public required IReadOnlyList<string> Urls
     {
@@ -72,18 +75,20 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
     }
 
     /// <summary>
-    /// Optional sidecar for this one study (one object, not an array). Not required
-    /// — omit if you do not have it. Recommended when you can provide it, especially
-    /// for very large studies. Enables progressive loading of legacy multi-SOP DICOM
-    /// so readers can scroll before every file is parsed. Invalid or incomplete values
-    /// are ignored; URLs still load.
+    /// Optional sidecars, one study per item (an array, not a single object). Not
+    /// required — omit if you do not have them. Recommended when you can provide
+    /// them, especially for very large or multi-study legacy DICOM. Enables progressive
+    /// loading so readers can scroll before every file is parsed. Invalid or incomplete
+    /// values are ignored; URLs still load.
     /// </summary>
-    public StudyAccessRequestedManifest? Manifest
+    public IReadOnlyList<StudyAccessRequestedManifest>? Manifests
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<StudyAccessRequestedManifest>("manifest");
+            return this._rawData.GetNullableStruct<ImmutableArray<StudyAccessRequestedManifest>>(
+                "manifests"
+            );
         }
         init
         {
@@ -92,13 +97,15 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
                 return;
             }
 
-            this._rawData.Set("manifest", value);
+            this._rawData.Set<ImmutableArray<StudyAccessRequestedManifest>?>(
+                "manifests",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
     /// <summary>
-    /// Optional presigned URLs for non-DICOM media (images, PDFs, videos) associated
-    /// with the study.
+    /// Optional presigned URLs for non-DICOM media (images, PDFs, videos).
     /// </summary>
     public IReadOnlyList<StudyAccessRequestedMediaUrl>? MediaUrls
     {
@@ -129,36 +136,41 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
         _ = this.Authorized;
         _ = this.Urls;
         _ = this.Error;
-        this.Manifest?.Validate();
+        foreach (var item in this.Manifests ?? [])
+        {
+            item.Validate();
+        }
         foreach (var item in this.MediaUrls ?? [])
         {
             item.Validate();
         }
     }
 
-    public StudyAccessRequestedResponse() { }
+    public EphemeralAccessRequestedResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public StudyAccessRequestedResponse(StudyAccessRequestedResponse studyAccessRequestedResponse)
-        : base(studyAccessRequestedResponse) { }
+    public EphemeralAccessRequestedResponse(
+        EphemeralAccessRequestedResponse ephemeralAccessRequestedResponse
+    )
+        : base(ephemeralAccessRequestedResponse) { }
 #pragma warning restore CS8618
 
-    public StudyAccessRequestedResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    public EphemeralAccessRequestedResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    StudyAccessRequestedResponse(FrozenDictionary<string, JsonElement> rawData)
+    EphemeralAccessRequestedResponse(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="StudyAccessRequestedResponseFromRaw.FromRawUnchecked"/>
-    public static StudyAccessRequestedResponse FromRawUnchecked(
+    /// <inheritdoc cref="EphemeralAccessRequestedResponseFromRaw.FromRawUnchecked"/>
+    public static EphemeralAccessRequestedResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -166,10 +178,10 @@ public sealed record class StudyAccessRequestedResponse : JsonModel
     }
 }
 
-class StudyAccessRequestedResponseFromRaw : IFromRawJson<StudyAccessRequestedResponse>
+class EphemeralAccessRequestedResponseFromRaw : IFromRawJson<EphemeralAccessRequestedResponse>
 {
     /// <inheritdoc/>
-    public StudyAccessRequestedResponse FromRawUnchecked(
+    public EphemeralAccessRequestedResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => StudyAccessRequestedResponse.FromRawUnchecked(rawData);
+    ) => EphemeralAccessRequestedResponse.FromRawUnchecked(rawData);
 }

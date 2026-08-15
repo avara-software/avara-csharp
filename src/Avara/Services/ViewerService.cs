@@ -28,8 +28,15 @@ public sealed class ViewerService : IViewerService
         _client = client;
 
         _withRawResponse = new(() => new ViewerServiceWithRawResponse(client.WithRawResponse));
+        _ephemeralSessions = new(() => new EphemeralSessionService(client));
         _studies = new(() => new StudyService(client));
         _users = new(() => new UserService(client));
+    }
+
+    readonly Lazy<IEphemeralSessionService> _ephemeralSessions;
+    public IEphemeralSessionService EphemeralSessions
+    {
+        get { return _ephemeralSessions.Value; }
     }
 
     readonly Lazy<IStudyService> _studies;
@@ -60,8 +67,15 @@ public sealed class ViewerServiceWithRawResponse : IViewerServiceWithRawResponse
     {
         _client = client;
 
+        _ephemeralSessions = new(() => new EphemeralSessionServiceWithRawResponse(client));
         _studies = new(() => new StudyServiceWithRawResponse(client));
         _users = new(() => new UserServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<IEphemeralSessionServiceWithRawResponse> _ephemeralSessions;
+    public IEphemeralSessionServiceWithRawResponse EphemeralSessions
+    {
+        get { return _ephemeralSessions.Value; }
     }
 
     readonly Lazy<IStudyServiceWithRawResponse> _studies;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Avara.Core;
 using Avara.Models.Webhooks;
@@ -16,6 +17,24 @@ public class WebhookEventTest : TestBase
             {
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void EphemeralAccessRequestedValidationWorks()
+    {
+        WebhookEvent value = new EphemeralAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                RetrievalID = "order-12345",
+                Options = new Dictionary<string, JsonElement>()
+                {
+                    { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
+                },
             },
         };
         value.Validate();
@@ -121,6 +140,30 @@ public class WebhookEventTest : TestBase
             {
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
                 StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<WebhookEvent>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void EphemeralAccessRequestedSerializationRoundtripWorks()
+    {
+        WebhookEvent value = new EphemeralAccessRequestedEvent()
+        {
+            ID = "whe_1234567890abcdef1234567890abcdef",
+            Data = new()
+            {
+                RetrievalID = "order-12345",
+                Options = new Dictionary<string, JsonElement>()
+                {
+                    { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
+                },
             },
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

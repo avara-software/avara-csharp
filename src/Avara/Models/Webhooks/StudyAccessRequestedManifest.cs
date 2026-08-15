@@ -9,16 +9,21 @@ using Avara.Core;
 namespace Avara.Models.Webhooks;
 
 /// <summary>
-/// Optional sidecar for this one study. Not required — omit if you do not have it.
-/// Recommended when you can provide it, especially for very large studies. Enables
-/// progressive loading of legacy multi-SOP DICOM so readers can scroll before every
-/// file is parsed. Invalid or incomplete values are ignored; URLs still load.
+/// Optional sidecar for this one study (one object, not an array). Not required —
+/// omit if you do not have it. Recommended when you can provide it, especially for
+/// very large studies. Enables progressive loading of legacy multi-SOP DICOM so
+/// readers can scroll before every file is parsed. Include only this study. Series
+/// you cannot describe can be left out. Invalid or incomplete values are ignored;
+/// URLs still load.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<StudyAccessRequestedManifest, StudyAccessRequestedManifestFromRaw>)
 )]
 public sealed record class StudyAccessRequestedManifest : JsonModel
 {
+    /// <summary>
+    /// Planable series in this study. At least one must survive validation.
+    /// </summary>
     public required IReadOnlyList<StudyAccessRequestedManifestSeries> Series
     {
         get
@@ -38,7 +43,8 @@ public sealed record class StudyAccessRequestedManifest : JsonModel
     }
 
     /// <summary>
-    /// DICOM Study Instance UID for this study
+    /// DICOM Study Instance UID for this study. Non-empty string. Must match the
+    /// study being requested.
     /// </summary>
     public required string StudyInstanceUid
     {

@@ -9,10 +9,10 @@ namespace Avara.Models.Webhooks;
 
 /// <summary>
 /// Union of all Avara webhook event types. Use the 'type' field to discriminate between
-/// event types. Events: study.access_requested (synchronous), report.delivered (asynchronous),
-/// secondary_capture.access_requested (synchronous), modality_worklist.requested
-/// (synchronous), patient_study.enrichment_requested (synchronous soft), clinical_context.enrichment_requested
-/// (synchronous soft).
+/// event types. Events: study.access_requested (synchronous), ephemeral.access_requested
+/// (synchronous), report.delivered (asynchronous), secondary_capture.access_requested
+/// (synchronous), modality_worklist.requested (synchronous), patient_study.enrichment_requested
+/// (synchronous soft), clinical_context.enrichment_requested (synchronous soft).
 /// </summary>
 [JsonConverter(typeof(WebhookEventConverter))]
 public record class WebhookEvent : ModelBase
@@ -38,6 +38,7 @@ public record class WebhookEvent : ModelBase
         {
             return Match(
                 studyAccessRequested: (x) => x.ID,
+                ephemeralAccessRequested: (x) => x.ID,
                 reportDelivered: (x) => x.ID,
                 secondaryCaptureAccessRequested: (x) => x.ID,
                 modalityWorklistRequested: (x) => x.ID,
@@ -53,6 +54,7 @@ public record class WebhookEvent : ModelBase
         {
             return Match(
                 studyAccessRequested: (x) => x.Type,
+                ephemeralAccessRequested: (x) => x.Type,
                 reportDelivered: (x) => x.Type,
                 secondaryCaptureAccessRequested: (x) => x.Type,
                 modalityWorklistRequested: (x) => x.Type,
@@ -63,6 +65,12 @@ public record class WebhookEvent : ModelBase
     }
 
     public WebhookEvent(StudyAccessRequestedEvent value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public WebhookEvent(EphemeralAccessRequestedEvent value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -123,6 +131,29 @@ public record class WebhookEvent : ModelBase
     )
     {
         value = this.Value as StudyAccessRequestedEvent;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="EphemeralAccessRequestedEvent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickEphemeralAccessRequested(out var value)) {
+    ///     // `value` is of type `EphemeralAccessRequestedEvent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickEphemeralAccessRequested(
+        [NotNullWhen(true)] out EphemeralAccessRequestedEvent? value
+    )
+    {
+        value = this.Value as EphemeralAccessRequestedEvent;
         return value != null;
     }
 
@@ -254,6 +285,7 @@ public record class WebhookEvent : ModelBase
     /// <code>
     /// instance.Switch(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
+    ///     (EphemeralAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
     ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
     ///     (ModalityWorklistRequestedEvent value) =&gt; {...},
@@ -265,6 +297,7 @@ public record class WebhookEvent : ModelBase
     /// </summary>
     public void Switch(
         Action<StudyAccessRequestedEvent> studyAccessRequested,
+        Action<EphemeralAccessRequestedEvent> ephemeralAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
         Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested,
         Action<ModalityWorklistRequestedEvent> modalityWorklistRequested,
@@ -276,6 +309,9 @@ public record class WebhookEvent : ModelBase
         {
             case StudyAccessRequestedEvent value:
                 studyAccessRequested(value);
+                break;
+            case EphemeralAccessRequestedEvent value:
+                ephemeralAccessRequested(value);
                 break;
             case ReportDeliveredEvent value:
                 reportDelivered(value);
@@ -315,6 +351,7 @@ public record class WebhookEvent : ModelBase
     /// <code>
     /// var result = instance.Match(
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
+    ///     (EphemeralAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
     ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
     ///     (ModalityWorklistRequestedEvent value) =&gt; {...},
@@ -326,6 +363,7 @@ public record class WebhookEvent : ModelBase
     /// </summary>
     public T Match<T>(
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
+        Func<EphemeralAccessRequestedEvent, T> ephemeralAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
         Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested,
         Func<ModalityWorklistRequestedEvent, T> modalityWorklistRequested,
@@ -336,6 +374,7 @@ public record class WebhookEvent : ModelBase
         return this.Value switch
         {
             StudyAccessRequestedEvent value => studyAccessRequested(value),
+            EphemeralAccessRequestedEvent value => ephemeralAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
             SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
             ModalityWorklistRequestedEvent value => modalityWorklistRequested(value),
@@ -350,6 +389,8 @@ public record class WebhookEvent : ModelBase
     }
 
     public static implicit operator WebhookEvent(StudyAccessRequestedEvent value) => new(value);
+
+    public static implicit operator WebhookEvent(EphemeralAccessRequestedEvent value) => new(value);
 
     public static implicit operator WebhookEvent(ReportDeliveredEvent value) => new(value);
 
@@ -383,6 +424,7 @@ public record class WebhookEvent : ModelBase
         }
         this.Switch(
             (studyAccessRequested) => studyAccessRequested.Validate(),
+            (ephemeralAccessRequested) => ephemeralAccessRequested.Validate(),
             (reportDelivered) => reportDelivered.Validate(),
             (secondaryCaptureAccessRequested) => secondaryCaptureAccessRequested.Validate(),
             (modalityWorklistRequested) => modalityWorklistRequested.Validate(),
@@ -412,11 +454,12 @@ public record class WebhookEvent : ModelBase
         return this.Value switch
         {
             StudyAccessRequestedEvent _ => 0,
-            ReportDeliveredEvent _ => 1,
-            SecondaryCaptureAccessRequestedEvent _ => 2,
-            ModalityWorklistRequestedEvent _ => 3,
-            PatientStudyEnrichmentRequestedEvent _ => 4,
-            ClinicalContextEnrichmentRequestedEvent _ => 5,
+            EphemeralAccessRequestedEvent _ => 1,
+            ReportDeliveredEvent _ => 2,
+            SecondaryCaptureAccessRequestedEvent _ => 3,
+            ModalityWorklistRequestedEvent _ => 4,
+            PatientStudyEnrichmentRequestedEvent _ => 5,
+            ClinicalContextEnrichmentRequestedEvent _ => 6,
             _ => -1,
         };
     }
@@ -448,6 +491,26 @@ sealed class WebhookEventConverter : JsonConverter<WebhookEvent>
                 try
                 {
                     var deserialized = JsonSerializer.Deserialize<StudyAccessRequestedEvent>(
+                        element,
+                        options
+                    );
+                    if (deserialized != null)
+                    {
+                        return new(deserialized, element);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // ignore
+                }
+
+                return new(element);
+            }
+            case "ephemeral.access_requested":
+            {
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<EphemeralAccessRequestedEvent>(
                         element,
                         options
                     );

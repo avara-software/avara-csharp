@@ -8,8 +8,9 @@ using Avara.Exceptions;
 namespace Avara.Models.Webhooks;
 
 /// <summary>
-/// Webhook event sent when Avara needs presigned URLs for DICOM images. This is a
-/// synchronous webhook - you must respond with the URLs within the request timeout.
+/// Webhook event sent when Avara needs presigned URLs for an ephemeral viewer session.
+/// This is a synchronous webhook — you must respond with the URLs within the request
+/// timeout. There is no Avara study; use retrievalId (and optional options) to resolve images.
 /// </summary>
 [JsonConverter(typeof(UnsafeUnwrapWebhookEventConverter))]
 public record class UnsafeUnwrapWebhookEvent : ModelBase
@@ -34,6 +35,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
         get
         {
             return Match(
+                ephemeralAccessRequested: (x) => x.ID,
                 studyAccessRequested: (x) => x.ID,
                 reportDelivered: (x) => x.ID,
                 secondaryCaptureAccessRequested: (x) => x.ID,
@@ -49,6 +51,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
         get
         {
             return Match(
+                ephemeralAccessRequested: (x) => x.Type,
                 studyAccessRequested: (x) => x.Type,
                 reportDelivered: (x) => x.Type,
                 secondaryCaptureAccessRequested: (x) => x.Type,
@@ -57,6 +60,15 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
                 clinicalContextEnrichmentRequested: (x) => x.Type
             );
         }
+    }
+
+    public UnsafeUnwrapWebhookEvent(
+        EphemeralAccessRequestedEvent value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
     }
 
     public UnsafeUnwrapWebhookEvent(StudyAccessRequestedEvent value, JsonElement? element = null)
@@ -110,6 +122,29 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     public UnsafeUnwrapWebhookEvent(JsonElement element)
     {
         this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="EphemeralAccessRequestedEvent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickEphemeralAccessRequested(out var value)) {
+    ///     // `value` is of type `EphemeralAccessRequestedEvent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickEphemeralAccessRequested(
+        [NotNullWhen(true)] out EphemeralAccessRequestedEvent? value
+    )
+    {
+        value = this.Value as EphemeralAccessRequestedEvent;
+        return value != null;
     }
 
     /// <summary>
@@ -262,6 +297,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
+    ///     (EphemeralAccessRequestedEvent value) =&gt; {...},
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
     ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
@@ -273,6 +309,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// </example>
     /// </summary>
     public void Switch(
+        Action<EphemeralAccessRequestedEvent> ephemeralAccessRequested,
         Action<StudyAccessRequestedEvent> studyAccessRequested,
         Action<ReportDeliveredEvent> reportDelivered,
         Action<SecondaryCaptureAccessRequestedEvent> secondaryCaptureAccessRequested,
@@ -283,6 +320,9 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     {
         switch (this.Value)
         {
+            case EphemeralAccessRequestedEvent value:
+                ephemeralAccessRequested(value);
+                break;
             case StudyAccessRequestedEvent value:
                 studyAccessRequested(value);
                 break;
@@ -323,6 +363,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
+    ///     (EphemeralAccessRequestedEvent value) =&gt; {...},
     ///     (StudyAccessRequestedEvent value) =&gt; {...},
     ///     (ReportDeliveredEvent value) =&gt; {...},
     ///     (SecondaryCaptureAccessRequestedEvent value) =&gt; {...},
@@ -334,6 +375,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     /// </example>
     /// </summary>
     public T Match<T>(
+        Func<EphemeralAccessRequestedEvent, T> ephemeralAccessRequested,
         Func<StudyAccessRequestedEvent, T> studyAccessRequested,
         Func<ReportDeliveredEvent, T> reportDelivered,
         Func<SecondaryCaptureAccessRequestedEvent, T> secondaryCaptureAccessRequested,
@@ -344,6 +386,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     {
         return this.Value switch
         {
+            EphemeralAccessRequestedEvent value => ephemeralAccessRequested(value),
             StudyAccessRequestedEvent value => studyAccessRequested(value),
             ReportDeliveredEvent value => reportDelivered(value),
             SecondaryCaptureAccessRequestedEvent value => secondaryCaptureAccessRequested(value),
@@ -357,6 +400,9 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
             ),
         };
     }
+
+    public static implicit operator UnsafeUnwrapWebhookEvent(EphemeralAccessRequestedEvent value) =>
+        new(value);
 
     public static implicit operator UnsafeUnwrapWebhookEvent(StudyAccessRequestedEvent value) =>
         new(value);
@@ -399,6 +445,7 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
             );
         }
         this.Switch(
+            (ephemeralAccessRequested) => ephemeralAccessRequested.Validate(),
             (studyAccessRequested) => studyAccessRequested.Validate(),
             (reportDelivered) => reportDelivered.Validate(),
             (secondaryCaptureAccessRequested) => secondaryCaptureAccessRequested.Validate(),
@@ -428,12 +475,13 @@ public record class UnsafeUnwrapWebhookEvent : ModelBase
     {
         return this.Value switch
         {
-            StudyAccessRequestedEvent _ => 0,
-            ReportDeliveredEvent _ => 1,
-            SecondaryCaptureAccessRequestedEvent _ => 2,
-            ModalityWorklistRequestedEvent _ => 3,
-            PatientStudyEnrichmentRequestedEvent _ => 4,
-            ClinicalContextEnrichmentRequestedEvent _ => 5,
+            EphemeralAccessRequestedEvent _ => 0,
+            StudyAccessRequestedEvent _ => 1,
+            ReportDeliveredEvent _ => 2,
+            SecondaryCaptureAccessRequestedEvent _ => 3,
+            ModalityWorklistRequestedEvent _ => 4,
+            PatientStudyEnrichmentRequestedEvent _ => 5,
+            ClinicalContextEnrichmentRequestedEvent _ => 6,
             _ => -1,
         };
     }
@@ -460,6 +508,26 @@ sealed class UnsafeUnwrapWebhookEventConverter : JsonConverter<UnsafeUnwrapWebho
 
         switch (type)
         {
+            case "ephemeral.access_requested":
+            {
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<EphemeralAccessRequestedEvent>(
+                        element,
+                        options
+                    );
+                    if (deserialized != null)
+                    {
+                        return new(deserialized, element);
+                    }
+                }
+                catch (JsonException)
+                {
+                    // ignore
+                }
+
+                return new(element);
+            }
             case "study.access_requested":
             {
                 try

@@ -8,9 +8,11 @@ using Avara.Core;
 namespace Avara.Models.Webhooks;
 
 /// <summary>
-/// One SOP in the optional study manifest. Identity is required. Image geometry
-/// (rows, columns, bitsAllocated, photometricInterpretation, samplesPerPixel) is
-/// required to preallocate a volume; rescale and float flags are optional.
+/// One SOP in the optional study manifest. Identity (sopInstanceUID, sopClassUID)
+/// is always required. For image SOPs, also include rows, columns, bitsAllocated,
+/// photometricInterpretation, and samplesPerPixel or that SOP is dropped. SR / PR
+/// / KO do not need geometry. Wrong types or missing required fields drop that SOP
+/// only; sibling SOPs and URLs still load.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<
@@ -21,7 +23,11 @@ namespace Avara.Models.Webhooks;
 public sealed record class StudyAccessRequestedManifestSop : JsonModel
 {
     /// <summary>
-    /// DICOM SOP Class UID (e.g. Legacy CT Image Storage)
+    /// DICOM SOP Class UID. Progressive load uses legacy single-frame image classes.
+    /// Common: CT 1.2.840.10008.5.1.4.1.1.2, MR 1.2.840.10008.5.1.4.1.1.4, plus CR
+    /// / DX / US / XA / PT. Enhanced multi-frame classes already load progressively
+    /// from the single SOP — the sidecar is not used for them. SR / PR / KO do not
+    /// need geometry.
     /// </summary>
     public required string SopClassUid
     {
@@ -34,7 +40,7 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
     }
 
     /// <summary>
-    /// DICOM SOP Instance UID
+    /// DICOM SOP Instance UID. Non-empty string.
     /// </summary>
     public required string SopInstanceUid
     {
@@ -46,6 +52,10 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         init { this._rawData.Set("sopInstanceUID", value); }
     }
 
+    /// <summary>
+    /// Required on image SOPs. Planner uses 8, 16, or 32 (or the float flags). Typical
+    /// CT/MR: 16.
+    /// </summary>
     public double? BitsAllocated
     {
         get
@@ -64,6 +74,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Optional. Typical CT/MR: 12 or 16.
+    /// </summary>
     public double? BitsStored
     {
         get
@@ -82,6 +95,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Image columns. Required on image SOPs. Positive integer. Common: 256, 512, 1024.
+    /// </summary>
     public double? Columns
     {
         get
@@ -100,6 +116,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Optional. Typical 16-bit: 15.
+    /// </summary>
     public double? HighBit
     {
         get
@@ -118,6 +137,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Slice order (DICOM Instance Number). Omit or 0 if unknown; UID is the tie-break.
+    /// </summary>
     public double? InstanceNumber
     {
         get
@@ -136,6 +158,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Set true only if pixel data is 64-bit float.
+    /// </summary>
     public bool? IsDoubleFloatPixelData
     {
         get
@@ -154,6 +179,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Set true only if pixel data is 32-bit float.
+    /// </summary>
     public bool? IsFloatPixelData
     {
         get
@@ -172,6 +200,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// 1 for single-frame files. Greater than 1 only if this SOP is multi-frame.
+    /// </summary>
     public double? NumberOfFrames
     {
         get
@@ -190,6 +221,12 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Required non-empty string on image SOPs. Common: MONOCHROME2 (CT/MR), MONOCHROME1
+    /// (often MG, inverted), RGB, PALETTE COLOR, YBR_FULL, YBR_FULL_422. Unknown
+    /// strings are kept and treated as mono unless samplesPerPixel is 3. Wrong type
+    /// (number/null) drops that SOP from optimized path.
+    /// </summary>
     public string? PhotometricInterpretation
     {
         get
@@ -208,6 +245,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// 0 unsigned, 1 signed. Typical CT: 0.
+    /// </summary>
     public double? PixelRepresentation
     {
         get
@@ -226,6 +266,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Optional. Typical CT: -1024. Safe to omit.
+    /// </summary>
     public double? RescaleIntercept
     {
         get
@@ -244,6 +287,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Optional. Typical CT: 1. Safe to omit.
+    /// </summary>
     public double? RescaleSlope
     {
         get
@@ -262,6 +308,9 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Image rows. Required on image SOPs. Positive integer. Common: 256, 512, 1024.
+    /// </summary>
     public double? Rows
     {
         get
@@ -280,6 +329,10 @@ public sealed record class StudyAccessRequestedManifestSop : JsonModel
         }
     }
 
+    /// <summary>
+    /// Required on image SOPs. 1 grayscale, 3 color. 3 is treated as color even
+    /// if photometric is unusual.
+    /// </summary>
     public double? SamplesPerPixel
     {
         get

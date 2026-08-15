@@ -11,7 +11,9 @@ using Avara.Exceptions;
 namespace Avara.Models.Webhooks;
 
 /// <summary>
-/// One series in the optional study manifest. Secondary capture should be omitted.
+/// One series in the optional study manifest. Series you cannot describe can be left
+/// out. Secondary capture is not necessary. Enhanced multi-frame series already
+/// load progressively without this sidecar. A series with no surviving SOPs is dropped.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<
@@ -22,7 +24,8 @@ namespace Avara.Models.Webhooks;
 public sealed record class StudyAccessRequestedManifestSeries : JsonModel
 {
     /// <summary>
-    /// DICOM modality (e.g. CT, MR)
+    /// Non-empty DICOM modality. Common: CT, MR, CR, DX, US, XA, PT, NM, MG. Secondary
+    /// capture (SC) is not necessary.
     /// </summary>
     public required string Modality
     {
@@ -35,7 +38,7 @@ public sealed record class StudyAccessRequestedManifestSeries : JsonModel
     }
 
     /// <summary>
-    /// Series description shown in the viewer sidebar
+    /// Non-empty display string shown in the viewer sidebar.
     /// </summary>
     public required string SeriesDescription
     {
@@ -48,7 +51,7 @@ public sealed record class StudyAccessRequestedManifestSeries : JsonModel
     }
 
     /// <summary>
-    /// DICOM Series Instance UID
+    /// DICOM Series Instance UID. Non-empty string.
     /// </summary>
     public required string SeriesInstanceUid
     {
@@ -61,7 +64,7 @@ public sealed record class StudyAccessRequestedManifestSeries : JsonModel
     }
 
     /// <summary>
-    /// Series number (string or number)
+    /// Series number. String or number (1 or "1").
     /// </summary>
     public required SeriesNumber SeriesNumber
     {
@@ -73,6 +76,9 @@ public sealed record class StudyAccessRequestedManifestSeries : JsonModel
         init { this._rawData.Set("seriesNumber", value); }
     }
 
+    /// <summary>
+    /// SOPs in this series. At least one must survive validation.
+    /// </summary>
     public required IReadOnlyList<StudyAccessRequestedManifestSop> Sops
     {
         get
@@ -145,7 +151,7 @@ class StudyAccessRequestedManifestSeriesFromRaw : IFromRawJson<StudyAccessReques
 }
 
 /// <summary>
-/// Series number (string or number)
+/// Series number. String or number (1 or "1").
 /// </summary>
 [JsonConverter(typeof(SeriesNumberConverter))]
 public record class SeriesNumber : ModelBase
