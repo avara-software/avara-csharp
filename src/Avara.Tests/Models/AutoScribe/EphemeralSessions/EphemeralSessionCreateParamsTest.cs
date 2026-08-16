@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Avara.Models;
 using Avara.Models.AutoScribe.EphemeralSessions;
 
 namespace Avara.Tests.Models.AutoScribe.EphemeralSessions;
@@ -13,6 +14,11 @@ public class EphemeralSessionCreateParamsTest : TestBase
         var parameters = new EphemeralSessionCreateParams
         {
             RetrievalID = "order-12345",
+            HangingProtocol = new()
+            {
+                Layout = ViewerLayout.V2x2,
+                ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
+            },
             Options = new Dictionary<string, JsonElement>()
             {
                 { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
@@ -20,12 +26,18 @@ public class EphemeralSessionCreateParamsTest : TestBase
         };
 
         string expectedRetrievalID = "order-12345";
+        EphemeralHangingProtocol expectedHangingProtocol = new()
+        {
+            Layout = ViewerLayout.V2x2,
+            ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
+        };
         Dictionary<string, JsonElement> expectedOptions = new()
         {
             { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },
         };
 
         Assert.Equal(expectedRetrievalID, parameters.RetrievalID);
+        Assert.Equal(expectedHangingProtocol, parameters.HangingProtocol);
         Assert.NotNull(parameters.Options);
         Assert.Equal(expectedOptions.Count, parameters.Options.Count);
         foreach (var item in expectedOptions)
@@ -41,6 +53,8 @@ public class EphemeralSessionCreateParamsTest : TestBase
     {
         var parameters = new EphemeralSessionCreateParams { RetrievalID = "order-12345" };
 
+        Assert.Null(parameters.HangingProtocol);
+        Assert.False(parameters.RawBodyData.ContainsKey("hangingProtocol"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
     }
@@ -53,9 +67,12 @@ public class EphemeralSessionCreateParamsTest : TestBase
             RetrievalID = "order-12345",
 
             // Null should be interpreted as omitted for these properties
+            HangingProtocol = null,
             Options = null,
         };
 
+        Assert.Null(parameters.HangingProtocol);
+        Assert.False(parameters.RawBodyData.ContainsKey("hangingProtocol"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
     }
@@ -81,6 +98,11 @@ public class EphemeralSessionCreateParamsTest : TestBase
         var parameters = new EphemeralSessionCreateParams
         {
             RetrievalID = "order-12345",
+            HangingProtocol = new()
+            {
+                Layout = ViewerLayout.V2x2,
+                ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
+            },
             Options = new Dictionary<string, JsonElement>()
             {
                 { "studyInstanceUids", JsonSerializer.SerializeToElement("bar") },

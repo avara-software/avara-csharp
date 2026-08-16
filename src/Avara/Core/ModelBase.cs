@@ -31,6 +31,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, InvitedSource>(),
             new ApiEnumConverter<string, Severity>(),
             new ApiEnumConverter<string, UserLevel>(),
+            new ApiEnumConverter<string, ViewerLayout>(),
             new ApiEnumConverter<string, ClinicalReferenceType>(),
             new ApiEnumConverter<string, HeightUnit>(),
             new ApiEnumConverter<string, ReportStatus>(),
