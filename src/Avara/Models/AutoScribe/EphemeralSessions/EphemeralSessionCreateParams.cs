@@ -13,6 +13,7 @@ namespace Avara.Models.AutoScribe.EphemeralSessions;
 /// Mints a 30-second tokenized landing URL for a userless, studyless AutoScribe viewer
 /// session. The token names a customer retrievalId (not an Avara study). Optional
 /// options are echoed verbatim on ephemeral.access_requested (max 3072 bytes JSON).
+/// Optional hangingProtocol applies a single-monitor layout when the viewer loads.
 /// Requires a customer study webhook on the API key.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
@@ -39,6 +40,28 @@ public record class EphemeralSessionCreateParams : ParamsBase
             return this._rawBodyData.GetNotNullClass<string>("retrievalId");
         }
         init { this._rawBodyData.Set("retrievalId", value); }
+    }
+
+    /// <summary>
+    /// Optional single-monitor hanging protocol applied when the ephemeral viewer
+    /// loads. Omitted = no protocol. Invalid shape is rejected.
+    /// </summary>
+    public EphemeralHangingProtocol? HangingProtocol
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<EphemeralHangingProtocol>("hangingProtocol");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawBodyData.Set("hangingProtocol", value);
+        }
     }
 
     /// <summary>

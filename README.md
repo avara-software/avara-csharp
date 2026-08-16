@@ -344,11 +344,11 @@ Undocumented properties, or undocumented values of documented properties, on nes
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Avara.Models.AutoScribe.Studies;
+using Avara.Models.AutoScribe.EphemeralSessions;
 
-StudyCreateParams parameters = new()
+EphemeralSessionCreateParams parameters = new()
 {
-    ReportMetadata = new
+    HangingProtocol = new
     (
         new Dictionary<string, JsonElement>
         {
@@ -363,12 +363,12 @@ Required properties on the nested parameter can also be changed or omitted using
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Avara.Models.AutoScribe;
-using Avara.Models.AutoScribe.Studies;
+using Avara.Models;
+using Avara.Models.AutoScribe.EphemeralSessions;
 
-StudyCreateParams parameters = new()
+EphemeralSessionCreateParams parameters = new()
 {
-    ReportMetadata = StudyReportMetadata.FromRawUnchecked
+    HangingProtocol = EphemeralHangingProtocol.FromRawUnchecked
     (
         new Dictionary<string, JsonElement>
         {

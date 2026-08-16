@@ -30,7 +30,8 @@ public interface IEphemeralSessionService
     /// Mints a 30-second tokenized landing URL for a userless, studyless AutoScribe
     /// viewer session. The token names a customer retrievalId (not an Avara study).
     /// Optional options are echoed verbatim on ephemeral.access_requested (max 3072
-    /// bytes JSON). Requires a customer study webhook on the API key.
+    /// bytes JSON). Optional hangingProtocol applies a single-monitor layout when the
+    /// viewer loads. Requires a customer study webhook on the API key.
     /// </summary>
     Task<EphemeralSessionCreateResponse> Create(
         EphemeralSessionCreateParams parameters,
