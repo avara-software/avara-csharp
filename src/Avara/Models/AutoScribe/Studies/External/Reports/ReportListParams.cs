@@ -1,38 +1,22 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using Avara.Core;
 
-namespace Avara.Models.AutoScribe.Studies;
+namespace Avara.Models.AutoScribe.Studies.External.Reports;
 
 /// <summary>
-/// Retrieves a paginated list of studies with optional filtering by assignment, severity,
-/// description, cancellation status, and report status. Returns up to 100 studies
-/// per request.
+/// Cursor-paginated list of external reports. List items omit report text and download URLs.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class StudyListParams : ParamsBase
+public record class ReportListParams : ParamsBase
 {
-    /// <summary>
-    /// Filter by assigned user ID (null = explicitly unassigned). Format: usr_&lt;32-hex-chars&gt;
-    /// </summary>
-    public string? AssignedTo
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<string>("assignedTo");
-        }
-        init { this._rawQueryData.Set("assignedTo", value); }
-    }
-
     /// <summary>
     /// Base64 encoded cursor from previous response
     /// </summary>
@@ -52,32 +36,6 @@ public record class StudyListParams : ParamsBase
 
             this._rawQueryData.Set("cursor", value);
         }
-    }
-
-    /// <summary>
-    /// Filter by Express customer ID (null = studies with no customer). Format: cus_{32-hex-chars}
-    /// </summary>
-    public string? ExpressCustomerID
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<string>("expressCustomerId");
-        }
-        init { this._rawQueryData.Set("expressCustomerId", value); }
-    }
-
-    /// <summary>
-    /// Filter by cancellation status
-    /// </summary>
-    public bool? IsCancelled
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableStruct<bool>("isCancelled");
-        }
-        init { this._rawQueryData.Set("isCancelled", value); }
     }
 
     /// <summary>
@@ -102,14 +60,14 @@ public record class StudyListParams : ParamsBase
     }
 
     /// <summary>
-    /// Filter by study severity
+    /// Filter to one study. Format: stu_{32-hex-chars}
     /// </summary>
-    public ApiEnum<string, Severity>? Severity
+    public string? StudyID
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, Severity>>("severity");
+            return this._rawQueryData.GetNullableClass<string>("studyId");
         }
         init
         {
@@ -118,87 +76,19 @@ public record class StudyListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData.Set("severity", value);
+            this._rawQueryData.Set("studyId", value);
         }
     }
 
-    /// <summary>
-    /// Filter by study description (contains match)
-    /// </summary>
-    public string? StudyDescription
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<string>("studyDescription");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawQueryData.Set("studyDescription", value);
-        }
-    }
-
-    /// <summary>
-    /// Filter by report status(es)
-    /// </summary>
-    public IReadOnlyList<ApiEnum<string, StudyReportStatus>>? StudyReportStatus
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableStruct<
-                ImmutableArray<ApiEnum<string, StudyReportStatus>>
-            >("studyReportStatus");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawQueryData.Set<ImmutableArray<ApiEnum<string, StudyReportStatus>>?>(
-                "studyReportStatus",
-                value == null ? null : ImmutableArray.ToImmutableArray(value)
-            );
-        }
-    }
-
-    /// <summary>
-    /// Filter by study kind. Omit to return both 'standard' and 'external' studies.
-    /// </summary>
-    public ApiEnum<string, StudyType>? StudyType
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<ApiEnum<string, StudyType>>("studyType");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawQueryData.Set("studyType", value);
-        }
-    }
-
-    public StudyListParams() { }
+    public ReportListParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public StudyListParams(StudyListParams studyListParams)
-        : base(studyListParams) { }
+    public ReportListParams(ReportListParams reportListParams)
+        : base(reportListParams) { }
 #pragma warning restore CS8618
 
-    public StudyListParams(
+    public ReportListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -209,7 +99,7 @@ public record class StudyListParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    StudyListParams(
+    ReportListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData
     )
@@ -220,7 +110,7 @@ public record class StudyListParams : ParamsBase
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static StudyListParams FromRawUnchecked(
+    public static ReportListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -247,7 +137,7 @@ public record class StudyListParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(StudyListParams? other)
+    public virtual bool Equals(ReportListParams? other)
     {
         if (other == null)
         {
@@ -259,7 +149,9 @@ public record class StudyListParams : ParamsBase
 
     public override Uri Url(ClientOptions options)
     {
-        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/v1/autoScribe/studies")
+        return new UriBuilder(
+            options.BaseUrl.ToString().TrimEnd('/') + "/v1/autoScribe/studies/external/reports"
+        )
         {
             Query = this.QueryString(options),
         }.Uri;

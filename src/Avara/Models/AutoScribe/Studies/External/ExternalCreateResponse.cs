@@ -7,13 +7,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avara.Core;
 
-namespace Avara.Models.AutoScribe.Studies;
+namespace Avara.Models.AutoScribe.Studies.External;
 
 /// <summary>
 /// A study entity in the AutoScribe system with report workflow status
 /// </summary>
-[JsonConverter(typeof(JsonModelConverter<StudyRetrieveResponse, StudyRetrieveResponseFromRaw>))]
-public sealed record class StudyRetrieveResponse : JsonModel
+[JsonConverter(typeof(JsonModelConverter<ExternalCreateResponse, ExternalCreateResponseFromRaw>))]
+public sealed record class ExternalCreateResponse : JsonModel
 {
     /// <summary>
     /// Timestamp when the study was cancelled, null if not cancelled
@@ -467,29 +467,29 @@ public sealed record class StudyRetrieveResponse : JsonModel
         _ = this.TechnologistTechnique;
     }
 
-    public StudyRetrieveResponse() { }
+    public ExternalCreateResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public StudyRetrieveResponse(StudyRetrieveResponse studyRetrieveResponse)
-        : base(studyRetrieveResponse) { }
+    public ExternalCreateResponse(ExternalCreateResponse externalCreateResponse)
+        : base(externalCreateResponse) { }
 #pragma warning restore CS8618
 
-    public StudyRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ExternalCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    StudyRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
+    ExternalCreateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="StudyRetrieveResponseFromRaw.FromRawUnchecked"/>
-    public static StudyRetrieveResponse FromRawUnchecked(
+    /// <inheritdoc cref="ExternalCreateResponseFromRaw.FromRawUnchecked"/>
+    public static ExternalCreateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -497,10 +497,10 @@ public sealed record class StudyRetrieveResponse : JsonModel
     }
 }
 
-class StudyRetrieveResponseFromRaw : IFromRawJson<StudyRetrieveResponse>
+class ExternalCreateResponseFromRaw : IFromRawJson<ExternalCreateResponse>
 {
     /// <inheritdoc/>
-    public StudyRetrieveResponse FromRawUnchecked(
+    public ExternalCreateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => StudyRetrieveResponse.FromRawUnchecked(rawData);
+    ) => ExternalCreateResponse.FromRawUnchecked(rawData);
 }

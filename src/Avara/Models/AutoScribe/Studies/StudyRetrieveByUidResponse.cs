@@ -245,6 +245,28 @@ public sealed record class StudyRetrieveByUidResponse : JsonModel
     }
 
     /// <summary>
+    /// External report identifier when this study has an attached archive report.
+    /// Format: ext_{32-hex-chars}
+    /// </summary>
+    public string? ExternalReportID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("externalReportId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("externalReportId", value);
+        }
+    }
+
+    /// <summary>
     /// Whether the primary report was marked as critical at sign-off
     /// </summary>
     public bool? IsCritical
@@ -352,6 +374,28 @@ public sealed record class StudyRetrieveByUidResponse : JsonModel
     }
 
     /// <summary>
+    /// Kind of study. 'standard' is a live AutoScribe reading-workflow study. 'external'
+    /// is an imported archive study.
+    /// </summary>
+    public ApiEnum<string, StudyType>? StudyType
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, StudyType>>("studyType");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("studyType", value);
+        }
+    }
+
+    /// <summary>
     /// Technologist notes for the study
     /// </summary>
     public IReadOnlyList<string>? TechnologistNotes
@@ -408,6 +452,7 @@ public sealed record class StudyRetrieveByUidResponse : JsonModel
         this.CreatedByUser?.Validate();
         this.ExpressCustomer?.Validate();
         _ = this.ExternalPatientID;
+        _ = this.ExternalReportID;
         _ = this.IsCritical;
         _ = this.Metadata;
         _ = this.Modality;
@@ -419,6 +464,7 @@ public sealed record class StudyRetrieveByUidResponse : JsonModel
         {
             item.Validate();
         }
+        this.StudyType?.Validate();
         _ = this.TechnologistNotes;
         _ = this.TechnologistTechnique;
     }

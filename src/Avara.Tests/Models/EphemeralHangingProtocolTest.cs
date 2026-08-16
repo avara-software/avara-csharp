@@ -12,11 +12,11 @@ public class EphemeralHangingProtocolTest : TestBase
     {
         var model = new EphemeralHangingProtocol
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
 
-        ApiEnum<string, ViewerLayout> expectedLayout = ViewerLayout.V2x2;
+        ApiEnum<string, ViewerLayout> expectedLayout = ViewerLayout.TwoByTwo;
         List<string?> expectedViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"];
 
         Assert.Equal(expectedLayout, model.Layout);
@@ -32,7 +32,7 @@ public class EphemeralHangingProtocolTest : TestBase
     {
         var model = new EphemeralHangingProtocol
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
 
@@ -50,7 +50,7 @@ public class EphemeralHangingProtocolTest : TestBase
     {
         var model = new EphemeralHangingProtocol
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
 
@@ -61,7 +61,7 @@ public class EphemeralHangingProtocolTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, ViewerLayout> expectedLayout = ViewerLayout.V2x2;
+        ApiEnum<string, ViewerLayout> expectedLayout = ViewerLayout.TwoByTwo;
         List<string?> expectedViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"];
 
         Assert.Equal(expectedLayout, deserialized.Layout);
@@ -77,7 +77,7 @@ public class EphemeralHangingProtocolTest : TestBase
     {
         var model = new EphemeralHangingProtocol
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
 
@@ -89,7 +89,7 @@ public class EphemeralHangingProtocolTest : TestBase
     {
         var model = new EphemeralHangingProtocol
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
 

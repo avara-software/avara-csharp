@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avara.Core;
 using Avara.Models.AutoScribe.Studies;
+using Avara.Services.AutoScribe.Studies;
 
 namespace Avara.Services.AutoScribe;
 
@@ -25,6 +26,8 @@ public interface IStudyService
     /// <para>The original service is not modified.</para>
     /// </summary>
     IStudyService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IExternalService External { get; }
 
     /// <summary>
     /// Creates a new study in the AutoScribe system with DICOM metadata and report
@@ -148,6 +151,8 @@ public interface IStudyServiceWithRawResponse
     /// <para>The original service is not modified.</para>
     /// </summary>
     IStudyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IExternalServiceWithRawResponse External { get; }
 
     /// <summary>
     /// Returns a raw HTTP response for <c>post /v1/autoScribe/studies</c>, but is otherwise the

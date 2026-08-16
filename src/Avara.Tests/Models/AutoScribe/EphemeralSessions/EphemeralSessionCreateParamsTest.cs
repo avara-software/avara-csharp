@@ -16,7 +16,7 @@ public class EphemeralSessionCreateParamsTest : TestBase
             RetrievalID = "order-12345",
             HangingProtocol = new()
             {
-                Layout = ViewerLayout.V2x2,
+                Layout = ViewerLayout.TwoByTwo,
                 ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
             },
             Options = new Dictionary<string, JsonElement>()
@@ -28,7 +28,7 @@ public class EphemeralSessionCreateParamsTest : TestBase
         string expectedRetrievalID = "order-12345";
         EphemeralHangingProtocol expectedHangingProtocol = new()
         {
-            Layout = ViewerLayout.V2x2,
+            Layout = ViewerLayout.TwoByTwo,
             ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
         };
         Dictionary<string, JsonElement> expectedOptions = new()
@@ -100,7 +100,7 @@ public class EphemeralSessionCreateParamsTest : TestBase
             RetrievalID = "order-12345",
             HangingProtocol = new()
             {
-                Layout = ViewerLayout.V2x2,
+                Layout = ViewerLayout.TwoByTwo,
                 ViewportAssignments = ["Axial T1", "Axial T2", null, "Sagittal T2"],
             },
             Options = new Dictionary<string, JsonElement>()

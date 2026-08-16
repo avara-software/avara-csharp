@@ -37,6 +37,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, ReportStatus>(),
             new ApiEnumConverter<string, Sex>(),
             new ApiEnumConverter<string, StudyReportStatus>(),
+            new ApiEnumConverter<string, StudyType>(),
             new ApiEnumConverter<string, WeightUnit>(),
             new ApiEnumConverter<string, StudyViewerStatus>(),
             new ApiEnumConverter<string, Webhooks::Unit>(),

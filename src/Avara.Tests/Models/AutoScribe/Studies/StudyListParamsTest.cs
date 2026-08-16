@@ -22,6 +22,7 @@ public class StudyListParamsTest : TestBase
             Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
+            StudyType = StudyType.Standard,
         };
 
         string expectedAssignedTo = "usr_1234567890abcdef1234567890abcdef";
@@ -35,6 +36,7 @@ public class StudyListParamsTest : TestBase
         [
             StudyReportStatus.Completed,
         ];
+        ApiEnum<string, StudyType> expectedStudyType = StudyType.Standard;
 
         Assert.Equal(expectedAssignedTo, parameters.AssignedTo);
         Assert.Equal(expectedCursor, parameters.Cursor);
@@ -49,6 +51,7 @@ public class StudyListParamsTest : TestBase
         {
             Assert.Equal(expectedStudyReportStatus[i], parameters.StudyReportStatus[i]);
         }
+        Assert.Equal(expectedStudyType, parameters.StudyType);
     }
 
     [Fact]
@@ -71,6 +74,8 @@ public class StudyListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("studyDescription"));
         Assert.Null(parameters.StudyReportStatus);
         Assert.False(parameters.RawQueryData.ContainsKey("studyReportStatus"));
+        Assert.Null(parameters.StudyType);
+        Assert.False(parameters.RawQueryData.ContainsKey("studyType"));
     }
 
     [Fact]
@@ -88,6 +93,7 @@ public class StudyListParamsTest : TestBase
             Severity = null,
             StudyDescription = null,
             StudyReportStatus = null,
+            StudyType = null,
         };
 
         Assert.Null(parameters.Cursor);
@@ -100,6 +106,8 @@ public class StudyListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("studyDescription"));
         Assert.Null(parameters.StudyReportStatus);
         Assert.False(parameters.RawQueryData.ContainsKey("studyReportStatus"));
+        Assert.Null(parameters.StudyType);
+        Assert.False(parameters.RawQueryData.ContainsKey("studyType"));
     }
 
     [Fact]
@@ -112,6 +120,7 @@ public class StudyListParamsTest : TestBase
             Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
+            StudyType = StudyType.Standard,
         };
 
         Assert.Null(parameters.AssignedTo);
@@ -132,6 +141,7 @@ public class StudyListParamsTest : TestBase
             Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
+            StudyType = StudyType.Standard,
 
             AssignedTo = null,
             ExpressCustomerID = null,
@@ -159,6 +169,7 @@ public class StudyListParamsTest : TestBase
             Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
+            StudyType = StudyType.Standard,
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -166,7 +177,7 @@ public class StudyListParamsTest : TestBase
         Assert.True(
             TestBase.UrisEqual(
                 new Uri(
-                    "https://api.avarasoftware.com/v1/autoScribe/studies?assignedTo=usr_1234567890abcdef1234567890abcdef&cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&expressCustomerId=cus_1234567890abcdef1234567890abcdef&isCancelled=false&limit=20&severity=normal&studyDescription=CT+Head&studyReportStatus=completed"
+                    "https://api.avarasoftware.com/v1/autoScribe/studies?assignedTo=usr_1234567890abcdef1234567890abcdef&cursor=eyJvZmZzZXQiOjIwfQ%3d%3d&expressCustomerId=cus_1234567890abcdef1234567890abcdef&isCancelled=false&limit=20&severity=normal&studyDescription=CT+Head&studyReportStatus=completed&studyType=standard"
                 ),
                 url
             )
@@ -186,6 +197,7 @@ public class StudyListParamsTest : TestBase
             Severity = Severity.Normal,
             StudyDescription = "CT Head",
             StudyReportStatus = [StudyReportStatus.Completed],
+            StudyType = StudyType.Standard,
         };
 
         StudyListParams copied = new(parameters);
