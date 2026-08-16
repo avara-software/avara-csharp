@@ -79,6 +79,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -106,6 +107,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -177,6 +179,7 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerName = "City Medical Center",
                 },
                 ExternalPatientID = "externalPatientId",
+                ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                 IsCritical = true,
                 Metadata = new Dictionary<string, string>()
                 {
@@ -204,6 +207,7 @@ public class StudyListPageResponseTest : TestBase
                         Status = ReportStatus.InProgress,
                     },
                 ],
+                StudyType = StudyType.Standard,
                 TechnologistNotes = ["x"],
                 TechnologistTechnique = "technologistTechnique",
             },
@@ -288,6 +292,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -315,6 +320,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -400,6 +406,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -427,6 +434,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -505,6 +513,7 @@ public class StudyListPageResponseTest : TestBase
                     ExpressCustomerName = "City Medical Center",
                 },
                 ExternalPatientID = "externalPatientId",
+                ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                 IsCritical = true,
                 Metadata = new Dictionary<string, string>()
                 {
@@ -532,6 +541,7 @@ public class StudyListPageResponseTest : TestBase
                         Status = ReportStatus.InProgress,
                     },
                 ],
+                StudyType = StudyType.Standard,
                 TechnologistNotes = ["x"],
                 TechnologistTechnique = "technologistTechnique",
             },
@@ -616,6 +626,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -643,6 +654,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -722,6 +734,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -749,6 +762,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -828,6 +842,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -855,6 +870,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -933,6 +949,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -960,6 +977,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -1042,6 +1060,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -1069,6 +1088,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },
@@ -1150,6 +1170,7 @@ public class StudyListPageResponseTest : TestBase
                         ExpressCustomerName = "City Medical Center",
                     },
                     ExternalPatientID = "externalPatientId",
+                    ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
                     IsCritical = true,
                     Metadata = new Dictionary<string, string>()
                     {
@@ -1177,6 +1198,7 @@ public class StudyListPageResponseTest : TestBase
                             Status = ReportStatus.InProgress,
                         },
                     ],
+                    StudyType = StudyType.Standard,
                     TechnologistNotes = ["x"],
                     TechnologistTechnique = "technologistTechnique",
                 },

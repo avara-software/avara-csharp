@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avara.Core;
 using Avara.Exceptions;
 using Avara.Models.AutoScribe.Studies;
+using Avara.Services.AutoScribe.Studies;
 
 namespace Avara.Services.AutoScribe;
 
@@ -32,6 +33,13 @@ public sealed class StudyService : IStudyService
         _client = client;
 
         _withRawResponse = new(() => new StudyServiceWithRawResponse(client.WithRawResponse));
+        _external = new(() => new ExternalService(client));
+    }
+
+    readonly Lazy<IExternalService> _external;
+    public IExternalService External
+    {
+        get { return _external.Value; }
     }
 
     /// <inheritdoc/>
@@ -199,6 +207,14 @@ public sealed class StudyServiceWithRawResponse : IStudyServiceWithRawResponse
     public StudyServiceWithRawResponse(IAvaraClientWithRawResponse client)
     {
         _client = client;
+
+        _external = new(() => new ExternalServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<IExternalServiceWithRawResponse> _external;
+    public IExternalServiceWithRawResponse External
+    {
+        get { return _external.Value; }
     }
 
     /// <inheritdoc/>

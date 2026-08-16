@@ -74,6 +74,7 @@ public class StudyListResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -101,6 +102,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
         };
@@ -163,6 +165,7 @@ public class StudyListResponseTest : TestBase
             ExpressCustomerName = "City Medical Center",
         };
         string expectedExternalPatientID = "externalPatientId";
+        string expectedExternalReportID = "ext_1234567890abcdef1234567890abcdef";
         bool expectedIsCritical = true;
         Dictionary<string, string> expectedMetadata = new()
         {
@@ -190,6 +193,7 @@ public class StudyListResponseTest : TestBase
                 Status = ReportStatus.InProgress,
             },
         ];
+        ApiEnum<string, StudyType> expectedStudyType = StudyType.Standard;
         List<string> expectedTechnologistNotes = ["x"];
         string expectedTechnologistTechnique = "technologistTechnique";
 
@@ -210,6 +214,7 @@ public class StudyListResponseTest : TestBase
         Assert.Equal(expectedCreatedByUser, model.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, model.ExpressCustomer);
         Assert.Equal(expectedExternalPatientID, model.ExternalPatientID);
+        Assert.Equal(expectedExternalReportID, model.ExternalReportID);
         Assert.Equal(expectedIsCritical, model.IsCritical);
         Assert.NotNull(model.Metadata);
         Assert.Equal(expectedMetadata.Count, model.Metadata.Count);
@@ -232,6 +237,7 @@ public class StudyListResponseTest : TestBase
         {
             Assert.Equal(expectedReportIds[i], model.ReportIds[i]);
         }
+        Assert.Equal(expectedStudyType, model.StudyType);
         Assert.NotNull(model.TechnologistNotes);
         Assert.Equal(expectedTechnologistNotes.Count, model.TechnologistNotes.Count);
         for (int i = 0; i < expectedTechnologistNotes.Count; i++)
@@ -305,6 +311,7 @@ public class StudyListResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -332,6 +339,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
         };
@@ -409,6 +417,7 @@ public class StudyListResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -436,6 +445,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
         };
@@ -505,6 +515,7 @@ public class StudyListResponseTest : TestBase
             ExpressCustomerName = "City Medical Center",
         };
         string expectedExternalPatientID = "externalPatientId";
+        string expectedExternalReportID = "ext_1234567890abcdef1234567890abcdef";
         bool expectedIsCritical = true;
         Dictionary<string, string> expectedMetadata = new()
         {
@@ -532,6 +543,7 @@ public class StudyListResponseTest : TestBase
                 Status = ReportStatus.InProgress,
             },
         ];
+        ApiEnum<string, StudyType> expectedStudyType = StudyType.Standard;
         List<string> expectedTechnologistNotes = ["x"];
         string expectedTechnologistTechnique = "technologistTechnique";
 
@@ -552,6 +564,7 @@ public class StudyListResponseTest : TestBase
         Assert.Equal(expectedCreatedByUser, deserialized.CreatedByUser);
         Assert.Equal(expectedExpressCustomer, deserialized.ExpressCustomer);
         Assert.Equal(expectedExternalPatientID, deserialized.ExternalPatientID);
+        Assert.Equal(expectedExternalReportID, deserialized.ExternalReportID);
         Assert.Equal(expectedIsCritical, deserialized.IsCritical);
         Assert.NotNull(deserialized.Metadata);
         Assert.Equal(expectedMetadata.Count, deserialized.Metadata.Count);
@@ -574,6 +587,7 @@ public class StudyListResponseTest : TestBase
         {
             Assert.Equal(expectedReportIds[i], deserialized.ReportIds[i]);
         }
+        Assert.Equal(expectedStudyType, deserialized.StudyType);
         Assert.NotNull(deserialized.TechnologistNotes);
         Assert.Equal(expectedTechnologistNotes.Count, deserialized.TechnologistNotes.Count);
         for (int i = 0; i < expectedTechnologistNotes.Count; i++)
@@ -647,6 +661,7 @@ public class StudyListResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -674,6 +689,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
         };
@@ -749,6 +765,8 @@ public class StudyListResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
         };
 
+        Assert.Null(model.ExternalReportID);
+        Assert.False(model.RawData.ContainsKey("externalReportId"));
         Assert.Null(model.IsCritical);
         Assert.False(model.RawData.ContainsKey("isCritical"));
         Assert.Null(model.Metadata);
@@ -757,6 +775,8 @@ public class StudyListResponseTest : TestBase
         Assert.False(model.RawData.ContainsKey("priorReports"));
         Assert.Null(model.ReportIds);
         Assert.False(model.RawData.ContainsKey("reportIds"));
+        Assert.Null(model.StudyType);
+        Assert.False(model.RawData.ContainsKey("studyType"));
         Assert.Null(model.TechnologistNotes);
         Assert.False(model.RawData.ContainsKey("technologistNotes"));
     }
@@ -900,13 +920,17 @@ public class StudyListResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
+            ExternalReportID = null,
             IsCritical = null,
             Metadata = null,
             PriorReports = null,
             ReportIds = null,
+            StudyType = null,
             TechnologistNotes = null,
         };
 
+        Assert.Null(model.ExternalReportID);
+        Assert.False(model.RawData.ContainsKey("externalReportId"));
         Assert.Null(model.IsCritical);
         Assert.False(model.RawData.ContainsKey("isCritical"));
         Assert.Null(model.Metadata);
@@ -915,6 +939,8 @@ public class StudyListResponseTest : TestBase
         Assert.False(model.RawData.ContainsKey("priorReports"));
         Assert.Null(model.ReportIds);
         Assert.False(model.RawData.ContainsKey("reportIds"));
+        Assert.Null(model.StudyType);
+        Assert.False(model.RawData.ContainsKey("studyType"));
         Assert.Null(model.TechnologistNotes);
         Assert.False(model.RawData.ContainsKey("technologistNotes"));
     }
@@ -987,10 +1013,12 @@ public class StudyListResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
 
             // Null should be interpreted as omitted for these properties
+            ExternalReportID = null,
             IsCritical = null,
             Metadata = null,
             PriorReports = null,
             ReportIds = null,
+            StudyType = null,
             TechnologistNotes = null,
         };
 
@@ -1026,6 +1054,7 @@ public class StudyListResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -1052,6 +1081,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
         };
 
@@ -1104,6 +1134,7 @@ public class StudyListResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -1130,6 +1161,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
         };
 
@@ -1165,6 +1197,7 @@ public class StudyListResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -1191,6 +1224,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
 
             AssignedTo = null,
@@ -1253,6 +1287,7 @@ public class StudyListResponseTest : TestBase
             StudyInstanceUid = "1.2.840.113619.2.55.3.604688119.868.1234567890.123",
             StudyReportStatus = StudyReportStatus.InProgress,
             UpdatedAt = DateTimeOffset.Parse("2024-03-15T14:20:00Z"),
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -1279,6 +1314,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
 
             AssignedTo = null,
@@ -1359,6 +1395,7 @@ public class StudyListResponseTest : TestBase
                 ExpressCustomerName = "City Medical Center",
             },
             ExternalPatientID = "externalPatientId",
+            ExternalReportID = "ext_1234567890abcdef1234567890abcdef",
             IsCritical = true,
             Metadata = new Dictionary<string, string>()
             {
@@ -1386,6 +1423,7 @@ public class StudyListResponseTest : TestBase
                     Status = ReportStatus.InProgress,
                 },
             ],
+            StudyType = StudyType.Standard,
             TechnologistNotes = ["x"],
             TechnologistTechnique = "technologistTechnique",
         };

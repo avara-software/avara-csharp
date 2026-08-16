@@ -5,15 +5,16 @@ using Avara.Core;
 using Avara.Models;
 using Avara.Models.AutoScribe;
 using Avara.Models.AutoScribe.Studies;
+using Avara.Models.AutoScribe.Studies.External;
 
-namespace Avara.Tests.Models.AutoScribe.Studies;
+namespace Avara.Tests.Models.AutoScribe.Studies.External;
 
-public class StudyRetrieveResponseTest : TestBase
+public class ExternalCreateResponseTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -250,7 +251,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -345,7 +346,7 @@ public class StudyRetrieveResponseTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyRetrieveResponse>(
+        var deserialized = JsonSerializer.Deserialize<ExternalCreateResponse>(
             json,
             ModelBase.SerializerOptions
         );
@@ -356,7 +357,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -451,7 +452,7 @@ public class StudyRetrieveResponseTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<StudyRetrieveResponse>(
+        var deserialized = JsonSerializer.Deserialize<ExternalCreateResponse>(
             element,
             ModelBase.SerializerOptions
         );
@@ -600,7 +601,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -700,7 +701,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -784,7 +785,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -855,7 +856,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -948,7 +949,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1028,7 +1029,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1108,7 +1109,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1171,7 +1172,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1261,7 +1262,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1334,7 +1335,7 @@ public class StudyRetrieveResponseTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new StudyRetrieveResponse
+        var model = new ExternalCreateResponse
         {
             CancelledAt = null,
             CreatedAt = DateTimeOffset.Parse("2024-03-15T10:30:00Z"),
@@ -1428,7 +1429,7 @@ public class StudyRetrieveResponseTest : TestBase
             TechnologistTechnique = "technologistTechnique",
         };
 
-        StudyRetrieveResponse copied = new(model);
+        ExternalCreateResponse copied = new(model);
 
         Assert.Equal(model, copied);
     }
