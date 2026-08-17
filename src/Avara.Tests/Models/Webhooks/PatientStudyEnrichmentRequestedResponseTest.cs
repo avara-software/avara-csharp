@@ -13,6 +13,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         var model = new PatientStudyEnrichmentRequestedResponse
         {
             DateOfBirth = "1985-01-01",
+            ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExternalPatientID = "EHR-999",
             FacilityName = "South Tampa Imaging",
             Height = new() { Unit = Unit.Cm, Value = 170 },
@@ -29,6 +30,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         };
 
         string expectedDateOfBirth = "1985-01-01";
+        string expectedExpressCustomerID = "cus_1234567890abcdef1234567890abcdef";
         string expectedExternalPatientID = "EHR-999";
         string expectedFacilityName = "South Tampa Imaging";
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
@@ -44,6 +46,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedDateOfBirth, model.DateOfBirth);
+        Assert.Equal(expectedExpressCustomerID, model.ExpressCustomerID);
         Assert.Equal(expectedExternalPatientID, model.ExternalPatientID);
         Assert.Equal(expectedFacilityName, model.FacilityName);
         Assert.Equal(expectedHeight, model.Height);
@@ -65,6 +68,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         var model = new PatientStudyEnrichmentRequestedResponse
         {
             DateOfBirth = "1985-01-01",
+            ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExternalPatientID = "EHR-999",
             FacilityName = "South Tampa Imaging",
             Height = new() { Unit = Unit.Cm, Value = 170 },
@@ -95,6 +99,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         var model = new PatientStudyEnrichmentRequestedResponse
         {
             DateOfBirth = "1985-01-01",
+            ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExternalPatientID = "EHR-999",
             FacilityName = "South Tampa Imaging",
             Height = new() { Unit = Unit.Cm, Value = 170 },
@@ -118,6 +123,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedDateOfBirth = "1985-01-01";
+        string expectedExpressCustomerID = "cus_1234567890abcdef1234567890abcdef";
         string expectedExternalPatientID = "EHR-999";
         string expectedFacilityName = "South Tampa Imaging";
         Height expectedHeight = new() { Unit = Unit.Cm, Value = 170 };
@@ -133,6 +139,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         Weight expectedWeight = new() { Unit = WeightUnit.Kg, Value = 68 };
 
         Assert.Equal(expectedDateOfBirth, deserialized.DateOfBirth);
+        Assert.Equal(expectedExpressCustomerID, deserialized.ExpressCustomerID);
         Assert.Equal(expectedExternalPatientID, deserialized.ExternalPatientID);
         Assert.Equal(expectedFacilityName, deserialized.FacilityName);
         Assert.Equal(expectedHeight, deserialized.Height);
@@ -154,6 +161,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         var model = new PatientStudyEnrichmentRequestedResponse
         {
             DateOfBirth = "1985-01-01",
+            ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExternalPatientID = "EHR-999",
             FacilityName = "South Tampa Imaging",
             Height = new() { Unit = Unit.Cm, Value = 170 },
@@ -179,6 +187,8 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
 
         Assert.Null(model.DateOfBirth);
         Assert.False(model.RawData.ContainsKey("dateOfBirth"));
+        Assert.Null(model.ExpressCustomerID);
+        Assert.False(model.RawData.ContainsKey("expressCustomerId"));
         Assert.Null(model.ExternalPatientID);
         Assert.False(model.RawData.ContainsKey("externalPatientId"));
         Assert.Null(model.FacilityName);
@@ -222,6 +232,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             DateOfBirth = null,
+            ExpressCustomerID = null,
             ExternalPatientID = null,
             FacilityName = null,
             Height = null,
@@ -239,6 +250,8 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
 
         Assert.Null(model.DateOfBirth);
         Assert.False(model.RawData.ContainsKey("dateOfBirth"));
+        Assert.Null(model.ExpressCustomerID);
+        Assert.False(model.RawData.ContainsKey("expressCustomerId"));
         Assert.Null(model.ExternalPatientID);
         Assert.False(model.RawData.ContainsKey("externalPatientId"));
         Assert.Null(model.FacilityName);
@@ -274,6 +287,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             DateOfBirth = null,
+            ExpressCustomerID = null,
             ExternalPatientID = null,
             FacilityName = null,
             Height = null,
@@ -298,6 +312,7 @@ public class PatientStudyEnrichmentRequestedResponseTest : TestBase
         var model = new PatientStudyEnrichmentRequestedResponse
         {
             DateOfBirth = "1985-01-01",
+            ExpressCustomerID = "cus_1234567890abcdef1234567890abcdef",
             ExternalPatientID = "EHR-999",
             FacilityName = "South Tampa Imaging",
             Height = new() { Unit = Unit.Cm, Value = 170 },
