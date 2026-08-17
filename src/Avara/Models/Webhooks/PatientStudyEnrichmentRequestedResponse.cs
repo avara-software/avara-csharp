@@ -11,7 +11,10 @@ namespace Avara.Models.Webhooks;
 
 /// <summary>
 /// Soft enrichment response. No authorized field — return any subset of fields (including
-/// {}). Avara merges per-field with DICOM light metadata then defaults.
+/// {}). Avara merges per-field with DICOM light metadata then defaults. Optional
+/// expressCustomerId: if present and a valid cus_ id for this clinic, Avara sets
+/// it on the created study. If present but not usable, Avara ignores it, applies
+/// other fields, and logs a warning.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<
@@ -39,6 +42,30 @@ public sealed record class PatientStudyEnrichmentRequestedResponse : JsonModel
             }
 
             this._rawData.Set("dateOfBirth", value);
+        }
+    }
+
+    /// <summary>
+    /// Optional Express customer to attach to the created study. Format: cus_{32
+    /// hex chars}. Must belong to the clinic in the request. Omit to leave the study
+    /// unscoped. If present but not usable, Avara ignores this field, applies any
+    /// other enrichment fields, and logs a warning on the webhook event.
+    /// </summary>
+    public string? ExpressCustomerID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("expressCustomerId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("expressCustomerId", value);
         }
     }
 
@@ -286,6 +313,7 @@ public sealed record class PatientStudyEnrichmentRequestedResponse : JsonModel
     public override void Validate()
     {
         _ = this.DateOfBirth;
+        _ = this.ExpressCustomerID;
         _ = this.ExternalPatientID;
         _ = this.FacilityName;
         this.Height?.Validate();
