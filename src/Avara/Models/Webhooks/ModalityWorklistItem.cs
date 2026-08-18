@@ -15,6 +15,9 @@ namespace Avara.Models.Webhooks;
 [JsonConverter(typeof(JsonModelConverter<ModalityWorklistItem, ModalityWorklistItemFromRaw>))]
 public sealed record class ModalityWorklistItem : JsonModel
 {
+    /// <summary>
+    /// Accession number (DICOM SH, max 16)
+    /// </summary>
     public required string AccessionNumber
     {
         get
@@ -35,6 +38,9 @@ public sealed record class ModalityWorklistItem : JsonModel
         init { this._rawData.Set("Modality", value); }
     }
 
+    /// <summary>
+    /// Patient birth date (DICOM DA: YYYYMMDD)
+    /// </summary>
     public required string PatientBirthDate
     {
         get
@@ -55,6 +61,9 @@ public sealed record class ModalityWorklistItem : JsonModel
         init { this._rawData.Set("PatientID", value); }
     }
 
+    /// <summary>
+    /// DICOM PN / HL7 format: LAST^FIRST[^MIDDLE^PREFIX^SUFFIX]
+    /// </summary>
     public required string PatientName
     {
         get
@@ -65,6 +74,9 @@ public sealed record class ModalityWorklistItem : JsonModel
         init { this._rawData.Set("PatientName", value); }
     }
 
+    /// <summary>
+    /// DICOM PatientSex: M, F, or O
+    /// </summary>
     public required string PatientSex
     {
         get
@@ -76,7 +88,7 @@ public sealed record class ModalityWorklistItem : JsonModel
     }
 
     /// <summary>
-    /// Patient size; empty string allowed
+    /// Height in meters. Empty string allowed; if set must be numeric (typical range 0.4–2.5).
     /// </summary>
     public required string PatientSize
     {
@@ -89,7 +101,8 @@ public sealed record class ModalityWorklistItem : JsonModel
     }
 
     /// <summary>
-    /// Patient weight; empty string allowed
+    /// Weight in kilograms. Empty string allowed; if set must be numeric (typical
+    /// range 1–400).
     /// </summary>
     public required string PatientWeight
     {

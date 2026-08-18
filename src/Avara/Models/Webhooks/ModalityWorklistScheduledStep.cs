@@ -42,7 +42,7 @@ public sealed record class ModalityWorklistScheduledStep : JsonModel
     }
 
     /// <summary>
-    /// Scheduled procedure step identifier
+    /// Scheduled procedure step identifier (DICOM SH, max 16)
     /// </summary>
     public required string ScheduledProcedureStepID
     {
@@ -55,7 +55,7 @@ public sealed record class ModalityWorklistScheduledStep : JsonModel
     }
 
     /// <summary>
-    /// Scheduled start date (DICOM DA-compatible string)
+    /// Scheduled start date (DICOM DA: YYYYMMDD)
     /// </summary>
     public required string ScheduledProcedureStepStartDate
     {
@@ -68,7 +68,7 @@ public sealed record class ModalityWorklistScheduledStep : JsonModel
     }
 
     /// <summary>
-    /// Scheduled start time (DICOM TM-compatible string)
+    /// Scheduled start time (DICOM TM: HHMMSS)
     /// </summary>
     public required string ScheduledProcedureStepStartTime
     {
