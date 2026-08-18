@@ -6,7 +6,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Copyright>Copyright 2026 Avara</Copyright>
     <PackageProjectUrl>https://docs.avarasoftware.com</PackageProjectUrl>
-    <RepositoryUrl>https://www.github.com/stainless-sdks/avara-csharp</RepositoryUrl>
+    <RepositoryUrl>https://www.github.com/avara-software/avara-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <!-- Documentation-->
