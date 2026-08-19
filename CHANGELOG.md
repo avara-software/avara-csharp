@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/avara-software/avara-csharp/compare/v0.1.0...v0.2.0) (2026-08-19)
+
+
+### Features
+
+* enable nuget publish ([cca4738](https://github.com/avara-software/avara-csharp/commit/cca47389d60a4d5082ba4224aba7f016d6924f51))
+
 ## 0.1.0 (2026-08-18)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/avara-software/avara-csharp/compare/v0.0.1...v0.1.0)
