@@ -8,9 +8,10 @@ The REST API documentation can be found on [docs.avarasoftware.com](https://docs
 
 ## Installation
 
+Install the package from [NuGet](https://www.nuget.org/packages/Avara):
+
 ```bash
-git clone git@github.com:avara-software/avara-csharp.git
-dotnet add reference avara-csharp/src/Avara
+dotnet add package Avara
 ```
 
 ## Requirements
