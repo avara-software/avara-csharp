@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/avara-software/avara-csharp/compare/v0.1.0...v0.2.0) (2026-08-24)
+
+
+### Features
+
+* add studyInstanceUid and externalPatientId to report.delivered ([cb50e68](https://github.com/avara-software/avara-csharp/commit/cb50e681872f2ba4df6bfaf3271ce937aac419db))
+
 ## 0.1.0 (2026-08-18)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/avara-software/avara-csharp/compare/v0.0.1...v0.1.0)
