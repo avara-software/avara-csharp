@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/avara-software/avara-csharp/compare/v0.4.0...v0.4.1) (2026-08-24)
+
+
+### Chores
+
+* finally trying to fix this fucking bullshit stainless CI bullshit always failing ([95a6198](https://github.com/avara-software/avara-csharp/commit/95a619804c4a8cf468368b90d819e0df8a4d0270))
+
 ## [0.4.0](https://github.com/avara-software/avara-csharp/compare/v0.3.0...v0.4.0) (2026-08-24)
 
 
