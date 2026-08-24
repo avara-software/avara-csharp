@@ -3,7 +3,7 @@
     <!-- Metadata -->
     <AssemblyTitle>Avara C#</AssemblyTitle>
     <AssemblyName>Avara</AssemblyName>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionPrefix>0.4.0</VersionPrefix>
     <Description>The official .NET library for the Avara API.</Description>
     <OutputType>Library</OutputType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
