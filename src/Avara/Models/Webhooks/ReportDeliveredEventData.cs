@@ -68,6 +68,40 @@ public sealed record class ReportDeliveredEventData : JsonModel
     }
 
     /// <summary>
+    /// DICOM Study Instance UID
+    /// </summary>
+    public required string StudyInstanceUid
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("studyInstanceUid");
+        }
+        init { this._rawData.Set("studyInstanceUid", value); }
+    }
+
+    /// <summary>
+    /// External patient identifier when available
+    /// </summary>
+    public string? ExternalPatientID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("externalPatientId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("externalPatientId", value);
+        }
+    }
+
+    /// <summary>
     /// Report plain text content (optional). Contains the full report text.
     /// </summary>
     public string? PlainText
@@ -95,6 +129,8 @@ public sealed record class ReportDeliveredEventData : JsonModel
         _ = this.PresignedUrl;
         _ = this.ReportID;
         _ = this.StudyID;
+        _ = this.StudyInstanceUid;
+        _ = this.ExternalPatientID;
         _ = this.PlainText;
     }
 

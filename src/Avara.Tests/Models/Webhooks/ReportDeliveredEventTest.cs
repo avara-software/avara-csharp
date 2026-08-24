@@ -19,6 +19,8 @@ public class ReportDeliveredEventTest : TestBase
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                ExternalPatientID = "EHR-999",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
             },
         };
@@ -30,6 +32,8 @@ public class ReportDeliveredEventTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
         JsonElement expectedType = JsonSerializer.SerializeToElement("report.delivered");
@@ -52,6 +56,8 @@ public class ReportDeliveredEventTest : TestBase
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                ExternalPatientID = "EHR-999",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
             },
         };
@@ -78,6 +84,8 @@ public class ReportDeliveredEventTest : TestBase
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                ExternalPatientID = "EHR-999",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
             },
         };
@@ -96,6 +104,8 @@ public class ReportDeliveredEventTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
         JsonElement expectedType = JsonSerializer.SerializeToElement("report.delivered");
@@ -118,6 +128,8 @@ public class ReportDeliveredEventTest : TestBase
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                ExternalPatientID = "EHR-999",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
             },
         };
@@ -138,6 +150,8 @@ public class ReportDeliveredEventTest : TestBase
                     "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
                 ReportID = "rep_1234567890abcdef1234567890abcdef",
                 StudyID = "stu_1234567890abcdef1234567890abcdef",
+                StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+                ExternalPatientID = "EHR-999",
                 PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
             },
         };

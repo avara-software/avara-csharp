@@ -15,6 +15,8 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
@@ -23,6 +25,8 @@ public class ReportDeliveredEventDataTest : TestBase
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
+        string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.1234567890";
+        string expectedExternalPatientID = "EHR-999";
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality...";
 
@@ -30,6 +34,8 @@ public class ReportDeliveredEventDataTest : TestBase
         Assert.Equal(expectedPresignedUrl, model.PresignedUrl);
         Assert.Equal(expectedReportID, model.ReportID);
         Assert.Equal(expectedStudyID, model.StudyID);
+        Assert.Equal(expectedStudyInstanceUid, model.StudyInstanceUid);
+        Assert.Equal(expectedExternalPatientID, model.ExternalPatientID);
         Assert.Equal(expectedPlainText, model.PlainText);
     }
 
@@ -42,6 +48,8 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
@@ -63,6 +71,8 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
@@ -78,6 +88,8 @@ public class ReportDeliveredEventDataTest : TestBase
             "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789";
         string expectedReportID = "rep_1234567890abcdef1234567890abcdef";
         string expectedStudyID = "stu_1234567890abcdef1234567890abcdef";
+        string expectedStudyInstanceUid = "1.2.840.113619.2.55.3.1234567890";
+        string expectedExternalPatientID = "EHR-999";
         string expectedPlainText =
             "FINDINGS: Normal brain MRI. No acute intracranial abnormality...";
 
@@ -85,6 +97,8 @@ public class ReportDeliveredEventDataTest : TestBase
         Assert.Equal(expectedPresignedUrl, deserialized.PresignedUrl);
         Assert.Equal(expectedReportID, deserialized.ReportID);
         Assert.Equal(expectedStudyID, deserialized.StudyID);
+        Assert.Equal(expectedStudyInstanceUid, deserialized.StudyInstanceUid);
+        Assert.Equal(expectedExternalPatientID, deserialized.ExternalPatientID);
         Assert.Equal(expectedPlainText, deserialized.PlainText);
     }
 
@@ -97,6 +111,8 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
@@ -112,8 +128,11 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
         };
 
+        Assert.Null(model.ExternalPatientID);
+        Assert.False(model.RawData.ContainsKey("externalPatientId"));
         Assert.Null(model.PlainText);
         Assert.False(model.RawData.ContainsKey("plainText"));
     }
@@ -127,6 +146,7 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
         };
 
         model.Validate();
@@ -141,11 +161,15 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
 
             // Null should be interpreted as omitted for these properties
+            ExternalPatientID = null,
             PlainText = null,
         };
 
+        Assert.Null(model.ExternalPatientID);
+        Assert.False(model.RawData.ContainsKey("externalPatientId"));
         Assert.Null(model.PlainText);
         Assert.False(model.RawData.ContainsKey("plainText"));
     }
@@ -159,8 +183,10 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
 
             // Null should be interpreted as omitted for these properties
+            ExternalPatientID = null,
             PlainText = null,
         };
 
@@ -176,6 +202,8 @@ public class ReportDeliveredEventDataTest : TestBase
             PresignedUrl = "https://storage.avarasoftware.com/reports/rep_1234.pdf?token=xyz789",
             ReportID = "rep_1234567890abcdef1234567890abcdef",
             StudyID = "stu_1234567890abcdef1234567890abcdef",
+            StudyInstanceUid = "1.2.840.113619.2.55.3.1234567890",
+            ExternalPatientID = "EHR-999",
             PlainText = "FINDINGS: Normal brain MRI. No acute intracranial abnormality...",
         };
 
